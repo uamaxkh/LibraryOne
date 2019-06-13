@@ -1,0 +1,6 @@
+D:\GitHub\LibraryOne\Library\DBLib\bin\Debug\DBLib.dll
+D:\GitHub\LibraryOne\Library\DBLib\bin\Debug\DBLib.pdb
+D:\GitHub\LibraryOne\Library\DBLib\obj\Debug\DBLib.csprojAssemblyReference.cache
+D:\GitHub\LibraryOne\Library\DBLib\obj\Debug\DBLib.csproj.CoreCompileInputs.cache
+D:\GitHub\LibraryOne\Library\DBLib\obj\Debug\DBLib.dll
+D:\GitHub\LibraryOne\Library\DBLib\obj\Debug\DBLib.pdb
