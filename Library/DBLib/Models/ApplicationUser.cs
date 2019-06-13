@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
+using DBLib.Models;
 
-namespace DBLib.Models
+//namespace DBLib.Models
+ namespace Library.Models
 {
     public class ApplicationUser : IdentityUser
     {
@@ -15,7 +17,8 @@ namespace DBLib.Models
         public string Surname { get; set; }
         public bool IsBanned { get; set; }
         public DateTime BirthDate { get; set; }
-
+        public ICollection<Comment> Comments { get; set; }
+        public ICollection<BooksRenting> BooksRenting { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

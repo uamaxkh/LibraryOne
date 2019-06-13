@@ -57,14 +57,18 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="ContexttInitializer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Author.cs" />
+    <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Publisher.cs" />
+    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\BooksRenting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Models\Знімок екрана %2852%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

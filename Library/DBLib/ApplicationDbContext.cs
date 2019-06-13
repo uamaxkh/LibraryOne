@@ -7,6 +7,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using DBLib.Models;
+using Library.Models;
 
 namespace DBLib
 {
