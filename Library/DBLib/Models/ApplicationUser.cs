@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +14,24 @@ using DBLib.Models;
 {
     public class ApplicationUser : IdentityUser
     {
+        [Required]
+        [Display(Name = "Ім'я")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Прізвище")]
         public string Surname { get; set; }
+        
+        [Display(Name = "Заблокований")]
+        [UIHint("Boolean")]
         public bool IsBanned { get; set; }
+
+        [Required]
+        [Display(Name = "Дата народження")]
         public DateTime BirthDate { get; set; }
+        
         public ICollection<Comment> Comments { get; set; }
+
         public ICollection<BooksRenting> BooksRenting { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
