@@ -26,5 +26,13 @@ namespace DBLib
                 return db.Books.Find(Id);
             }
         }
+
+        public static List<Author> GetAllAuthors()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Authors.ToList();
+            }
+        }
     }
 }

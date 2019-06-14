@@ -57,12 +57,16 @@ namespace Library.Controllers
         [HttpGet]
         public ActionResult AddBook()
         {
+            var authorsList = DBLib.DBCommands.GetAllAuthors();
+            SelectList authorsSelectList = new SelectList(authorsList, "Id", "Name");
+            ViewBag.authorsSelectList = authorsSelectList;
             return View();
         }
 
         [HttpPost]
         public ActionResult AddBook(HttpPostedFileBase file)
         {
+
             if (file != null && file.ContentLength > 0)
                 try
                 {

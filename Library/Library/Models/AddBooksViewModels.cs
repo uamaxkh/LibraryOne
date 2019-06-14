@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBLib.Models;
+using System.Web;
 
-namespace DBLib.Models
+namespace Library.Models
 {
-    public class Book : BaseEntity
+    public class AddBooksViewModels : BaseEntity
     {
         [Required]
         [Display(Name = "Заголовок")]
@@ -15,7 +17,7 @@ namespace DBLib.Models
         
         [Display(Name = "Обкладинка")]
         [UIHint("Url")]
-        public string TitlePic { get; set; }
+        public HttpPostedFileBase TitlePic { get; set; }
 
         [Required]
         [Display(Name = "Рік видання")]
@@ -45,15 +47,8 @@ namespace DBLib.Models
         [Display(Name = "Видавець")]
         public Publisher Publisher { get; set; }
 
+        [Required]
         [Display(Name = "Автори")]
         public virtual ICollection<Author> Authors { get; set; }
-        
-        public virtual ICollection<BooksRenting> BooksRenting { get; set; }
-
-        public Book()
-        {
-            BooksRenting = new List<BooksRenting>();
-            Authors = new List<Author>();
-        }
     }
 }
