@@ -1,9 +1,9 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
-
-@{
-    ViewBag.Title = "Error";
+﻿@{
+    ViewBag.Title = "Помилка";
+    @model DBLib.Models.MessageBag
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
-
+<h1 class="text-danger">Помилка</h1>
+<h4 class="bg-danger text-info alertMessage">@Model.MessageText</h4>
+<p class="bg-warning text-info alertInfo">@Model.AdditionalInfo</p>
+<div>Рекомендуємо <a href="/Home/Index">повернутися на голову</a></div>

@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
-    public class Section
+    public class Section : BaseEntity
     {
-        public Guid Id { get; set; }
-
         [Required]
         [Display(Name = "Назва розділу")]
         public string Name { get; set; }
         
         public ICollection<Book> Books { get; set; }
+
+        public Section()
+        {
+            Books = new List<Book>();
+        }
     }
 }

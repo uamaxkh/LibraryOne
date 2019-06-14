@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
-    public class Book
+    public class Book : BaseEntity
     {
-        public Guid Id { get; set; }
-
         [Required]
         [Display(Name = "Заголовок")]
         public string Title { get; set; }
-
-        [Required]
+        
         [Display(Name = "Обкладинка")]
         [UIHint("Url")]
         public string TitlePic { get; set; }
@@ -51,5 +48,11 @@ namespace DBLib.Models
         public virtual ICollection<Author> Authors { get; set; }
 
         public virtual ICollection<BooksRenting> BooksRenting { get; set; }
+
+        public Book()
+        {
+            BooksRenting = new List<BooksRenting>();
+            Authors = new List<Author>();
+        }
     }
 }

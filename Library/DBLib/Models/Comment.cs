@@ -8,10 +8,8 @@ using Library.Models;
 
 namespace DBLib.Models
 {
-    public class Comment
+    public class Comment : BaseEntity
     {
-        public Guid Id { get; set; }
-
         [Required]
         [Display(Name = "Дата")]
         public DateTime Date { get; set; }

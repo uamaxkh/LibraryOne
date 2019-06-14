@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
-    public class Author
+    public class Author : BaseEntity
     {
-        public Guid Id { get; set; }
-
         [Required]
-        [Display(Name = "Ім'я")]
+        [Display(Name = "Ім'я і прізвище")]
         public string Name { get; set; }
-
-        [Required]
-        [Display(Name = "Прізвище")]
-        public string Surname { get; set; }
 
         [Required]
         [Display(Name = "Книги")]
         [UIHint("Collection")]
         public virtual ICollection<Book> Books { get; set; }
+
+        public Author()
+        {
+            Books = new List<Book>();
+        }
     }
 }

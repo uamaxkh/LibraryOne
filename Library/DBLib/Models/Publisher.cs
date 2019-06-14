@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
-    public class Publisher
+    public class Publisher : BaseEntity
     {
-        public Guid Id { get; set; }
-
         [Required]
         [Display(Name = "Назва видавця")]
         public string Name { get; set; }
@@ -20,5 +18,10 @@ namespace DBLib.Models
         public string City { get; set; }
 
         public ICollection<Book> Books { get; set; }
+
+        public Publisher()
+        {
+            Books = new List<Book>();
+        }
     }
 }

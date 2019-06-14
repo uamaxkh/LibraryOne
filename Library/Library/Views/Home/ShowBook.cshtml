@@ -1,0 +1,26 @@
+﻿
+@{
+    Layout = null;
+    @model DBLib.Models.Book
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowBooks</title>
+</head>
+<body>
+    <h1>Books</h1>
+    <div>
+            @Html.DisplayFor(b => b.ISBN);
+            @Html.DisplayFor(b => b.Pages);
+            @Html.DisplayFor(b => b.Quantity);
+            @Html.DisplayFor(b => b.Title);
+            @Html.DisplayFor(b => b.TitlePic);
+            @Html.DisplayFor(b => b.Year);
+        <img src="~/TitlePic/@Model.TitlePic" />
+    </div>
+</body>
+</html>

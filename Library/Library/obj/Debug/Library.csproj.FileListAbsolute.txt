@@ -109,3 +109,4 @@ D:\GitHub\LibraryOne\Library\Library\obj\Debug\Library.csproj.CoreCompileInputs.
 D:\GitHub\LibraryOne\Library\Library\obj\Debug\Library.csproj.CopyComplete
 D:\GitHub\LibraryOne\Library\Library\obj\Debug\Library.dll
 D:\GitHub\LibraryOne\Library\Library\obj\Debug\Library.pdb
+D:\GitHub\LibraryOne\Library\Library\bin\DBLib.dll.config

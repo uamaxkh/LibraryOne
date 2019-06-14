@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using DBLib.Models;
+using DBLib;
 
 namespace Library.Models
 {
@@ -34,6 +35,18 @@ namespace Library.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+        
+        public DbSet<Book> Books { get; set; }
+
+        public DbSet<Author> Authors { get; set; }
+
+        public DbSet<BooksRenting> BooksRenting { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<Publisher> Publisher { get; set; }
+
+        public DbSet<Section> Sections { get; set; }
 
         public static ApplicationDbContext Create()
         {

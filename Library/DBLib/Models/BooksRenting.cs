@@ -8,11 +8,11 @@ using Library.Models;
 
 namespace DBLib.Models
 {
-    public class BooksRenting
+    public class BooksRenting : BaseEntity
     {
-        public Book Books { get; set; }
-
-        public ApplicationUser ApplicationUsers { get; set; }
+        public Book Book { get; set; }
+        
+        public ApplicationUser ApplicationUser { get; set; }
 
         public DateTime TakingDate { get; set; }
 

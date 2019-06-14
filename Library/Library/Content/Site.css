@@ -22,3 +22,15 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.alertMessage {
+    padding: 14px;
+    border-radius: 6px;
+    margin: 5px 0px;
+}
+
+.alertInfo {
+    padding: 14px;
+    border-radius: 6px;
+    margin: 5px 0px;
+}

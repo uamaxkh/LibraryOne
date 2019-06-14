@@ -41,5 +41,11 @@ using DBLib.Models;
             // Add custom user claims here
             return userIdentity;
         }
+
+        public ApplicationUser()
+        {
+            Comments = new List<Comment>();
+            BooksRenting = new List<BooksRenting>();
+        }
     }
 }
