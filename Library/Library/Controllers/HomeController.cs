@@ -103,14 +103,8 @@ namespace Library.Controllers
             {
                 try
                 {
-                    var book = new Book();
-
-                    book.ISBN = bookViewModel.ISBN;
-                    book.LibraryReading = bookViewModel.LibraryReading;
-                    book.Pages = bookViewModel.Pages;
-                    book.Quantity = bookViewModel.Quantity;
-                    book.Title = bookViewModel.Title;
-                    book.Year = bookViewModel.Year;
+                    var book = new Book(bookViewModel.ISBN, bookViewModel.LibraryReading, bookViewModel.Pages,
+                        bookViewModel.Quantity, bookViewModel.Title, bookViewModel.Year);
 
                     //Adding book picture
                     if (bookViewModel.TitlePic != null)

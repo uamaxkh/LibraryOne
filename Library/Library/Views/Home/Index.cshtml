@@ -20,9 +20,9 @@
         <p>Видавництва @book.Publisher.Name</p>
         <p>Читання в бібліотеці @book.LibraryReading</p>
         @if (book.TitlePic == null)
-        {<img style="max-height: 80px; max-height: 200px;" src="~/TitlePic/noImage.png" /> }
+        {<img style="max-width: 80px; max-height: 200px;" src="~/TitlePic/noImage.png" /> }
         else
-        { <img style="max-height: 80px; max-height: 200px;" src="~/TitlePic/@book.TitlePic" />}
+        { <img style="max-width: 80px; max-height: 200px;" src="~/TitlePic/@book.TitlePic" />}
         
         <p>@Html.ActionLink("Дивитися", "ShowBook", new { id = book.Id }, new { @class = "btn btn-xs btn-primary" })</p>
     </div>

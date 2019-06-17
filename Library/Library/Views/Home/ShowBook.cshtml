@@ -1,17 +1,10 @@
 ﻿
 @{
-    Layout = null;
     @model DBLib.Models.Book
 }
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ShowBooks</title>
-</head>
-<body>
     <h1>Books</h1>
     <div>
         @Html.LabelFor(b => b.ISBN)
@@ -57,5 +50,3 @@
         else
         { <img src="~/TitlePic/@Model.TitlePic" /> }
     </div>
-</body>
-</html>

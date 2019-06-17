@@ -55,5 +55,19 @@ namespace DBLib.Models
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
         }
+
+        public Book(string ISBN, bool LibraryReading, int Pages,
+            int Quantity, string Title, short Year)
+        {
+            this.ISBN = ISBN;
+            this.LibraryReading = LibraryReading;
+            this.Pages = Pages;
+            this.Quantity = Quantity;
+            this.Title = Title;
+            this.Year = Year;
+
+            BooksRenting = new List<BooksRenting>();
+            Authors = new List<Author>();
+        }
     }
 }
