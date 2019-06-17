@@ -146,7 +146,7 @@ namespace DBLib
 
             booksList.ForEach(el => context.Books.Add(el));
             authorsList.ForEach(el => context.Authors.Add(el));
-            publishersList.ForEach(el => context.Publisher.Add(el));
+            publishersList.ForEach(el => context.Publishers.Add(el));
             sectionsList.ForEach(el => context.Sections.Add(el));
             //commentsList.ForEach(el => context.Comments.Add(el));
             //booksRentingsList.ForEach(el => context.BooksRenting.Add(el));

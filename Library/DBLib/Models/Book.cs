@@ -45,7 +45,7 @@ namespace DBLib.Models
         [Display(Name = "Видавець")]
         public Publisher Publisher { get; set; }
 
-        [Display(Name = "Автори")]
+        [Display(Name = "Автор(и)")]
         public virtual ICollection<Author> Authors { get; set; }
         
         public virtual ICollection<BooksRenting> BooksRenting { get; set; }

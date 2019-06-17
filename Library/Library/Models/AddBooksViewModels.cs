@@ -9,20 +9,16 @@ using System.Web;
 
 namespace Library.Models
 {
-    public class AddBooksViewModels : BaseEntity
+    public class AddBooksViewModels
     {
         [Required]
         [Display(Name = "Заголовок")]
         public string Title { get; set; }
-        
-        [Display(Name = "Обкладинка")]
-        [UIHint("Url")]
-        public HttpPostedFileBase TitlePic { get; set; }
 
         [Required]
         [Display(Name = "Рік видання")]
         public short Year { get; set; }
-        
+
         [Display(Name = "Читання в бібліотеці")]
         [UIHint("Boolean")]
         public bool LibraryReading { get; set; }
@@ -41,14 +37,17 @@ namespace Library.Models
 
         [Required]
         [Display(Name = "Назва розділу")]
-        public Section Section { get; set; }
+        public Guid SectionId { get; set; }
 
         [Required]
         [Display(Name = "Видавець")]
-        public Publisher Publisher { get; set; }
+        public Guid PublisherId { get; set; }
 
         [Required]
         [Display(Name = "Автори")]
-        public virtual ICollection<Author> Authors { get; set; }
+        public virtual ICollection<Guid> AuthorsId { get; set; }
+
+        [Display(Name = "Обкладинка")]
+        public HttpPostedFileBase TitlePic { get; set; }
     }
 }

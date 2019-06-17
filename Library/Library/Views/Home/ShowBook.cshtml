@@ -14,13 +14,48 @@
 <body>
     <h1>Books</h1>
     <div>
-            @Html.DisplayFor(b => b.ISBN);
-            @Html.DisplayFor(b => b.Pages);
-            @Html.DisplayFor(b => b.Quantity);
-            @Html.DisplayFor(b => b.Title);
-            @Html.DisplayFor(b => b.TitlePic);
-            @Html.DisplayFor(b => b.Year);
-        <img src="~/TitlePic/@Model.TitlePic" />
+        @Html.LabelFor(b => b.ISBN)
+        @Html.DisplayFor(b => b.ISBN)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Pages)
+        @Html.DisplayFor(b => b.Pages)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Quantity)
+        @Html.DisplayFor(b => b.Quantity)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Title)
+        @Html.DisplayFor(b => b.Title)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Year)
+        @Html.DisplayFor(b => b.Year)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.LibraryReading)
+        @Html.DisplayFor(b => b.LibraryReading)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Publisher.Name)
+        @Html.DisplayFor(b => b.Publisher.Name)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Section.Name)
+        @Html.DisplayFor(b => b.Section.Name)
+    </div>
+    <div>
+        @Html.LabelFor(b => b.Authors)
+        @foreach (var author in Model.Authors)
+        {
+            <p>@author.Name</p>
+        }
+
+        @if (Model.TitlePic == null)
+        { <img src="~/TitlePic/noImage.png" /> }
+        else
+        { <img src="~/TitlePic/@Model.TitlePic" /> }
     </div>
 </body>
 </html>

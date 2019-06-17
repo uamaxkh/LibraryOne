@@ -1,9 +1,29 @@
 ﻿@{
-    ViewBag.Title = "Помилка";
     @model DBLib.Models.MessageBag
 }
 
-<h1 class="text-danger">Помилка</h1>
-<h4 class="bg-danger text-info alertMessage">@Model.MessageText</h4>
-<p class="bg-warning text-info alertInfo">@Model.AdditionalInfo</p>
-<div>Рекомендуємо <a href="/Home/Index">повернутися на голову</a></div>
+@{
+    if (Model.State == DBLib.Models.MessageState.Error || Model.State == null)
+    {
+        ViewBag.Title = "Помилка";
+        <h1 class="text-danger">Помилка</h1>
+        <h4 class="bg-danger text-info alertMessage">@Model.MessageText</h4>
+    }
+    else if (Model.State == DBLib.Models.MessageState.Info)
+    {
+        ViewBag.Title = "Повідомлення";
+        <h1 class="text-primary">Повідомлення</h1>
+        <h4 class="bg-info alertMessage">@Model.MessageText</h4>
+    }
+    else if (Model.State == DBLib.Models.MessageState.Succes)
+    {
+        ViewBag.Title = "Успішно";
+        <h1 class="text-success">Успішно</h1>
+        <h4 class="bg-success text-info alertMessage">@Model.MessageText</h4>
+    }
+}
+@if (@Model.AdditionalInfo != null)
+{
+    <p class="bg-warning text-info alertInfo">@Model.AdditionalInfo</p>
+}
+<div>Бажаєте <a href="/Home/Index">повернутися на голову?</a></div>

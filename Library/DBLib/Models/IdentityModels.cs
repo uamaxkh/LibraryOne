@@ -44,7 +44,7 @@ namespace Library.Models
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<Publisher> Publisher { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
 
         public DbSet<Section> Sections { get; set; }
 

@@ -10,5 +10,13 @@ namespace DBLib.Models
     {
         public string MessageText { get; set; }
         public string AdditionalInfo { get; set; }
+        public MessageState State { get; set; }
+    }
+
+    public enum MessageState
+    {
+        Error,
+        Info,
+        Succes
     }
 }
