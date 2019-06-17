@@ -1,6 +1,13 @@
 ﻿@{
     @model DBLib.Models.MessageBag
+    int timer = 0;
 }
+
+<script>
+    function redirect() {
+        window.location.href = "/Home/Index";
+    };
+</script>
 
 @{
     if (Model.State == DBLib.Models.MessageState.Error || Model.State == null)
@@ -14,12 +21,20 @@
         ViewBag.Title = "Повідомлення";
         <h1 class="text-primary">Повідомлення</h1>
         <h4 class="bg-info alertMessage">@Model.MessageText</h4>
+        timer = 5;
+        <script>
+            setTimeout(redirect, 5000);
+        </script>
     }
     else if (Model.State == DBLib.Models.MessageState.Succes)
     {
         ViewBag.Title = "Успішно";
         <h1 class="text-success">Успішно</h1>
         <h4 class="bg-success text-info alertMessage">@Model.MessageText</h4>
+        timer = 3;
+        <script>
+            setTimeout(redirect, 3000);
+        </script>
     }
 }
 @if (@Model.AdditionalInfo != null)
@@ -27,3 +42,7 @@
     <p class="bg-warning text-info alertInfo">@Model.AdditionalInfo</p>
 }
 <div>Бажаєте <a href="/Home/Index">повернутися на голову?</a></div>
+@if (timer != 0)
+{
+    <div class="text-info">Автоматичне повернення на головну через @timer сек.</div>
+}
