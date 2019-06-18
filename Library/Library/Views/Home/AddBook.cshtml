@@ -9,13 +9,13 @@
     <div class="panel-body">
         <form method="post" action="/Home/AddBook" role="form" enctype="multipart/form-data">
             <div>
-                <div id="authorSection" class="authorSection">
-                    @Html.LabelFor(m => m.AuthorsId)
-                    @Html.DropDownList("AuthorsId", ViewBag.authorsSelectList as SelectList, new { @class = "AuthorsId" })
-                    @Html.ValidationMessageFor(m => m.AuthorsId)
-                </div>
+                @Html.LabelFor(m => m.AuthorsNames)
+                <div id="authorSection" class="authorSection"></div>
+                @Html.TextBox("searchTerm", null, new { id = "Search" })
+                @Html.ValidationMessageFor(m => m.AuthorsNames)
+                <div id="selectAuthorBnt" class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
+                <div id="addAuthorBnt" class="btn btn-default btn-xs" onclick="saveAuthor()">Зберегти нового автора</div>
             </div>
-            <div class="btn btn-default btn-xs" onclick="addAuthorButtons()">+ автор</div>
             <div>
                 @Html.LabelFor(m => m.ISBN)
                 @Html.TextBoxFor(m => m.ISBN, new { htmlAttributes = new { @class = "form-control" } })
@@ -64,8 +64,63 @@
         </form>
     </div>
 </div>
-<script>
-    function addAuthorButtons() {
-        $("#AuthorsId").clone().appendTo("#authorSection");
-    }
-</script>
+
+<datalist id="authorsList">
+    <option value="Id">Чебурашка</option>
+</datalist>
+
+@section scripts{
+    <script src="~/Scripts/myScripts.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-git.css"></link>
+
+    <script>
+        function getAuthors(request, response) {
+            $.ajax({
+                      url: '@Url.Action("GetAuthorsJson")',
+                      //type: 'POST',
+                      dataType: "json",
+                      data: { search: $("#Search").val() },
+                      success: function (data) {
+                          response($.map(data, function (item) {
+                              return { label: item.Name, value: item.Name }
+                          }))
+                      },
+                      error: function(xhr, status, error){
+                          alert("Error");
+                      }
+                  });
+        }
+
+      $( function() {
+          $("#Search").autocomplete({
+              source: getAuthors
+          });
+        });
+
+        function selectAuthor() {
+            var authorName = $('#Search').val(); //.trim();
+            $('<div><input type="text" readonly name="AuthorsNames" value="' + authorName + '" /></div>').appendTo("#authorSection");
+            $('#Search').val('');
+        }
+
+        function saveAuthor() {
+            var authorName = $('#Search').val(); //.trim();
+            $.ajax({
+                url: '@Url.Action("AddAuthorToDB")',
+                type: 'POST',
+                data: { authorName: authorName },
+                success: function (data) {
+                    alert(data.Message);
+                    //queryStatusCode == 0 -IS- QueryStatusCode.Succes
+                    if (data.queryStatusCode == 0) {
+                        selectAuthor();
+                    };
+                },
+                error: function () {
+                    alert('Помилка при додаванні');
+                }
+            });
+        }
+    </script>
+}

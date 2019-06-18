@@ -6,49 +6,105 @@
 <div id="authorSection">
 
 </div>
+<datalist id="character">
+    <option value="Чебурашка"></option>
+    <option value="Крокодил Гена"></option>
+    <option value="Шапокляк"></option>
+</datalist>
 
 @using (Html.BeginForm())
 {
-    @Html.TextBox("searchTerm", null, new { id = "Search" })
-    <div class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
-    <input type="submit" value="Search">
+    <input id="Search" oninput="addOptions()" placeholder="Введіть 3 перші літери" />
+    <div id="selectAuthorBnt" class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
+    <div id="addAuthorBnt" class="btn btn-default btn-xs" onclick="saveAuthor()">Зберегти нового автора</div>
+    <input list="character">
+}
+
+@using (Html.BeginForm())
+{
+    <select id="list"></select>
 }
 
 
-@section scripts{
-    <script src="~/Scripts/myScripts.js"></script>
-    <script src="~/Scripts/jquery-ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-git.css"></link>
+    @section scripts{
+        <script src="~/Scripts/myScripts.js"></script>
+        <script src="~/Scripts/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-git.css">
 
-    <script>
-      $( function() {
-          $("#Search").autocomplete({
-              source: function (request, response) {
-                  $.ajax({
-                      url: '@Url.Action("GetAuthorsJson")',
-                      dataType: "json",
-                      data: { search: $("#Search").val() },
-                      success: function (data) {
-                          response($.map(data, function (item) {
-                              return { label: item.Name, value: item.Name }
-                          }))
-                      },
-                      error: function(xhr, status, error){
-                          alert("Error");
-                      }
-                  });
-              }
-          });
-        });
+        <script>
+            function addOptions() {
+                if ($("#Search").val().length > 2)
+                {
+                $.ajax({
+                    url: '@Url.Action("GetAuthorsJson")',
+                    //type: 'POST',
+                    dataType: "json",
+                    data: { search: $("#Search").val() },
+                    success: function (data) {
+                        $("#list").empty();
+                        $.map(data, function (item)
+                        {
+                             $('<option name="authorsNames" value="' + item.Id + '">' + item.Name + '</option>').appendTo("#list");
+                        })
+                    },
+                          error: function(xhr, status, error){
+                              alert("Error");
+                          }
+                      });
+                }
+        }
+
+        //    $(function () {
+        //        $("#Search").oninput = addOptions;
+        //});
 
         function selectAuthor() {
-            var authorName = $('#Search').val(); //.trim();
+            var authorName = $('#list').find(":selected").text(); //.trim();
             $('<input type="text" readonly name="authorsNames" value="' + authorName + '" />').appendTo("#authorSection");
             $('#Search').val('');
         }
 
+        function saveAuthor() {
+            var authorName = $('#Search').val(); //.trim();
+            $.ajax({
+                url: '@Url.Action("AddAuthorToDB")',
+                type: 'POST',
+                data: { authorName: authorName },
+                success: function (data) {
+                    alert(data.Message);
+                    //queryStatusCode == 0 -IS- QueryStatusCode.Succes
+                    if (data.queryStatusCode == 0) {
+                        selectAuthor();
+                    };
+                },
+                error: function () {
+                    alert('Помилка при додаванні');
+                }
+            });
+        }
+
+        @*$(function () {
+            $("#Search").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetAuthorsJson")',
+                        dataType: "json",
+                        data: { search: $("#Search").val() },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Name, value: item.Name }
+                            }))
+                        },
+                        error: function (xhr, status, error) {
+                            alert("Error");
+                        }
+                    });
+                }
+            });
+        });*@
+
         //function addAuthorButtons() {
         //    $("#AuthorsId").clone().appendTo("#authorSection");
         //}
-    </script>
-}
+        </script>
+    }

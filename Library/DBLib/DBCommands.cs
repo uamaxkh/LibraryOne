@@ -8,6 +8,7 @@ using DBLib.Models;
 using Library.Models;
 using System.IO;
 using System.Web;
+using DBLib;
 
 namespace DBLib
 {
@@ -54,34 +55,35 @@ namespace DBLib
             }
         }
 
-        public static bool AddBook(Book book, ICollection<Guid> AuthorsId, Guid PublisherId, Guid SectionId)
+        public static bool AddBook(Book book, ICollection<string> AuthorsNames, Guid PublisherId, Guid SectionId)
         {
-            //try
-            //{
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            try
             {
-                //ЦЕ ВЖЕ ІНШИЙ КОНТЕКСТ!
-                book.Publisher = GetPublisherById(PublisherId);
-                db.Publishers.Attach(book.Publisher);
-                book.Section = GetSectionById(SectionId);
-                db.Sections.Attach(book.Section);
-
-                foreach (var authorId in AuthorsId)
+                using (ApplicationDbContext db = new ApplicationDbContext())
                 {
-                    Author author = GetAuthorById(authorId);
-                    db.Authors.Attach(author);
-                    book.Authors.Add(author);
-                }
+                    book.Publisher = GetPublisherById(PublisherId);
+                    db.Publishers.Attach(book.Publisher);
+                    book.Section = GetSectionById(SectionId);
+                    db.Sections.Attach(book.Section);
 
-                db.Books.Add(book);
-                int a = db.SaveChanges();
-            }
+                    foreach (var authorName in AuthorsNames)
+                    {
+                        Author author = GetAuthorByName(authorName);
+                        if (author == null)
+                            throw new Exception("Був обраний неіснуючий автор!");
+                        db.Authors.Attach(author);
+                        book.Authors.Add(author);
+                    }
+
+                    db.Books.Add(book);
+                    int a = db.SaveChanges();
+                }
             return true;
-            //}
-            //catch(Exception ex)
-            //{
-            //    throw ex;
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static Author GetAuthorById(Guid Id)
@@ -89,6 +91,14 @@ namespace DBLib
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 return db.Authors.Find(Id);
+            }
+        }
+
+        public static Author GetAuthorByName(string Name)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Authors.Where(a => a.Name == Name).SingleOrDefault();
             }
         }
 
@@ -105,6 +115,44 @@ namespace DBLib
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 return db.Sections.Find(Id);
+            }
+        }
+
+        public static QueryStatus AddAuthor(string Name)
+        {
+            try
+            {
+                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                    bool isExits = AuthorIsExistByName(db, Name);
+
+                    if (isExits)
+                    {
+                        return new QueryStatus(QueryStatusCode.IsExist, "Цей автор вже є в БД");
+                    }
+
+                    var newAuthor = new Author() { Name = Name };
+                    db.Authors.Add(newAuthor);
+                    db.SaveChanges();
+                    return new QueryStatus(QueryStatusCode.Success, "Автор успішно доданий");
+                }
+            }
+            catch
+            {
+                return new QueryStatus(QueryStatusCode.DBError, "Помилка додавання автора в БД");
+            }
+        }
+
+        public static bool AuthorIsExistByName(ApplicationDbContext db, string Name)
+        {
+            int isExist = db.Authors.Where(a => a.Name.Contains(Name)).Count();
+            if (isExist > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

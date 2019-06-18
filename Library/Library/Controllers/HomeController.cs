@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using DBLib.Models;
 using Library.Models;
+using DBLib;
 
 namespace Library.Controllers
 {
@@ -72,30 +73,6 @@ namespace Library.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult AddBook(HttpPostedFileBase file)
-        //{
-
-        //    if (file != null && file.ContentLength > 0)
-        //        try
-        //        {
-        //            string path = Path.Combine(Server.MapPath("~/TitlePic/"),
-        //                                       Path.GetFileName(file.FileName));
-        //            file.SaveAs(path);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return RedirectToAction("Error", new MessageBag { MessageText = "Помилка додавання файлу", AdditionalInfo = ex.Message });
-        //        }
-        //    else
-        //    {
-        //        return RedirectToAction("Error", new MessageBag { MessageText = "Помилка додавання файлу", AdditionalInfo = "НЕМАЄ ФАЙЛУ" });
-        //    }
-        //    return View();
-        //}
-
-
-
         [HttpPost]
         public ActionResult AddBook(AddBooksViewModels bookViewModel)
         {
@@ -118,7 +95,7 @@ namespace Library.Controllers
                         }
                     }
 
-                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsId, bookViewModel.PublisherId, bookViewModel.SectionId);
+                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsNames, bookViewModel.PublisherId, bookViewModel.SectionId);
                 }
                 catch (Exception ex)
                 {
@@ -154,6 +131,30 @@ namespace Library.Controllers
             return titlePicFileName;
         }
 
+        public JsonResult GetAuthorsJson(string search)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var authors = db.Authors.Where(a => a.Name.StartsWith(search)).Select(a => new {Id = a.Id, Name = a.Name}).ToList();
+                return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddAuthorToDB(string authorName)
+        {
+            if (authorName.Length > 3)
+            {
+                QueryStatus result = DBLib.DBCommands.AddAuthor(authorName);
+
+                return new JsonResult() { Data = result };
+            }
+            else
+            {
+                return new JsonResult() { Data = new QueryStatus(QueryStatusCode.Error, "Не допускається ім'я з 3-х символів") };
+            }
+        }
+
         //--------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------
         //test section----------------------------------------------------------------------------------------------------
@@ -163,28 +164,6 @@ namespace Library.Controllers
         public ActionResult Test()
         {
             return View();
-        }
-
-        public ActionResult _Test2()
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                List<string> authors = db.Authors.Select(a => a.Name).ToList();
-
-                return PartialView(Json(authors));
-            }
-        }
-        
-        public JsonResult GetAuthorsJson(string search)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var authors = db.Authors.Where(a => a.Name.StartsWith(search)).Select(a => new {
-                    Id = a.Id,
-                    Name = a.Name
-                }).ToList();
-                return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
         }
     }
 }

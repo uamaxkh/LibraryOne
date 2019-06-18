@@ -45,7 +45,7 @@ namespace Library.Models
 
         [Required]
         [Display(Name = "Автори")]
-        public virtual ICollection<Guid> AuthorsId { get; set; }
+        public virtual ICollection<string> AuthorsNames { get; set; }
 
         [Display(Name = "Обкладинка")]
         public HttpPostedFileBase TitlePic { get; set; }
