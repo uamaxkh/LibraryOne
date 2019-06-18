@@ -25,6 +25,13 @@ namespace Library
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+
+            bundles.Add(new ScriptBundle("~/Scripts/forAutocompleteJs").Include(
+                        "~/Scripts/jquery-ui.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/forAutocompleteCss").Include(
+                      "~/Content/jquery-ui-git.css"));
         }
     }
 }
