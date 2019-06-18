@@ -4,6 +4,8 @@
 * Copyright jQuery Foundation and other contributors; Licensed  */
 /* Layout helpers
 ----------------------------------*/
+html {
+}
 .ui-helper-hidden {
 	display: none;
 }

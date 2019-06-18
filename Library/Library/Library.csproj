@@ -193,7 +193,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jquery-ui-git.css" />
     <Content Include="Scripts\jquery-ui.min.js" />
-    <Content Include="Scripts\MyScripts.js" />
+    <Content Include="Scripts\myScripts.js" />
     <Content Include="TitlePic\44342_66652_k.jpg" />
     <Content Include="TitlePic\7733757_images_1488273965.jpg" />
     <Content Include="TitlePic\89082873_images_12235641285.jpg" />
@@ -253,6 +253,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ShowBook.cshtml" />
     <Content Include="Views\Home\AddBook.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

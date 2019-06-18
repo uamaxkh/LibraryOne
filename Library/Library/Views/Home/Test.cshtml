@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Test";
+}
+
+<h2>Test</h2>
+
+@using (Html.BeginForm())
+{
+    @*@Html.TextBox("searchTerm", null, new { id = "Search" })*@
+    <input type="search" id = "Search" />
+    <input type="submit" value="Search">
+}
+
+
+@section scripts{
+    <script src="~/Scripts/myScripts.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-git.css"></link>
+
+    <script>
+
+      $( function() {
+          $("#Search").autocomplete({
+              source: function (request, response) {
+                  $.ajax({
+                      url: '@Url.Action("GetAuthorsJson")',
+                      dataType: "json",
+                      data: { search: $("#Search").val() },
+                      success: function (data) {
+                          response($.map(data, function (item) {
+                              return { label: item.Name, value: item.Id }
+                          }))
+                      },
+                      error: function(xhr, status, error){
+                          alert("Error");
+                      }
+                  });
+              }
+          });
+      });
+
+    </script>
+}

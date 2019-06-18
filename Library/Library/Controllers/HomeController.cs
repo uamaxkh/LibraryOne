@@ -153,5 +153,38 @@ namespace Library.Controllers
             }
             return titlePicFileName;
         }
+
+        //--------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------
+        //test section----------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------
+
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+        public ActionResult _Test2()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<string> authors = db.Authors.Select(a => a.Name).ToList();
+
+                return PartialView(Json(authors));
+            }
+        }
+        
+        public JsonResult GetAuthorsJson(string search)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var authors = db.Authors.Where(a => a.Name.StartsWith(search)).Select(a => new {
+                    Id = a.Id,
+                    Name = a.Name
+                }).ToList();
+                return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
     }
 }

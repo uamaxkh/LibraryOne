@@ -26,6 +26,8 @@ namespace Library
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/Scripts/myScript").Include(
+                        "~/Scripts/myScripts.js"));
 
             bundles.Add(new ScriptBundle("~/Scripts/forAutocompleteJs").Include(
                         "~/Scripts/jquery-ui.min.js"));
