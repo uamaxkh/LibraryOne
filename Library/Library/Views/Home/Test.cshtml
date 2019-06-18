@@ -3,11 +3,14 @@
 }
 
 <h2>Test</h2>
+<div id="authorSection">
+
+</div>
 
 @using (Html.BeginForm())
 {
-    @*@Html.TextBox("searchTerm", null, new { id = "Search" })*@
-    <input type="search" id = "Search" />
+    @Html.TextBox("searchTerm", null, new { id = "Search" })
+    <div class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
     <input type="submit" value="Search">
 }
 
@@ -18,7 +21,6 @@
     <link rel="stylesheet" type="text/css" href="~/Content/jquery-ui-git.css"></link>
 
     <script>
-
       $( function() {
           $("#Search").autocomplete({
               source: function (request, response) {
@@ -28,7 +30,7 @@
                       data: { search: $("#Search").val() },
                       success: function (data) {
                           response($.map(data, function (item) {
-                              return { label: item.Name, value: item.Id }
+                              return { label: item.Name, value: item.Name }
                           }))
                       },
                       error: function(xhr, status, error){
@@ -37,7 +39,16 @@
                   });
               }
           });
-      });
+        });
 
+        function selectAuthor() {
+            var authorName = $('#Search').val(); //.trim();
+            $('<input type="text" readonly name="authorsNames" value="' + authorName + '" />').appendTo("#authorSection");
+            $('#Search').val('');
+        }
+
+        //function addAuthorButtons() {
+        //    $("#AuthorsId").clone().appendTo("#authorSection");
+        //}
     </script>
 }

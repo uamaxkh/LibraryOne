@@ -101,7 +101,7 @@ namespace DBLib
             publishersList.Add(ACT);
             booksList.Add(b3);
 
-            var LinaKostenko = new Author() { Name = "Ліна Костенко " };
+            var LinaKostenko = new Author() { Name = "Ліна Костенко" };
             var Ababa = new Publisher() { Name = "А-ба-ба-га-ла-ма-га", City = "Київ" };
             var HudogniKnygy = new Section() { Name = "Художні книги" };
             var b4 = new Book()
