@@ -58,14 +58,13 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="ContexttInitializer.cs" />
     <Compile Include="DBCommands.cs" />
-    <Compile Include="QueryStatus.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\MessageBag.cs" />
+    <Compile Include="Models\ExceptionExt.cs" />
     <Compile Include="Models\Publisher.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\BooksRenting.cs" />

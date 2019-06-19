@@ -39,7 +39,7 @@ namespace Library.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Error", new MessageBag { MessageText = "Такої книги не існує", AdditionalInfo = "Не вказано код книги", State = MessageState.Error });
+                    return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
                 }
 
                 var book = DBLib.DBCommands.GetBookById((Guid)id);
@@ -47,11 +47,11 @@ namespace Library.Controllers
             }
             catch
             {
-                return RedirectToAction("Error", new MessageBag { MessageText = "Такої книги не існує", AdditionalInfo = "Не знайдено книги за цим кодом" });
+                return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
             }
         }
 
-        public ActionResult Error(MessageBag ms)
+        public ActionResult Error(ExceptionExt ms)
         {
             return View(ms);
         }
@@ -59,17 +59,6 @@ namespace Library.Controllers
         [HttpGet]
         public ActionResult AddBook()
         {
-            var authorsList = DBLib.DBCommands.GetAllAuthors();
-            SelectList authorsSelectList = new SelectList(authorsList, "Id", "Name");
-            ViewBag.authorsSelectList = authorsSelectList;
-
-            var sectionsList = DBLib.DBCommands.GetAllSections();
-            SelectList sectionsSelectList = new SelectList(sectionsList, "Id", "Name");
-            ViewBag.sectionsSelectList = sectionsSelectList;
-
-            var publishersList = DBLib.DBCommands.GetAllPublishers();
-            SelectList publishersSelectList = new SelectList(publishersList, "Id", "Name");
-            ViewBag.publishersSelectList = publishersSelectList;
             return View();
         }
 
@@ -95,18 +84,18 @@ namespace Library.Controllers
                         }
                     }
 
-                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsId, bookViewModel.PublisherId, bookViewModel.SectionId);
+                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsId, bookViewModel.PublisherName, bookViewModel.SectionName);
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Error", new MessageBag { MessageText = "Помилка додавання книги", AdditionalInfo = ex.Message });
+                    return RedirectToAction("Error", new ExceptionExt("Помилка додавання книги", ex.ToString(), MessageState.Error));
                 }
             }
             else
             {
                 return View();
             }
-            return RedirectToAction("Error", new MessageBag { MessageText = "Книгу додано", State = MessageState.Succes });
+            return RedirectToAction("Error", new ExceptionExt("Книгу додано", null, MessageState.Succes));
         }
 
         public string SaveTitlePic(HttpPostedFileBase titlePic)
@@ -151,6 +140,20 @@ namespace Library.Controllers
             {
                 return new JsonResult() { Data = "Закоротке ім'я" };
             }
+        }
+
+        public JsonResult GetPublishersJson()
+        {
+            var publishers = DBCommands.GetAllPublishers();
+            var publishersNameAndId = publishers.Select(a => a.Name);
+            return new JsonResult { Data = publishersNameAndId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public JsonResult GetSectionsJson()
+        {
+            var sections = DBCommands.GetAllSections();
+            var sectionsNameAndId = sections.Select(a => a.Name);
+            return new JsonResult { Data = sectionsNameAndId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         //--------------------------------------------------------------------------------------------------------

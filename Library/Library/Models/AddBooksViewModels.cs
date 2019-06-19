@@ -37,11 +37,11 @@ namespace Library.Models
 
         [Required]
         [Display(Name = "Назва розділу")]
-        public Guid SectionId { get; set; }
+        public string SectionName { get; set; }
 
         [Required]
         [Display(Name = "Видавець")]
-        public Guid PublisherId { get; set; }
+        public string PublisherName { get; set; }
 
         [Required]
         [Display(Name = "Автори")]

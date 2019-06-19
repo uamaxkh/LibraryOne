@@ -55,15 +55,23 @@ namespace DBLib
             }
         }
 
-        public static bool AddBook(Book book, ICollection<Guid> AuthorsId, Guid PublisherId, Guid SectionId)
+        public static bool AddBook(Book book, ICollection<Guid> AuthorsId, string PublisherName, string SectionName)
         {
             try
             {
                 using (ApplicationDbContext db = new ApplicationDbContext())
                 {
-                    book.Publisher = GetPublisherById(PublisherId);
+                    book.Publisher = GetPublisherByName(PublisherName);
+
+                    if (book.Publisher == null)
+                        throw new Exception("");
+
                     db.Publishers.Attach(book.Publisher);
-                    book.Section = GetSectionById(SectionId);
+                    book.Section = GetSectionByName(SectionName);
+
+                    if (book.Section == null)
+                        throw new Exception("");
+
                     db.Sections.Attach(book.Section);
 
                     foreach (var authorId in AuthorsId)
@@ -78,11 +86,27 @@ namespace DBLib
                     db.Books.Add(book);
                     int a = db.SaveChanges();
                 }
-            return true;
+                return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        private static Section GetSectionByName(string Name)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Sections.Where(a => a.Name == Name).SingleOrDefault();
+            }
+        }
+
+        private static Publisher GetPublisherByName(string Name)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Publishers.Where(a => a.Name == Name).SingleOrDefault();
             }
         }
 

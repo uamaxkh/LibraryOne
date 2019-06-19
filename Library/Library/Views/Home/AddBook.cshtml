@@ -10,9 +10,8 @@
         <form method="post" action="/Home/AddBook" role="form" enctype="multipart/form-data">
             <div>
                 @Html.LabelFor(m => m.AuthorsId)
-                <input type="text" oninput="getAuthorsByNameTerm()" id="authorSearch"/>
-                <select hidden id="authorSelect" class="authorSelect">
-                </select>
+                <input type="text" oninput="getAuthorsByNameTerm()" id="authorSearch" />
+                <select hidden id="authorSelect" class="authorSelect"></select>
                 @Html.ValidationMessageFor(m => m.AuthorsId)
                 <div id="selectAuthorBnt" disabled class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
                 <div id="addAuthorBnt" class="btn btn-default btn-xs" onclick="addAuthorToDB()">Зберегти нового автора</div>
@@ -34,9 +33,11 @@
                 @Html.ValidationMessageFor(m => m.Pages)
             </div>
             <div>
-                @Html.LabelFor(m => m.PublisherId)
-                @Html.DropDownList("PublisherId", ViewBag.publishersSelectList as SelectList)
-                @Html.ValidationMessageFor(m => m.PublisherId)
+                @Html.LabelFor(m => m.PublisherName)
+                <input name="PublisherName" id="PublisherName" list="publisherList" />
+                @Html.ActionLink("Додати видавця", "AddPublisher", "LibraryManage", null, new {@class="btn btn-default btn-xs"})
+                <div class="btn btn-default btn-xs" onclick="updatePublishersList()">Оновити</div>
+                @Html.ValidationMessageFor(m => m.PublisherName)
             </div>
             <div>
                 @Html.LabelFor(m => m.Quantity)
@@ -44,9 +45,11 @@
                 @Html.ValidationMessageFor(m => m.Quantity)
             </div>
             <div>
-                @Html.LabelFor(m => m.SectionId)
-                @Html.DropDownList("SectionId", ViewBag.sectionsSelectList as SelectList)
-                @Html.ValidationMessageFor(m => m.SectionId)
+                @Html.LabelFor(m => m.SectionName)
+                <input name="SectionName" id="SectionName" list="sectionList" />
+                @Html.ActionLink("Додати розділ", "AddSection", "LibraryManage", null, new { @class = "btn btn-default btn-xs" })
+                <div class="btn btn-default btn-xs" onclick="updateSectionsList()">Оновити</div>
+                @Html.ValidationMessageFor(m => m.SectionName)
             </div>
             <div>
                 @Html.LabelFor(m => m.Title)
@@ -67,6 +70,11 @@
     </div>
 </div>
 
+<datalist id="publisherList">
+</datalist>
+<datalist id="sectionList">
+</datalist>
+
 @section scripts{
     <script src="~/Scripts/myScripts.js"></script>
     <script src="~/Scripts/jquery-ui.min.js"></script>
@@ -74,6 +82,8 @@
 
     <script>
         var authorsArray = getAllAuthors();
+        updatePublishersList();
+        updateSectionsList();
 
         function getAllAuthors() {
             $.ajax({
@@ -112,7 +122,7 @@
             });
 
             $("#authorSelect").empty();
-            
+
             if (authorsFind.length == 0) {
                 selectToggle('off')
                 return 0;
@@ -160,8 +170,46 @@
         }
 
         function removeEl(selector) {
-            //$("'" + selector+"'").remove();
             $(selector).remove();
         }
+        
+        function updatePublishersList() {
+            $("#publisherList").empty();
+            
+            $.ajax({
+                url: '@Url.Action("GetPublishersJson")',
+                dataType: "json",
+                success: function (data)
+                {
+                    data.map(function (publisherName) {
+                        $('<option>' + publisherName + '</option>').appendTo("#publisherList");
+                    }
+                    )
+                },
+                error: function(xhr, status, error){
+                    alert("Error");
+                }
+             });
+        }
+
+        function updateSectionsList(){
+            $("#sectionList").empty();
+            
+            $.ajax({
+                url: '@Url.Action("GetSectionsJson")',
+                dataType: "json",
+                success: function (data)
+                {
+                    data.map(function (publisherName) {
+                        $('<option>' + publisherName + '</option>').appendTo("#sectionList");
+                    }
+                    )
+                },
+                error: function(xhr, status, error){
+                    alert("Error");
+                }
+             });
+        }
+
     </script>
 }
