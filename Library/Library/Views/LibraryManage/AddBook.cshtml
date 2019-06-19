@@ -7,7 +7,7 @@
 <div class="panel panel-info">
     <div class="panel-heading text-uppercase">Додати книгу</div>
     <div class="panel-body">
-        <form method="post" action="/Home/AddBook" role="form" enctype="multipart/form-data">
+        <form method="post" action="/LibraryManage/AddBook" role="form" enctype="multipart/form-data">
             <div>
                 @Html.LabelFor(m => m.AuthorsId)
                 <input type="text" oninput="getAuthorsByNameTerm()" id="authorSearch" />
