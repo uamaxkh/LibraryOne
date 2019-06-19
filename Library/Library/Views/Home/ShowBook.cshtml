@@ -45,8 +45,6 @@
             <p>@author.Name</p>
         }
 
-        @if (Model.TitlePic == null)
-        { <img src="~/TitlePic/noImage.png" /> }
-        else
-        { <img src="~/TitlePic/@Model.TitlePic" /> }
+
+        <img style="max-width: 160px; max-height: 400px;" src="~/TitlePic/@Model.TitlePic" onerror="imgError(this)" />
     </div>
