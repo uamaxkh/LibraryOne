@@ -34,3 +34,19 @@ textarea {
     border-radius: 6px;
     margin: 5px 0px;
 }
+
+.removeBtn {
+    color: #ff8181;
+    cursor: pointer;
+    border: 1px #ff8181 solid;
+    padding: 0px 4px;
+    border-radius: 5px;
+}
+
+.selectedBox{
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin: 4px;
+    display: inline-block;
+}

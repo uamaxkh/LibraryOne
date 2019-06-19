@@ -131,13 +131,11 @@ namespace Library.Controllers
             return titlePicFileName;
         }
 
-        public JsonResult GetAuthorsJson(string search)
+        public JsonResult GetAuthorsJson()
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var authors = db.Authors.Select(a => new {Id = a.Id, Name = a.Name}).ToList();
-                return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            }
+            var authors = DBCommands.GetAllAuthors();
+            var authorsNameAndId = authors.Select(a => new { Id = a.Id, Name = a.Name });
+            return new JsonResult { Data = authorsNameAndId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         [HttpPost]
@@ -163,6 +161,13 @@ namespace Library.Controllers
 
         public ActionResult Test()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Test(string authorsNames)
+        {
+            ViewBag.message = authorsNames;
             return View();
         }
     }

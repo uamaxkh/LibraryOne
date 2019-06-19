@@ -90,6 +90,18 @@
              });
         }
 
+        function selectToggle(state) {
+            if (state == "off") {
+                $("#authorSelect").hide();
+                $("#selectAuthorBnt").attr('disabled', 'disabled');
+            }
+            else {
+                $("#authorSelect").show();
+                $("#selectAuthorBnt").removeAttr('disabled');
+            }
+
+        }
+
         function getAuthorsByNameTerm() {
             var authorNameTerm = $("#authorSearch").val();
 
@@ -102,12 +114,11 @@
             $("#authorSelect").empty();
             
             if (authorsFind.length == 0) {
-                $("#authorSelect").hide();
-                $("#selectAuthorBnt").attr('disabled', 'disabled');
+                selectToggle('off')
                 return 0;
             }
-            $("#authorSelect").show();
-            $("#selectAuthorBnt").removeAttr('disabled');
+
+            selectToggle('on');
 
             authorsFind.map(function (author) {
                 $('<option type="text" readonly value="'
@@ -119,11 +130,12 @@
             var authorId = (Id != undefined) ? Id : $("#authorSelect option:selected").val();
             var authorName = (Name != undefined) ? Name : $("#authorSelect option:selected").text();
             if (authorId != undefined) {
-                $('<div><input type="checkbox" readonly checked name="AuthorsId" value="' + authorId + '">' + authorName + '</div>').appendTo("#selectedAuthorsDisplay");
+                $('<div class="selectedBox" id="' + authorId + '"><input hidden type="checkbox"checked name="AuthorsId" value="'
+                    + authorId + '">' + authorName + ' <span class="removeBtn" onclick="removeEl(\'#'
+                    + authorId + '\')">X</span></div>').appendTo("#selectedAuthorsDisplay");
                 $('#authorSearch').val('');
                 $("#authorSelect").empty();
-                $("#authorSelect").hide();
-                $("#selectAuthorBnt").attr('disabled', 'disabled');
+                selectToggle('off');
             }
         }
 
@@ -145,6 +157,11 @@
                     alert('Помилка при додаванні');
                 }
             });
+        }
+
+        function removeEl(selector) {
+            //$("'" + selector+"'").remove();
+            $(selector).remove();
         }
     </script>
 }
