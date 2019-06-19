@@ -44,11 +44,11 @@ namespace DBLib
 
             var Gorlis = new Author() { Name = "Ю. Горліс-Горський" };
             var KSD = new Publisher() { Name = "Книжковий Клуб «Клуб Сімейного Дозвілля", City = "Харків" }; 
-            var Memuary = new Section() { Name = "Мемуари. Біографії" }; 
+            var Memuary = new Section() { Name = "Мемуари. Біографії" };
             var b1 = new Book()
             {
+                Id = System.Guid.Parse("dea6286b-52e5-44e6-b557-f8f8372996d0"),
                 Title = "Холодний Яр",
-                TitlePic = "44342_66652_k.jpg",
                 Authors = new List<Author>() { Gorlis },
                 Year = 2017,
                 Publisher = KSD,
@@ -67,8 +67,8 @@ namespace DBLib
             var Fantastyka = new Section() { Name = "Фантастика. Фентезі" };
             var b2 = new Book()
             {
+                Id = System.Guid.Parse("ca2f0f87-008a-4119-8191-5508c9632c2d"),
                 Title = "Відьмак.Останнє бажання",
-                TitlePic = "7733757_images_1488273965.jpg",
                 Authors = new List<Author>() { AnjeySapkovski },
                 Year = 2018,
                 Publisher = KSD,
@@ -86,8 +86,8 @@ namespace DBLib
             var ACT = new Publisher() { Name = "АСТ", City = "Москва" };
             var b3 = new Book()
             {
+                Id = System.Guid.Parse("8ab4278d-9ccc-447e-9451-fed1f84cd052"),
                 Title = "Метро 2033",
-                TitlePic = "89082873_images_12235641285.jpg",
                 Authors = new List<Author>() { DmitriyGluhovski },
                 Year = 2019,
                 Publisher = ACT,
@@ -106,8 +106,8 @@ namespace DBLib
             var HudogniKnygy = new Section() { Name = "Художні книги" };
             var b4 = new Book()
             {
+                Id = System.Guid.Parse("2742cafb-24f6-4ec0-af0a-4b616af509b2"),
                 Title = "Записки українського самашедшого",
-                TitlePic = "a_ba_ba_ga_la_ma_ga_9789667047887_images_1847982452.jpg",
                 Authors = new List<Author>() { LinaKostenko },
                 Year = 2010,
                 Publisher = Ababa,
@@ -127,8 +127,8 @@ namespace DBLib
             var BisnesiPidpr = new Section() { Name = "Бізнес і підприємництво" };
             var b5 = new Book()
             {
+                Id = System.Guid.Parse("7fb61b4c-c312-4e9d-8cff-2dfbb8020744"),
                 Title = "Думай і багатій",
-                TitlePic = "nash_format_9786177388967_images_11478842126.jpg",
                 Authors = new List<Author>() { GillNapoleon },
                 Year = 2017,
                 Publisher = NashFormat,

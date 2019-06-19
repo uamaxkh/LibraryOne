@@ -69,16 +69,15 @@ namespace Library.Controllers
             {
                 try
                 {
-                    var book = new Book(bookViewModel.ISBN, bookViewModel.LibraryReading, bookViewModel.Pages,
-                        bookViewModel.Quantity, bookViewModel.Title, bookViewModel.Year);
+                    var book = new Book(bookViewModel.ISBN, bookViewModel.Title, bookViewModel.LibraryReading, bookViewModel.Pages,
+                           bookViewModel.Quantity, bookViewModel.Year);
 
                     //Adding book picture
                     if (bookViewModel.TitlePic != null)
                     {
-                        string titlePicFileName = SaveTitlePic(bookViewModel.TitlePic);
-                        book.TitlePic = titlePicFileName;
+                        bool picSaved = SaveTitlePic(bookViewModel.TitlePic, book.Id);
 
-                        if (titlePicFileName == string.Empty)
+                        if (picSaved == false)
                         {
                             throw new Exception("Файл обкладинки не вдалося додати");
                         }
@@ -98,26 +97,29 @@ namespace Library.Controllers
             return RedirectToAction("Error", new ExceptionExt("Книгу додано", null, MessageState.Succes));
         }
 
-        public string SaveTitlePic(HttpPostedFileBase titlePic)
+        public bool SaveTitlePic(HttpPostedFileBase titlePic, Guid Id)
         {
-            string titlePicFileName = Path.GetFileName(titlePic.FileName);
             if (titlePic != null && titlePic.ContentLength > 0)
             {
                 try
                 {
-                    string path = Path.Combine(Server.MapPath("~/TitlePic/"), titlePicFileName);
+                    if(titlePic.ContentType != ".jpg")
+                    {
+                        return false;
+                    }
+                    string path = Path.Combine(Server.MapPath("~/TitlePic/"), Id.ToString()+".jpg");
                     titlePic.SaveAs(path);
                 }
                 catch
                 {
-                    return string.Empty;
+                    return false;
                 }
             }
             else
             {
-                return string.Empty;
+                return false;
             }
-            return titlePicFileName;
+            return true;
         }
 
         public JsonResult GetAuthorsJson()

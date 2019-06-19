@@ -12,10 +12,6 @@ namespace DBLib.Models
         [Required]
         [Display(Name = "Заголовок")]
         public string Title { get; set; }
-        
-        [Display(Name = "Обкладинка")]
-        [UIHint("Url")]
-        public string TitlePic { get; set; }
 
         [Required]
         [Display(Name = "Рік видання")]
@@ -56,14 +52,14 @@ namespace DBLib.Models
             Authors = new List<Author>();
         }
 
-        public Book(string ISBN, bool LibraryReading, int Pages,
-            int Quantity, string Title, short Year)
+        public Book(string ISBN, string Title, bool LibraryReading, int Pages,
+            int Quantity, short Year)
         {
             this.ISBN = ISBN;
+            this.Title = Title;
             this.LibraryReading = LibraryReading;
             this.Pages = Pages;
             this.Quantity = Quantity;
-            this.Title = Title;
             this.Year = Year;
 
             BooksRenting = new List<BooksRenting>();

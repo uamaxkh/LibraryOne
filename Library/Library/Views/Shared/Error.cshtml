@@ -31,7 +31,7 @@
         <h4 class="bg-info alertMessage">@Model.MessageExt</h4>
         timer = 5000;
         <script>
-            setTimeout(redirect, timer);
+            setTimeout(redirect, @timer);
         </script>
     }
     else if (Model.State == DBLib.Models.MessageState.Succes)
@@ -41,7 +41,7 @@
         <h4 class="bg-success text-info alertMessage">@Model.MessageExt</h4>
         timer = 3000;
         <script>
-            setTimeout(redirect, timer);
+            setTimeout(redirect, @timer);
         </script>
     }
 }

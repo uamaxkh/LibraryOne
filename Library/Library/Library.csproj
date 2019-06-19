@@ -176,7 +176,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LibManagementController.cs" />
     <Compile Include="Controllers\LibraryManageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -196,11 +195,6 @@
     <Content Include="Content\jquery-ui-git.css" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\myScripts.js" />
-    <Content Include="TitlePic\44342_66652_k.jpg" />
-    <Content Include="TitlePic\7733757_images_1488273965.jpg" />
-    <Content Include="TitlePic\89082873_images_12235641285.jpg" />
-    <Content Include="TitlePic\a_ba_ba_ga_la_ma_ga_9789667047887_images_1847982452.jpg" />
-    <Content Include="TitlePic\nash_format_9786177388967_images_11478842126.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
