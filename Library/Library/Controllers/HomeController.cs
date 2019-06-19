@@ -76,7 +76,7 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult AddBook(AddBooksViewModels bookViewModel)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid/* && bookViewModel.AuthorsId.Count > 0*/)
             {
                 try
                 {
@@ -95,7 +95,7 @@ namespace Library.Controllers
                         }
                     }
 
-                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsNames, bookViewModel.PublisherId, bookViewModel.SectionId);
+                    DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsId, bookViewModel.PublisherId, bookViewModel.SectionId);
                 }
                 catch (Exception ex)
                 {
@@ -135,7 +135,7 @@ namespace Library.Controllers
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                var authors = db.Authors.Where(a => a.Name.StartsWith(search)).Select(a => new {Id = a.Id, Name = a.Name}).ToList();
+                var authors = db.Authors.Select(a => new {Id = a.Id, Name = a.Name}).ToList();
                 return new JsonResult { Data = authors, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
@@ -145,13 +145,13 @@ namespace Library.Controllers
         {
             if (authorName.Length > 3)
             {
-                QueryStatus result = DBLib.DBCommands.AddAuthor(authorName);
+                string result = DBLib.DBCommands.AddAuthor(authorName);
 
                 return new JsonResult() { Data = result };
             }
             else
             {
-                return new JsonResult() { Data = new QueryStatus(QueryStatusCode.Error, "Не допускається ім'я з 3-х символів") };
+                return new JsonResult() { Data = "Закоротке ім'я" };
             }
         }
 

@@ -217,6 +217,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="TitlePic\noImage.png" />
+    <Content Include="Views\Home\AddBook.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -252,7 +253,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ShowBook.cshtml" />
-    <Content Include="Views\Home\AddBook.cshtml" />
     <Content Include="..\..\..\..\RealDesktop\Test.cshtml">
       <Link>Views\Home\Test.cshtml</Link>
     </Content>

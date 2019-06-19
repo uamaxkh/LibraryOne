@@ -55,7 +55,7 @@ namespace DBLib
             }
         }
 
-        public static bool AddBook(Book book, ICollection<string> AuthorsNames, Guid PublisherId, Guid SectionId)
+        public static bool AddBook(Book book, ICollection<Guid> AuthorsId, Guid PublisherId, Guid SectionId)
         {
             try
             {
@@ -66,9 +66,9 @@ namespace DBLib
                     book.Section = GetSectionById(SectionId);
                     db.Sections.Attach(book.Section);
 
-                    foreach (var authorName in AuthorsNames)
+                    foreach (var authorId in AuthorsId)
                     {
-                        Author author = GetAuthorByName(authorName);
+                        Author author = GetAuthorById(authorId);
                         if (author == null)
                             throw new Exception("Був обраний неіснуючий автор!");
                         db.Authors.Attach(author);
@@ -118,7 +118,7 @@ namespace DBLib
             }
         }
 
-        public static QueryStatus AddAuthor(string Name)
+        public static string AddAuthor(string Name)
         {
             try
             {
@@ -128,18 +128,18 @@ namespace DBLib
 
                     if (isExits)
                     {
-                        return new QueryStatus(QueryStatusCode.IsExist, "Цей автор вже є в БД");
+                        return "0";
                     }
 
                     var newAuthor = new Author() { Name = Name };
                     db.Authors.Add(newAuthor);
                     db.SaveChanges();
-                    return new QueryStatus(QueryStatusCode.Success, "Автор успішно доданий");
+                    return newAuthor.Id.ToString();
                 }
             }
             catch
             {
-                return new QueryStatus(QueryStatusCode.DBError, "Помилка додавання автора в БД");
+                return "-1";
             }
         }
 
