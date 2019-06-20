@@ -104,5 +104,10 @@
                 }
              });
         }
+
+        if (@ViewBag.userOrderedTheBook.ToString().ToLower()) {
+            $("#addBookOrder").toggleClass("hidden");
+            $("#cancelBookOrder").toggleClass("hidden");
+        }
     </script>
 }

@@ -44,13 +44,15 @@ namespace Library.Controllers
                 }
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
-
-
-
-                var userId = User.Identity.GetUserId();                if(userId != null)
+                
+                var userId = User.Identity.GetUserId();                if (userId != null)
                 {
                     ViewBag.userId = userId;
                     ViewBag.userExist = true;
+
+                    //Перевірка, чи цей користувач вже замовив книгу
+                    bool userOrderedTheBook = DBCommands.GetBookOrderByBookAndUserId((Guid)id, userId) != null;
+                    ViewBag.userOrderedTheBook = userOrderedTheBook;
                 }                else
                 {
                     ViewBag.userExist = false;
@@ -82,7 +84,7 @@ namespace Library.Controllers
 
                 if (state)
                 {
-                    return new JsonResult { Data = "Успішно!" };
+                    return new JsonResult { Data = "Успішно додано!" };
                 }
                 return new JsonResult { Data = "Помилка при замовленні книги" };
             }
