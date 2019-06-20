@@ -43,7 +43,7 @@ namespace Library.Controllers
                     return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
                 }
 
-                var book = DBLib.DBCommands.GetBookById((Guid)id);
+                var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
 
 
 
@@ -104,7 +104,7 @@ namespace Library.Controllers
 
                 bool state = DBCommands.cancelBookOrderInDB((Guid)BookId, UserId);
 
-                if (state)
+                if (state != false)
                 {
                     return new JsonResult { Data = "Успішно видалено!" };
                 }

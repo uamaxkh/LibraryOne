@@ -66,24 +66,10 @@
 
 @section scripts{
     <script>
-
-        function addBookOrder() {
-            $("#addBookOrder").toggleClass("hidden");
-            $("#cancelBookOrder").toggleClass("hidden");
-            bookOrder();
-        }
-
-        function cancelBookOrder() {
-            $("#addBookOrder").toggleClass("hidden");
-            $("#cancelBookOrder").toggleClass("hidden");
-            //cancelBookOrder();
-        }
-
-
         $("#addBookOrder").click(addBookOrder);
         $("#cancelBookOrder").click(cancelBookOrder);
 
-        function bookOrder() {
+        function addBookOrder() {
             $.ajax({
                 url: '@Url.Action("bookOrder")',
                 data: { BookId: '@Model.Id', UserId: '@ViewBag.userId' },
@@ -91,6 +77,8 @@
                 dataType: "json",
                 success: function (data)
                 {
+                    $("#addBookOrder").toggleClass("hidden");
+                    $("#cancelBookOrder").toggleClass("hidden");
                     alert(data);
                 },
                 error: function(xhr, status, error){
@@ -107,6 +95,8 @@
                 dataType: "json",
                 success: function (data)
                 {
+                    $("#addBookOrder").toggleClass("hidden");
+                    $("#cancelBookOrder").toggleClass("hidden");
                     alert(data);
                 },
                 error: function(xhr, status, error){
