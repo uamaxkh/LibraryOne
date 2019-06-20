@@ -21,7 +21,7 @@ using DBLib.Models;
         [Required]
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
-        
+
         [Display(Name = "Заблокований")]
         [UIHint("Boolean")]
         public bool IsBanned { get; set; }
@@ -29,7 +29,7 @@ using DBLib.Models;
         [Required]
         [Display(Name = "Дата народження")]
         public DateTime BirthDate { get; set; }
-        
+
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<BooksRenting> BooksRenting { get; set; }
@@ -46,6 +46,7 @@ using DBLib.Models;
         {
             Comments = new List<Comment>();
             BooksRenting = new List<BooksRenting>();
+            IsBanned = false;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult AddBook(AddBooksViewModels bookViewModel)
         {
-            if (ModelState.IsValid/* && bookViewModel.AuthorsId.Count > 0*/)
+            if (ModelState.IsValid)
             {
                 try
                 {

@@ -179,5 +179,13 @@ namespace DBLib
                 return false;
             }
         }
+
+        public static void saveBookOrderToDB(Guid BookId /*, USER!*/)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+
+            }
+        }
     }
 }

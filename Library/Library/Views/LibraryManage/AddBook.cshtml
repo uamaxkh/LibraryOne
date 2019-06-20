@@ -13,8 +13,8 @@
                 <input type="text" oninput="getAuthorsByNameTerm()" id="authorSearch" />
                 <select hidden id="authorSelect" class="authorSelect"></select>
                 @Html.ValidationMessageFor(m => m.AuthorsId)
-                <div id="selectAuthorBnt" disabled class="btn btn-default btn-xs" onclick="selectAuthor()">Обрати автора</div>
-                <div id="addAuthorBnt" class="btn btn-default btn-xs" onclick="addAuthorToDB()">Зберегти нового автора</div>
+                <div id="selectAuthorBnt" disabled class="btn btn-default btn-xs">Обрати автора</div>
+                <div id="addAuthorBnt" class="btn btn-default btn-xs">Зберегти нового автора</div>
                 <div id="selectedAuthorsDisplay"></div>
             </div>
             <div>
@@ -36,7 +36,7 @@
                 @Html.LabelFor(m => m.PublisherName)
                 <input name="PublisherName" id="PublisherName" list="publisherList" />
                 @Html.ActionLink("Додати видавця", "AddPublisher", "LibraryManage", null, new {@class="btn btn-default btn-xs"})
-                <div class="btn btn-default btn-xs" onclick="updatePublishersList()">Оновити</div>
+                <div id="updatePublishersListBtn" class="btn btn-default btn-xs">Оновити</div>
                 @Html.ValidationMessageFor(m => m.PublisherName)
             </div>
             <div>
@@ -48,7 +48,7 @@
                 @Html.LabelFor(m => m.SectionName)
                 <input name="SectionName" id="SectionName" list="sectionList" />
                 @Html.ActionLink("Додати розділ", "AddSection", "LibraryManage", null, new { @class = "btn btn-default btn-xs" })
-                <div class="btn btn-default btn-xs" onclick="updateSectionsList()">Оновити</div>
+                <div id="updateSectionsListBtn" class="btn btn-default btn-xs">Оновити</div>
                 @Html.ValidationMessageFor(m => m.SectionName)
             </div>
             <div>
@@ -211,5 +211,10 @@
              });
         }
 
+
+        $("#selectAuthorBnt").click(selectAuthor);
+        $("#addAuthorBnt").click(addAuthorToDB);
+        $("#updatePublishersListBtn").click(updatePublishersList);
+        $("#updateSectionsListBtn").click(updateSectionsList);
     </script>
 }

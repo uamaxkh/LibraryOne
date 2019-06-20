@@ -8,7 +8,10 @@ using DBLib.Models;
 using Library.Models;
 using System.Web;
 
-namespace DBLib
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+
+namespace Library
 {
     public class ContexttInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
@@ -144,13 +147,51 @@ namespace DBLib
             booksList.Add(b5);
 
 
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+
+            // создаем две роли
+            var adminRole = new IdentityRole { Name = "Admin" };
+            var librarianRole = new IdentityRole { Name = "Librarian" };
+            var registeredRole = new IdentityRole { Name = "Registered" };
+
+            // добавляем роли в бд
+            roleManager.Create(adminRole);
+            roleManager.Create(librarianRole);
+            roleManager.Create(registeredRole);
+
+            // создаем пользователей
+            var adminUser = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com", BirthDate= DateTime.Parse("1990/10/10"), Name="Василь", Surname="Петрович" };
+            string adminPassword = "123qwe";
+
+            var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", BirthDate = DateTime.Parse("1990/10/10"), Name = "Іванка", Surname = "Хомич" };
+            string librarianPassword = "123qwe";
+
+            var registeredUser = new ApplicationUser { Email = "registered@gmail.com", UserName = "registered@gmail.com", BirthDate = DateTime.Parse("1990/10/10"), Name = "Артем", Surname = "Дуб" };
+            string registeredPassword = "123qwe";
+
+            var result1 = userManager.Create(adminUser, adminPassword);
+            var result2 = userManager.Create(librarianUser, librarianPassword);
+            var result3 = userManager.Create(registeredUser, registeredPassword);
+            
+                // добавляем для пользователя роль
+            userManager.AddToRole(adminUser.Id, adminRole.Name);
+            userManager.AddToRole(adminUser.Id, librarianRole.Name);
+            userManager.AddToRole(adminUser.Id, registeredRole.Name);
+            
+            userManager.AddToRole(librarianUser.Id, librarianRole.Name);
+            userManager.AddToRole(librarianUser.Id, registeredRole.Name);
+
+            userManager.AddToRole(registeredUser.Id, registeredRole.Name);
+
+
             booksList.ForEach(el => context.Books.Add(el));
             authorsList.ForEach(el => context.Authors.Add(el));
             publishersList.ForEach(el => context.Publishers.Add(el));
             sectionsList.ForEach(el => context.Sections.Add(el));
             //commentsList.ForEach(el => context.Comments.Add(el));
             //booksRentingsList.ForEach(el => context.BooksRenting.Add(el));
-            context.SaveChanges();
+            base.Seed(context);
         }
     }
 }

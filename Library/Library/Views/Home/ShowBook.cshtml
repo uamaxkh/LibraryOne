@@ -5,46 +5,73 @@
 
 <!DOCTYPE html>
 
-    <h1>Books</h1>
-    <div>
-        @Html.LabelFor(b => b.ISBN)
-        @Html.DisplayFor(b => b.ISBN)
+<h1>Books</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-6 col-md-2">
+            <div>
+                @Html.LabelFor(b => b.ISBN)
+                @Html.DisplayFor(b => b.ISBN)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Pages)
+                @Html.DisplayFor(b => b.Pages)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Quantity)
+                @Html.DisplayFor(b => b.Quantity)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Title)
+                @Html.DisplayFor(b => b.Title)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Year)
+                @Html.DisplayFor(b => b.Year)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.LibraryReading)
+                @Html.DisplayFor(b => b.LibraryReading)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Publisher.Name)
+                @Html.DisplayFor(b => b.Publisher.Name)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Section.Name)
+                @Html.DisplayFor(b => b.Section.Name)
+            </div>
+            <div>
+                @Html.LabelFor(b => b.Authors)
+                @foreach (var author in Model.Authors)
+                {
+                    <p>@author.Name</p>
+                }
+            </div>
+            <div id="addBookOrder" class="btn btn-primary">Замовити</div>
+            <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+        </div>
+        <div class="col-xs-6 col-md-2">
+            <img style="max-width: 160px; max-height: 400px;" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
+        </div>
     </div>
-    <div>
-        @Html.LabelFor(b => b.Pages)
-        @Html.DisplayFor(b => b.Pages)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Quantity)
-        @Html.DisplayFor(b => b.Quantity)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Title)
-        @Html.DisplayFor(b => b.Title)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Year)
-        @Html.DisplayFor(b => b.Year)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.LibraryReading)
-        @Html.DisplayFor(b => b.LibraryReading)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Publisher.Name)
-        @Html.DisplayFor(b => b.Publisher.Name)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Section.Name)
-        @Html.DisplayFor(b => b.Section.Name)
-    </div>
-    <div>
-        @Html.LabelFor(b => b.Authors)
-        @foreach (var author in Model.Authors)
-        {
-            <p>@author.Name</p>
+</div>
+
+@section scripts{
+    <script>
+
+        function addBookOrder() {
+            $("#addBookOrder").toggleClass("hidden");
+            $("#cancelBookOrder").toggleClass("hidden");
+        }
+
+        function cancelBookOrder() {
+            $("#addBookOrder").toggleClass("hidden");
+            $("#cancelBookOrder").toggleClass("hidden");
         }
 
 
-        <img style="max-width: 160px; max-height: 400px;" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
-    </div>
+        $("#addBookOrder").click(addBookOrder);
+        $("#cancelBookOrder").click(cancelBookOrder);
+    </script>
+}
