@@ -36,49 +36,85 @@ namespace Library.Controllers
 
         public ActionResult ShowBook(Guid? id)
         {
-            //try
-            //{
+            try
+            {
                 if (id == null)
                 {
                     return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
                 }
 
                 var book = DBLib.DBCommands.GetBookById((Guid)id);
-                var userId = User.Identity.GetUserId();                using (ApplicationDbContext db = new ApplicationDbContext())
+
+
+
+                var userId = User.Identity.GetUserId();                if(userId != null)
                 {
-                var users = db.Users.ToList();
-                    var currentUser = users.Where(a => a.Id == userId).SingleOrDefault();
-                    ViewBag.userName = currentUser.Name;
+                    ViewBag.userId = userId;
+                    ViewBag.userExist = true;
+                }                else
+                {
+                    ViewBag.userExist = false;
                 }
-                ViewBag.userId = userId;
                 return View(book);
-            //}
-            //catch
-            //{
-            //    return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
-            //}
         }
+            catch
+            {
+                return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
+            }
+}
 
         public ActionResult Error(ExceptionExt ms)
         {
             return View(ms);
         }
 
-        //public JsonResult addBookOrder(Guid? id)
-        //{
-        //    try
-        //    {
-        //        if (id == null)
-        //        {
-        //            //ERR
-        //        }
-        //        //CODE
-        //    }
-        //    catch
-        //    {
-        //        //ERR
-        //    }
-        //}
+        [HttpPost]
+        public JsonResult bookOrder(Guid? BookId, string UserId)
+        {
+            try
+            {
+                if (BookId == null && UserId.Length < 1)
+                {
+                    return new JsonResult { Data = "Помилка. Не вказано Ід книги чи користувача" };
+                }
+
+                bool state = DBCommands.saveBookOrderToDB((Guid)BookId, UserId);
+
+                if (state)
+                {
+                    return new JsonResult { Data = "Успішно!" };
+                }
+                return new JsonResult { Data = "Помилка при замовленні книги" };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public JsonResult cancelBookOrder(Guid? BookId, string UserId)
+        {
+            try
+            {
+                if (BookId == null && UserId.Length < 1)
+                {
+                    return new JsonResult { Data = "Помилка. Не вказано Ід книги чи користувача" };
+                }
+
+                bool state = DBCommands.cancelBookOrderInDB((Guid)BookId, UserId);
+
+                if (state)
+                {
+                    return new JsonResult { Data = "Успішно видалено!" };
+                }
+                return new JsonResult { Data = "Помилка при скасуванні замовлення книги" };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         //--------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------

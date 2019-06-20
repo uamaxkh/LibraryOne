@@ -14,8 +14,10 @@ namespace DBLib.Models
         
         public ApplicationUser ApplicationUser { get; set; }
 
-        public DateTime TakingDate { get; set; }
+        public DateTime OrderDate { get; set; }
 
-        public DateTime ReturningDate { get; set; }
+        public DateTime? TakingDate { get; set; }
+
+        public DateTime? ReturningDate { get; set; }
     }
 }

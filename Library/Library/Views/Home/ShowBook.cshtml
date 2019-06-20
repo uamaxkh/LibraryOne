@@ -48,13 +48,18 @@
                     <p>@author.Name</p>
                 }
             </div>
-            <div id="addBookOrder" class="btn btn-primary">Замовити</div>
-            <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
-            <div>@ViewBag.userId</div>
-            <div>@ViewBag.userName</div>
+            @if (@ViewBag.userExist)
+            {
+                <div id="addBookOrder" class="btn btn-primary">Замовити</div>
+                <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+            }
+            else
+            {
+                @Html.ActionLink("Щоб замовити книгу, необхідно увійти", "Login", "Account", null, new { @class = "btn btn-default" });
+            }
         </div>
         <div class="col-xs-6 col-md-2">
-            <img style="max-width: 160px; max-height: 400px;" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
+            <img class="bookTitleImgLj" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
         </div>
     </div>
 </div>
@@ -65,15 +70,49 @@
         function addBookOrder() {
             $("#addBookOrder").toggleClass("hidden");
             $("#cancelBookOrder").toggleClass("hidden");
+            bookOrder();
         }
 
         function cancelBookOrder() {
             $("#addBookOrder").toggleClass("hidden");
             $("#cancelBookOrder").toggleClass("hidden");
+            //cancelBookOrder();
         }
 
 
         $("#addBookOrder").click(addBookOrder);
         $("#cancelBookOrder").click(cancelBookOrder);
+
+        function bookOrder() {
+            $.ajax({
+                url: '@Url.Action("bookOrder")',
+                data: { BookId: '@Model.Id', UserId: '@ViewBag.userId' },
+                type: 'POST',
+                dataType: "json",
+                success: function (data)
+                {
+                    alert(data);
+                },
+                error: function(xhr, status, error){
+                    alert("Error");
+                }
+             });
+        }
+
+        function cancelBookOrder() {
+            $.ajax({
+                url: '@Url.Action("cancelBookOrder")',
+                data: { BookId: '@Model.Id', UserId: '@ViewBag.userId' },
+                type: 'POST',
+                dataType: "json",
+                success: function (data)
+                {
+                    alert(data);
+                },
+                error: function(xhr, status, error){
+                    alert("Error");
+                }
+             });
+        }
     </script>
 }

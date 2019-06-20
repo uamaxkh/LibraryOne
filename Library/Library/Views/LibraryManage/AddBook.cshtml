@@ -212,7 +212,7 @@
         }
 
 
-        $("#selectAuthorBnt").click(selectAuthor);
+        $("#selectAuthorBnt").click(() => { return selectAuthor() });
         $("#addAuthorBnt").click(addAuthorToDB);
         $("#updatePublishersListBtn").click(updatePublishersList);
         $("#updateSectionsListBtn").click(updateSectionsList);

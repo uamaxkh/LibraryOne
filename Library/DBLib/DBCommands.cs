@@ -180,11 +180,95 @@ namespace DBLib
             }
         }
 
-        public static void saveBookOrderToDB(Guid BookId /*, USER!*/)
+        public static ApplicationUser GetUserById(string Id, ApplicationDbContext applicationDbContext = null)
+        {
+            ApplicationUser user;
+
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = new ApplicationDbContext();
+                user = applicationDbContext.Users.Where(a => a.Id == Id).SingleOrDefault();
+                applicationDbContext.Dispose();
+            }
+            else
+            {
+                user = applicationDbContext.Users.Where(a => a.Id == Id).SingleOrDefault();
+            }
+            
+            return user;
+        }
+
+        public static Book GetBookById(Guid Id, ApplicationDbContext applicationDbContext = null)
+        {
+            Book book;
+
+            if (applicationDbContext == null)
+            {
+                applicationDbContext = new ApplicationDbContext();
+                book = applicationDbContext.Books.Find(Id);
+                applicationDbContext.Dispose();
+            }
+            else
+            {
+                book = applicationDbContext.Books.Find(Id);
+            }
+
+            return book;
+        }
+
+        //public static Book GetBookOrderByBookAndUserId(Guid BookId, string UserId, ApplicationDbContext applicationDbContext = null)
+        //{
+        //    BooksRenting booksRenting;
+
+        //    if (applicationDbContext == null)
+        //    {
+        //        applicationDbContext = new ApplicationDbContext();
+        //        book = applicationDbContext.Books.Find(Id);
+        //        applicationDbContext.Dispose();
+        //    }
+        //    else
+        //    {
+        //        book = applicationDbContext.Books.Find(Id);
+        //    }
+
+        //    return book;
+        //}
+
+        public static bool saveBookOrderToDB(Guid BookId, string UserId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+                ApplicationUser applicationUser = GetUserById(UserId, db);
+                db.Users.Attach(applicationUser);
+                Book book = GetBookById(BookId, db);
+                db.Books.Attach(book);
 
+                BooksRenting booksRenting = new BooksRenting() { ApplicationUser = applicationUser,
+                    Book = book, OrderDate = DateTime.Now};
+                db.BooksRenting.Add(booksRenting);
+                db.SaveChanges();
+                return true;
+            }
+        }
+
+        public static bool cancelBookOrderInDB(Guid BookId, string UserId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser applicationUser = GetUserById(UserId, db);
+                db.Users.Attach(applicationUser);
+                Book book = GetBookById(BookId, db);
+                db.Books.Attach(book);
+
+                BooksRenting booksRenting = new BooksRenting()
+                {
+                    ApplicationUser = applicationUser,
+                    Book = book,
+                    OrderDate = DateTime.Now
+                };
+                db.BooksRenting.Add(booksRenting);
+                db.SaveChanges();
+                return true;
             }
         }
     }
