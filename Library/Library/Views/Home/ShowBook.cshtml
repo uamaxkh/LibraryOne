@@ -50,6 +50,8 @@
             </div>
             <div id="addBookOrder" class="btn btn-primary">Замовити</div>
             <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+            <div>@ViewBag.userId</div>
+            <div>@ViewBag.userName</div>
         </div>
         <div class="col-xs-6 col-md-2">
             <img style="max-width: 160px; max-height: 400px;" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />

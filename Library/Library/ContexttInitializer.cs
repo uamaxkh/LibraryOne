@@ -171,19 +171,16 @@ namespace Library
             string registeredPassword = "123qwe";
 
             var result1 = userManager.Create(adminUser, adminPassword);
-            var result2 = userManager.Create(librarianUser, librarianPassword);
-            var result3 = userManager.Create(registeredUser, registeredPassword);
-            
-                // добавляем для пользователя роль
             userManager.AddToRole(adminUser.Id, adminRole.Name);
             userManager.AddToRole(adminUser.Id, librarianRole.Name);
             userManager.AddToRole(adminUser.Id, registeredRole.Name);
-            
+
+            var result2 = userManager.Create(librarianUser, librarianPassword);
             userManager.AddToRole(librarianUser.Id, librarianRole.Name);
             userManager.AddToRole(librarianUser.Id, registeredRole.Name);
 
+            var result3 = userManager.Create(registeredUser, registeredPassword);
             userManager.AddToRole(registeredUser.Id, registeredRole.Name);
-
 
             booksList.ForEach(el => context.Books.Add(el));
             authorsList.ForEach(el => context.Authors.Add(el));

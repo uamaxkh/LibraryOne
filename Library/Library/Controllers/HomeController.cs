@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using DBLib.Models;
 using Library.Models;
 using DBLib;
+using Microsoft.AspNet.Identity;
 
 namespace Library.Controllers
 {
@@ -35,20 +36,27 @@ namespace Library.Controllers
 
         public ActionResult ShowBook(Guid? id)
         {
-            try
-            {
+            //try
+            //{
                 if (id == null)
                 {
                     return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
                 }
 
                 var book = DBLib.DBCommands.GetBookById((Guid)id);
+                var userId = User.Identity.GetUserId();                using (ApplicationDbContext db = new ApplicationDbContext())
+                {
+                var users = db.Users.ToList();
+                    var currentUser = users.Where(a => a.Id == userId).SingleOrDefault();
+                    ViewBag.userName = currentUser.Name;
+                }
+                ViewBag.userId = userId;
                 return View(book);
-            }
-            catch
-            {
-                return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
-            }
+            //}
+            //catch
+            //{
+            //    return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
+            //}
         }
 
         public ActionResult Error(ExceptionExt ms)
