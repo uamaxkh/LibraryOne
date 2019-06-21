@@ -221,9 +221,7 @@ namespace DBLib
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 ApplicationUser applicationUser = GetUserById(UserId, db);
-                db.Users.Attach(applicationUser);
                 Book book = GetBookById(BookId, db);
-                db.Books.Attach(book);
 
                 BooksRenting booksRenting = new BooksRenting() { ApplicationUser = applicationUser,
                     Book = book, OrderDate = DateTime.Now};
