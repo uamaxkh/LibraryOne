@@ -1,7 +1,23 @@
-﻿
-@{
-    ViewBag.Title = "AddPublisher";
+﻿@{
+    ViewBag.Title = "Додати нового видавця";
+    @model DBLib.Models.Publisher
 }
 
-<h2>AddPublisher</h2>
+<h2>Додати нового видавця</h2>
 
+@using (Html.BeginForm("AddPublisher", "LibraryManage", null, FormMethod.Post, new { @role = "form" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.Name)
+        @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(p => p.City)
+        @Html.TextBoxFor(p => p.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.City)
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary btn-block" type="submit" />
+    </div>
+}

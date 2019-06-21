@@ -57,20 +57,18 @@ namespace DBLib
 
         public static bool AddBook(Book book, ICollection<Guid> AuthorsId, string PublisherName, string SectionName)
         {
-            try
-            {
                 using (ApplicationDbContext db = new ApplicationDbContext())
                 {
                     book.Publisher = GetPublisherByName(PublisherName);
 
                     if (book.Publisher == null)
-                        throw new Exception("");
+                        throw new ExceptionExt("Такого видавця не існує");
 
                     db.Publishers.Attach(book.Publisher);
                     book.Section = GetSectionByName(SectionName);
 
                     if (book.Section == null)
-                        throw new Exception("");
+                        throw new ExceptionExt("Такого розділу не існує");
 
                     db.Sections.Attach(book.Section);
 
@@ -78,7 +76,7 @@ namespace DBLib
                     {
                         Author author = GetAuthorById(authorId);
                         if (author == null)
-                            throw new Exception("Був обраний неіснуючий автор!");
+                            throw new ExceptionExt("Був обраний неіснуючий автор!");
                         db.Authors.Attach(author);
                         book.Authors.Add(author);
                     }
@@ -87,11 +85,6 @@ namespace DBLib
                     int a = db.SaveChanges();
                 }
                 return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         private static Section GetSectionByName(string Name)
@@ -223,6 +216,11 @@ namespace DBLib
                 ApplicationUser applicationUser = GetUserById(UserId, db);
                 Book book = GetBookById(BookId, db);
 
+                if(book.FreeBooksCount() < 1)
+                {
+                    throw new Exception("Неможливо замовити книгу, кількість менша за 1");
+                }
+
                 BooksRenting booksRenting = new BooksRenting() { ApplicationUser = applicationUser,
                     Book = book, OrderDate = DateTime.Now};
                 db.BooksRenting.Add(booksRenting);
@@ -293,6 +291,24 @@ namespace DBLib
             }
 
             return freeBookCount;
+        }
+
+        public static void addPublisher(Publisher publisher)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                db.Publishers.Add(publisher);
+                db.SaveChanges();
+            }
+        }
+
+        public static void addSection(Section section)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                db.Sections.Add(section);
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -34,6 +34,11 @@ namespace DBLib.Models
             this.AdditionalInfo = AdditionalInfo;
             this.State = State;
         }
+
+        public override string ToString()
+        {
+            return MessageExt;
+        }
     }
 
     public enum MessageState

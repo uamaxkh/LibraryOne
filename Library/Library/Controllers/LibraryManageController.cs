@@ -35,13 +35,13 @@ namespace Library.Controllers
 
                         if (picSaved == false)
                         {
-                            throw new Exception("Файл обкладинки не вдалося додати");
+                            throw new ExceptionExt("Файл обкладинки не вдалося додати");
                         }
                     }
 
                     DBLib.DBCommands.AddBook(book, bookViewModel.AuthorsId, bookViewModel.PublisherName, bookViewModel.SectionName);
                 }
-                catch (Exception ex)
+                catch (ExceptionExt ex)
                 {
                     return RedirectToAction("Error", "Home", new ExceptionExt("Помилка додавання книги", ex.ToString(), MessageState.Error));
                 }
@@ -114,14 +114,60 @@ namespace Library.Controllers
             return new JsonResult { Data = sectionsNameAndId, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        [HttpGet]
         public ActionResult AddPublisher()
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult AddPublisher(Publisher publisher)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    DBCommands.addPublisher(publisher);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch(ExceptionExt ex)
+            {
+                return RedirectToAction("Error", "Home", ex);
+            }
+            
+            return RedirectToAction("Error", "Home", new ExceptionExt("Видання успішно додано", null, MessageState.Succes));
+        }
+
+        [HttpGet]
         public ActionResult AddSection()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddSection(Section section)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    DBCommands.addSection(section);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (ExceptionExt ex)
+            {
+                return RedirectToAction("Error", "Home", ex);
+            }
+
+            return RedirectToAction("Error", "Home", new ExceptionExt("Розділ успішно додано", null, MessageState.Succes));
         }
     }
 }
