@@ -69,6 +69,11 @@
         $("#addBookOrder").click(addBookOrder);
         $("#cancelBookOrder").click(cancelBookOrder);
 
+        function toggleOrderBtn() {
+            $("#addBookOrder").toggleClass("hidden");
+            $("#cancelBookOrder").toggleClass("hidden");
+        }
+
         function addBookOrder() {
             $.ajax({
                 url: '@Url.Action("bookOrder")',
@@ -77,8 +82,7 @@
                 dataType: "json",
                 success: function (data)
                 {
-                    $("#addBookOrder").toggleClass("hidden");
-                    $("#cancelBookOrder").toggleClass("hidden");
+                    toggleOrderBtn();
                     alert(data);
                 },
                 error: function(xhr, status, error){
@@ -95,8 +99,7 @@
                 dataType: "json",
                 success: function (data)
                 {
-                    $("#addBookOrder").toggleClass("hidden");
-                    $("#cancelBookOrder").toggleClass("hidden");
+                    toggleOrderBtn();
                     alert(data);
                 },
                 error: function(xhr, status, error){
@@ -106,8 +109,7 @@
         }
 
         if (@ViewBag.userOrderedTheBook.ToString().ToLower()) {
-            $("#addBookOrder").toggleClass("hidden");
-            $("#cancelBookOrder").toggleClass("hidden");
+            toggleOrderBtn();
         }
     </script>
 }

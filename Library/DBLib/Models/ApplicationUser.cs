@@ -26,10 +26,6 @@ using DBLib.Models;
         [UIHint("Boolean")]
         public bool IsBanned { get; set; }
 
-        [Required]
-        [Display(Name = "Дата народження")]
-        public DateTime BirthDate { get; set; }
-
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<BooksRenting> BooksRenting { get; set; }

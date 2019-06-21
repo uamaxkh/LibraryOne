@@ -80,9 +80,6 @@ namespace Library.Models
         [Required]
         [Display(Name = "IsBanned")]
         public bool IsBanned { get; set; }
-        [Required]
-        [Display(Name = "BirthDate")]
-        public DateTime BirthDate { get; set; }
         #endregion
 
         [Required]

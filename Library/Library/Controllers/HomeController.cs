@@ -56,6 +56,7 @@ namespace Library.Controllers
                 }                else
                 {
                     ViewBag.userExist = false;
+                    ViewBag.userOrderedTheBook = false;
                 }
                 return View(book);
         }
@@ -117,6 +118,18 @@ namespace Library.Controllers
                 throw ex;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         //--------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------

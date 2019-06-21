@@ -161,13 +161,13 @@ namespace Library
             roleManager.Create(registeredRole);
 
             // создаем пользователей
-            var adminUser = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com", BirthDate= DateTime.Parse("1990/10/10"), Name="Василь", Surname="Петрович" };
+            var adminUser = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com", Name="Василь", Surname="Петрович" };
             string adminPassword = "123qwe";
 
-            var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", BirthDate = DateTime.Parse("1990/10/10"), Name = "Іванка", Surname = "Хомич" };
+            var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", Name = "Іванка", Surname = "Хомич" };
             string librarianPassword = "123qwe";
 
-            var registeredUser = new ApplicationUser { Email = "registered@gmail.com", UserName = "registered@gmail.com", BirthDate = DateTime.Parse("1990/10/10"), Name = "Артем", Surname = "Дуб" };
+            var registeredUser = new ApplicationUser { Email = "registered@gmail.com", UserName = "registered@gmail.com", Name = "Артем", Surname = "Дуб" };
             string registeredPassword = "123qwe";
 
             var result1 = userManager.Create(adminUser, adminPassword);
