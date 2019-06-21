@@ -136,7 +136,7 @@ namespace Library
                 Year = 2017,
                 Publisher = NashFormat,
                 LibraryReading = true,
-                Quantity = 4,
+                Quantity = 1,
                 Pages = 264,
                 ISBN = "978-617-7388-96-7",
                 Section = BisnesiPidpr

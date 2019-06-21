@@ -20,6 +20,7 @@
             <div>
                 @Html.LabelFor(b => b.Quantity)
                 @Html.DisplayFor(b => b.Quantity)
+                <div>Вільно: @ViewBag.freeBookCount</div>
             </div>
             <div>
                 @Html.LabelFor(b => b.Title)
@@ -50,8 +51,24 @@
             </div>
             @if (@ViewBag.userExist)
             {
-                <div id="addBookOrder" class="btn btn-primary">Замовити</div>
-                <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+                if (@ViewBag.userOrderedTheBook) //книга вже замовлена
+                {
+                    <div id="addBookOrder" class="btn btn-primary hidden">Замовити</div>
+                    <div id="cancelBookOrder" class="btn btn-danger">Відмінити</div>
+                }
+                else
+                {
+
+                    if (@ViewBag.freeBookCount > 0)
+                    {
+                        <div id="addBookOrder" class="btn btn-primary">Замовити</div>
+                        <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+                    }
+                    else
+                    {
+                        <div class="btn btn-default">Вільних книг немає</div>
+                    }
+                }
             }
             else
             {
@@ -86,7 +103,7 @@
                     alert(data);
                 },
                 error: function(xhr, status, error){
-                    alert("Error");
+                    alert("Помилка :(");
                 }
              });
         }
@@ -103,13 +120,9 @@
                     alert(data);
                 },
                 error: function(xhr, status, error){
-                    alert("Error");
+                    alert("Помилка :(");
                 }
              });
-        }
-
-        if (@ViewBag.userOrderedTheBook.ToString().ToLower()) {
-            toggleOrderBtn();
         }
     </script>
 }

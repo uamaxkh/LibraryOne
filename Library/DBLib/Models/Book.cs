@@ -65,5 +65,10 @@ namespace DBLib.Models
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
         }
+
+        public int FreeBooksCount()
+        {
+            return DBCommands.FreeBookCountById(Id);
+        }
     }
 }

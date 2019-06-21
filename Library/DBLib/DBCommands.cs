@@ -263,5 +263,36 @@ namespace DBLib
                 return true;
             }
         }
+
+        public static int FreeBookCountById(Guid Id, ApplicationDbContext dbContext = null)
+        {
+            int takenBookCount;
+            int availableBookCount;
+            int freeBookCount;
+
+            if (dbContext == null)
+            {
+                dbContext = new ApplicationDbContext();
+
+                takenBookCount = dbContext.BooksRenting.Where(b => b.Book.Id == Id && b.ReturningDate == null).Count();
+                availableBookCount = dbContext.Books.Where(b => b.Id == Id).Select(b => b.Quantity).Single();
+                freeBookCount = availableBookCount - takenBookCount;
+
+                dbContext.Dispose();
+            }
+            else
+            {
+                takenBookCount = dbContext.BooksRenting.Where(b => b.Book.Id == Id && b.ReturningDate == null).Count();
+                availableBookCount = dbContext.Books.Where(b => b.Id == Id).Select(b => b.Quantity).Single();
+                freeBookCount = availableBookCount - takenBookCount;
+            }
+
+            if(freeBookCount < 0)
+            {
+                throw new Exception("Кількість вільних книг від'ємна");
+            }
+
+            return freeBookCount;
+        }
     }
 }

@@ -44,7 +44,8 @@ namespace Library.Controllers
                 }
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
-                
+                ViewBag.freeBookCount = book.FreeBooksCount();
+
                 var userId = User.Identity.GetUserId();                if (userId != null)
                 {
                     ViewBag.userId = userId;
