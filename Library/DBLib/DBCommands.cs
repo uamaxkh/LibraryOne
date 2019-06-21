@@ -12,6 +12,16 @@ using DBLib;
 
 namespace DBLib
 {
+    //public class DBCover
+    //{
+    //    public ApplicationDbContext Context { get; set; }
+
+    //    public DBCover(ApplicationDbContext extContext = null)
+    //    {
+    //        if(extContext == null)
+    //    }
+    //}
+
     public class DBCommands
     {
         public static List<Book> GetAllBooks()

@@ -41,6 +41,10 @@ namespace DBLib.Models
         [Display(Name = "Видавець")]
         public Publisher Publisher { get; set; }
 
+        [Required]
+        [Display(Name = "Дата додавання")]
+        public DateTime AddingDate { get; set; }
+
         [Display(Name = "Автор(и)")]
         public virtual ICollection<Author> Authors { get; set; }
         
@@ -48,6 +52,7 @@ namespace DBLib.Models
 
         public Book()
         {
+            AddingDate = DateTime.Now;
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
         }
@@ -55,6 +60,7 @@ namespace DBLib.Models
         public Book(string ISBN, string Title, bool LibraryReading, int Pages,
             int Quantity, short Year)
         {
+            this.AddingDate = DateTime.Now;
             this.ISBN = ISBN;
             this.Title = Title;
             this.LibraryReading = LibraryReading;
