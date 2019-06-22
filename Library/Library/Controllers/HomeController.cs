@@ -97,6 +97,8 @@ namespace Library.Controllers
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
                 ViewBag.freeBookCount = book.FreeBooksCount();
+                ViewBag.Comments = DBCommands.GetCommentsByBookId((Guid)id);
+                ViewBag.bookId = (Guid)id;
 
                 var userId = User.Identity.GetUserId();                if (userId != null)
                 {
@@ -170,6 +172,19 @@ namespace Library.Controllers
             {
                 throw ex;
             }
+        }
+
+        [HttpPost]
+        public ActionResult AddCommnet(string CommentText, Guid bookId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            if (userId != null)
+            {
+                DBCommands.AddComment(userId, bookId, CommentText);
+            }
+
+            return RedirectToAction("ShowBook", new { id = bookId});
         }
 
 

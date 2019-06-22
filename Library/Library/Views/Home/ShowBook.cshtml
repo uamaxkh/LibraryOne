@@ -8,7 +8,7 @@
 <h1>Books</h1>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-6 col-md-2">
+        <div class="col-xs-6 col-md-4">
             <div>
                 @Html.LabelFor(b => b.ISBN)
                 @Html.DisplayFor(b => b.ISBN)
@@ -36,17 +36,17 @@
             </div>
             <div>
                 @Html.LabelFor(b => b.Publisher.Name)
-                <a href="@Url.Action("ShowPublisher","Home",new { id = Model.Publisher.Id})">@Model.Publisher.Name</a>
+                <a href="@Url.Action("ShowPublisher", "Home", new { id = Model.Publisher.Id })">@Model.Publisher.Name</a>
             </div>
             <div>
                 @Html.LabelFor(b => b.Section.Name)
-                <a href="@Url.Action("ShowSection","Home",new { id = Model.Section.Id})">@Model.Section.Name</a>
+                <a href="@Url.Action("ShowSection", "Home", new { id = Model.Section.Id })">@Model.Section.Name</a>
             </div>
             <div>
                 @Html.LabelFor(b => b.Authors)
                 @foreach (var author in Model.Authors)
                 {
-                    <a href="@Url.Action("ShowAuthor","Home",new { id = author.Id})">@author.Name</a>
+                    <a href="@Url.Action("ShowAuthor", "Home", new { id = author.Id })">@author.Name</a>
                 }
             </div>
             @if (@ViewBag.userExist)
@@ -80,6 +80,7 @@
         </div>
     </div>
 </div>
+@Html.Partial("_Comments", (List<DBLib.Models.Comment>)ViewBag.Comments)
 
 @section scripts{
     <script>

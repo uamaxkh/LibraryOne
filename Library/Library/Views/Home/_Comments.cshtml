@@ -1,0 +1,38 @@
+﻿@model List<DBLib.Models.Comment>
+
+<br>
+@if (Model.Count > 0)
+{
+    foreach (var review in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading text-uppercase">@review.ApplicationUser.Name @review.ApplicationUser.Surname | @review.Date.ToString("yyyy/MM/dd")</div>
+            <div class="panel-body">@review.CommentText</div>
+        </div>
+    }
+}
+else
+{
+    <h5 class="alertInfo bg-warning text-primary">Жодного коментаря... Стань першим коментатором!</h5>
+}
+    <div class="panel panel-info">
+        <div class="panel-heading text-uppercase">Додати коментар</div>
+        <div class="panel-body">
+            @using (Html.BeginForm("AddCommnet", "Home", null, FormMethod.Post, new { @role = "form" }))
+            {
+                <p>
+                    @Html.Label("Ваш коментар")
+                    @Html.Hidden("bookId", (Guid)ViewBag.bookId)
+                    @Html.TextBox("CommentText", null, new { @class = "form-control" })
+                </p>
+                if (ViewBag.userExist)
+                {
+                    <button type="submit" class="btn btn-sm btn-primary">Додати коментар</button>
+                }
+                else
+                {
+                    @Html.ActionLink("Щоб лишити коментар, необхідно увійти", "Login", "Account", null, new { @class = "btn btn-default" });
+                }
+            }
+        </div>
+    </div>

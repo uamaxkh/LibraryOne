@@ -50,11 +50,14 @@ namespace DBLib.Models
         
         public virtual List<BooksRenting> BooksRenting { get; set; }
 
+        public virtual List<Comment> Comments { get; set; }
+
         public Book()
         {
             AddingDate = DateTime.Now;
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
+            Comments = new List<Comment>();
         }
 
         public Book(string ISBN, string Title, bool LibraryReading, int Pages,
@@ -70,6 +73,7 @@ namespace DBLib.Models
 
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
+            Comments = new List<Comment>();
         }
 
         public int FreeBooksCount()

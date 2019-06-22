@@ -161,8 +161,30 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Book book = db.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).SingleOrDefault(b => b.Id == Id);
+                Book book = db.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Include(b => b.Comments).SingleOrDefault(b => b.Id == Id);
                 return book;
+            }
+        }
+
+        public static void AddComment(string userId, Guid id, string commentText)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser user = GetUserById(userId, db);
+                Book book = GetBookById(id, db);
+
+
+                Comment comment = new Comment() { ApplicationUser = user, Book = book, CommentText = commentText };
+                db.Comments.Add(comment);
+                db.SaveChanges();
+            }
+        }
+
+        public static List<Comment> GetCommentsByBookId(Guid bookId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Comments.OrderByDescending(b => b.Date).Include(b => b.ApplicationUser).Where(b => b.Book.Id == bookId).ToList();
             }
         }
 
