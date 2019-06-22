@@ -32,11 +32,40 @@ namespace DBLib
             }
         }
 
-        public static List<Book> GetBooksRange(int startNum, int endNum)
+        public static List<Book> GetBooksRange(int startNum, int takenNum, string sortingBy, string sortingOrder)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(endNum).ToList();
+                --startNum;
+                var allBooks = GetAllBooks();
+                
+                switch (sortingBy)
+                {
+                    case "Title":
+                        if(sortingOrder == "ASC")
+                            return db.Books.OrderBy(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        else
+                            return db.Books.OrderByDescending(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                    //case "Author":
+                    //    return db.Books.OrderBy(b => b.Authors).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                    case "Publisher":
+                        if (sortingOrder == "ASC")
+                            return db.Books.OrderBy(b => b.Publisher.Name).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        else
+                            return db.Books.OrderByDescending(b => b.Publisher.Name).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                    case "PublicationDate":
+                        if (sortingOrder == "ASC")
+                            return db.Books.OrderBy(b => b.Year).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        else
+                            return db.Books.OrderByDescending(b => b.Year).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                    case "AddingDate":
+                        if (sortingOrder == "ASC")
+                            return db.Books.OrderBy(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        else
+                            return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                }
+
+                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
             }
         }
 

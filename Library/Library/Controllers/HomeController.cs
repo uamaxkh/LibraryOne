@@ -15,12 +15,13 @@ namespace Library.Controllers
     {
         Pagination pagination = new Pagination(12, DBCommands.GetBooksCount);
 
-        public ActionResult Index(int id = 1)
+        public ActionResult Index(int id = 1, string sortingBy = "none", string sortingOrder = "none")
         {
             pagination.setPage(id);
             ViewBag.MaxPage = pagination.GetMaxPage;
             ViewBag.currentPage = id;
-            var books = DBLib.DBCommands.GetBooksRange(pagination.StartPage, pagination.Step);
+
+            var books = DBCommands.GetBooksRange(pagination.StartPage, pagination.Step, sortingBy, sortingOrder);
 
             return View(books);
         }

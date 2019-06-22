@@ -7,12 +7,16 @@
     <div>Пошук за назвою</div>
     <div>
         Сортувати за:
-        <span>Автором</span> |
-        <span>Назвою</span> |
-        <span>Виданням</span> |
-        <span>Даті видання</span>
-        <label for="DescendingRadio"><input id="DescendingRadio" name="sorting" type="radio" />Спадання</label>
-        <label for="AscendingRadio"><input id="AscendingRadio" name="sorting" type="radio" />Зростання</label>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Title", sortingOrder = "ASC" })">Назвою ↑</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Title", sortingOrder = "DESC" })"> ↓</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Author", sortingOrder = "ASC" })">Автором ↑</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Author", sortingOrder = "DESC" })"> ↓</a> |
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Publisher", sortingOrder = "ASC" })">Виданням ↑</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Publisher", sortingOrder = "DESC" })"> ↓</a> |
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "PublicationDate", sortingOrder = "ASC" })">Даті видання ↑</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "PublicationDate", sortingOrder = "DESC" })"> ↓</a> |
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "AddingDate", sortingOrder = "ASC" })">Даті додавання ↑</a>
+        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "AddingDate", sortingOrder = "DESC" })"> ↓</a>
     </div>
     <a href="@Url.Action("Authors")">Автори</a> |
     <a href="@Url.Action("Sections")">Розділи</a> |

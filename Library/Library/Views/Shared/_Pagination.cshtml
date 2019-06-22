@@ -9,11 +9,11 @@
     {
         if (i == ViewBag.currentPage)
         {
-            <a class="btn btn-primary" href="@Url.Action("Index", new { id = i })">@i</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", new { id = i , sortingBy = Request.QueryString["sortingBy"], sortingOrder = Request.QueryString["sortingOrder"]})">@i</a>
         }
         else
         {
-            <a class="btn btn-default" href="@Url.Action("Index", new { id = i })">@i</a>
+            <a class="btn btn-default" href="@Url.Action("Index", new { id = i , sortingBy = Request.QueryString["sortingBy"], sortingOrder = Request.QueryString["sortingOrder"]})">@i</a>
         }
     }
 </div>
