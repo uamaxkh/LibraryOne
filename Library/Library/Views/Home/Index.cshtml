@@ -4,7 +4,20 @@
 }
 
 <div class="jumbotron">
-    <div>Пошук за назвою</div>
+    <div id="search">
+        @using (Html.BeginForm("Search", "Home", null, FormMethod.Post, new { @role = "form", @class = "navbar-form"}))
+        {
+        <div class="input-group">
+            <input id="searchByTitle" placeholder="Пошук" class="form-control" name="searchString" list="titlesList" />
+            <div class="input-group-btn">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+
     <div>
         <span>Сортувати за:</span>
         @SortBtn("Title", "Назвою ↑")
@@ -13,18 +26,25 @@
         @SortBtn("PublicationDate", "Даті видання ↑")
         @SortBtn("AddingDate", "Даті додавання ↑")
     </div>
-    <a href="@Url.Action("Authors")">Автори</a> |
-    <a href="@Url.Action("Sections")">Розділи</a> |
-    <a href="@Url.Action("Publishers")">Видання</a>
 </div>
 @Html.Partial("_BooksView", Model)
+<datalist id="titlesList">
+    @foreach (var book in ViewBag.Titles)
+    {
+    <option value="@book">Заголовок</option>
+    }
+    @foreach (var author in ViewBag.AuthorsName)
+    {
+        <option value="@author">Автор</option>
+    }
+</datalist>
 
-@helper SortBtn(string sortValue, string title)
-{
-    <div class="btn-group">
-        <a name="sortBtn" class="btn btn-default" href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = sortValue,
+    @helper SortBtn(string sortValue, string title)
+        {
+        <div class="btn-group">
+            <a name="sortBtn" class="btn btn-default" href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = sortValue,
             sortingOrder = "ASC" })">@title</a>
             <a name="sortBtn" class="btn btn-default" href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = sortValue,
             sortingOrder = "DESC" })">↓</a>
         </div>
-}
+    }

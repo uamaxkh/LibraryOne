@@ -114,7 +114,7 @@ namespace Library
             var b2 = new Book()
             {
                 Id = System.Guid.Parse("ca2f0f87-008a-4119-8191-5508c9632c2d"),
-                Title = "Відьмак.Останнє бажання",
+                Title = "Відьмак. Останнє бажання",
                 Authors = new List<Author>() { a2 },
                 Year = 2018,
                 Publisher = p1,

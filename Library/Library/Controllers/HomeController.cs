@@ -13,17 +13,63 @@ namespace Library.Controllers
 {
     public class HomeController : Controller
     {
-        Pagination pagination = new Pagination(12, DBCommands.GetBooksCount);
+        const int pagesPerPage = 12;
+        Pagination pagination = new Pagination(pagesPerPage, DBCommands.GetBooksCount);
 
         public ActionResult Index(int id = 1, string sortingBy = "none", string sortingOrder = "none")
         {
             pagination.setPage(id);
             ViewBag.MaxPage = pagination.GetMaxPage;
             ViewBag.currentPage = id;
+            ViewBag.Titles = DBCommands.GetAllTitles();
+            ViewBag.AuthorsName = DBCommands.GetAllAuthorsName();
 
             var books = DBCommands.GetBooksRange(pagination.StartPage, pagination.Step, sortingBy, sortingOrder);
 
             return View(books);
+        }
+
+        public ActionResult Search(string searchString)
+        {
+            ViewBag.findedBooks = DBCommands.SearchBookByTitle(searchString);
+            ViewBag.findedAuthors = DBCommands.SearchAuthorByName(searchString);
+            return View();
+        }
+
+        public ActionResult ShowAuthor(Guid? Id)
+        {
+            Author author = DBCommands.GetAuthorByIdWithBooks(Id);
+
+            if (Id == null || author == null || author.Books.Count == 0)
+            {
+                ViewBag.OtherAuthors = DBCommands.GetAllAuthors();
+            }
+
+            return View(author);
+        }
+
+        public ActionResult ShowPublisher(Guid? Id)
+        {
+            Publisher publisher = DBCommands.GetPublisherByIdWithBooks(Id);
+
+            if (Id == null || publisher == null || publisher.Books.Count == 0)
+            {
+                ViewBag.OtherPublishers = DBCommands.GetAllPublishers();
+            }
+
+            return View(publisher);
+        }
+
+        public ActionResult ShowSection(Guid? Id)
+        {
+            Section section = DBCommands.GetSectionByIdWithBooks(Id);
+
+            if (Id == null || section == null || section.Books.Count == 0)
+            {
+                ViewBag.OtherSections = DBCommands.GetAllSections();
+            }
+
+            return View(section);
         }
 
         public ActionResult About()

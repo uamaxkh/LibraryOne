@@ -12,18 +12,74 @@ using DBLib;
 
 namespace DBLib
 {
-    //public class DBCover
-    //{
-    //    public ApplicationDbContext Context { get; set; }
-
-    //    public DBCover(ApplicationDbContext extContext = null)
-    //    {
-    //        if(extContext == null)
-    //    }
-    //}
 
     public class DBCommands
     {
+        public static List<Book> SearchBookByTitle(string searchString)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Books.Where(b=>b.Title.ToLower().Contains(searchString.ToLower())).ToList();
+            }
+        }
+
+        public static List<Author> SearchAuthorByName(string searchString)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Authors.Where(b => b.Name.ToLower().Contains(searchString.ToLower())).ToList();
+            }
+        }
+
+        public static Author GetAuthorByIdWithBooks(Guid? Id)
+        {
+            if (Id == null)
+                return null;
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Authors.Include(a => a.Books).Where(a => a.Id==Id).FirstOrDefault();
+            }
+        }
+
+        public static Publisher GetPublisherByIdWithBooks(Guid? Id)
+        {
+            if (Id == null)
+                return null;
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Publishers.Include(a => a.Books).Where(a => a.Id == Id).FirstOrDefault();
+            }
+        }
+
+        public static Section GetSectionByIdWithBooks(Guid? Id)
+        {
+            if (Id == null)
+                return null;
+
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Sections.Include(a => a.Books).Where(a => a.Id == Id).FirstOrDefault();
+            }
+        }
+
+        public static List<string> GetAllTitles()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Books.Select(b => b.Title).ToList();
+            }
+        }
+
+        public static List<string> GetAllAuthorsName()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Authors.Select(a => a.Name).ToList();
+            }
+        }
+
         public static List<Book> GetAllBooks()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -37,43 +93,59 @@ namespace DBLib
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 --startNum;
-                
+                var allBooks = GetAllBooks();
+                IOrderedEnumerable<Book> orderedBooks = allBooks.OrderBy(b => b.Title);
+
                 switch (sortingBy)
                 {
                     case "Title":
                         if(sortingOrder == "ASC")
-                            return db.Books.OrderBy(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderBy(b => b.Title); break;
+                        }
                         else
-                            return db.Books.OrderByDescending(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderByDescending(b => b.Title); break;
+                        }
                     case "Author":
                         if (sortingOrder == "ASC")
                         {
-                            var allBooks = GetAllBooks();
-                            return allBooks.OrderBy(b => b.getFirstAuthorName).Skip(startNum).Take(takenNum).ToList();
+                            orderedBooks = allBooks.OrderBy(b => b.getFirstAuthorName); break;
                         }
                         else
                         {
-                            var allBooks = GetAllBooks();
-                            return allBooks.OrderByDescending(b => b.getFirstAuthorName).Skip(startNum).Take(takenNum).ToList();
+                            orderedBooks = allBooks.OrderByDescending(b => b.getFirstAuthorName); break;
                         }
                     case "Publisher":
                         if (sortingOrder == "ASC")
-                            return db.Books.OrderBy(b => b.Publisher.Name).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderBy(b => b.Publisher.Name); break;
+                        }
                         else
-                            return db.Books.OrderByDescending(b => b.Publisher.Name).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderByDescending(b => b.Publisher.Name); break;
+                        }
                     case "PublicationDate":
                         if (sortingOrder == "ASC")
-                            return db.Books.OrderBy(b => b.Year).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderBy(b => b.Year); break;
+                        }
                         else
-                            return db.Books.OrderByDescending(b => b.Year).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderByDescending(b => b.Year); break;
+                        }
                     case "AddingDate":
                         if (sortingOrder == "ASC")
-                            return db.Books.OrderBy(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderBy(b => b.AddingDate); break;
+                        }
                         else
-                            return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                        {
+                            orderedBooks = allBooks.OrderByDescending(b => b.AddingDate); break;
+                        }
                 }
 
-                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                return orderedBooks.Skip(startNum).Take(takenNum).ToList();
             }
         }
 

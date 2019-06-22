@@ -1,0 +1,37 @@
+﻿@if (Model != null)
+{
+    ViewBag.Title = "Видавець: " + Model.Name;
+    @model DBLib.Models.Publisher
+
+    <h2>Видавець: @Model.Name</h2>
+    <h4>Місто: @Model.City</h4>
+
+    if (Model.Books.Count > 0)
+    {
+        <h5 class="alertInfo bg-success text-primary">Цей видавець має <span class="badge">@Model.Books.Count</span> книг</h5>
+        <ul>
+            @foreach (var book in Model.Books)
+            {
+                <li><a href="@Url.Action("ShowBook", "Home", new { id = book.Id })">@book.Title</a></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <h5 class="alertInfo bg-warning text-primary">Це видавець не має книг</h5>
+    }
+}
+else
+{
+    ViewBag.Title = "Видавці";
+    <h2>Видавці</h2>
+
+    <h4 class="alertInfo bg-success text-primary">До вашої уваги такі видавці:</h4>
+
+    <ul>
+        @foreach (var publisher in ViewBag.OtherPublishers)
+        {
+            <li><a href="@Url.Action("ShowPublisher", "Home", new { id = publisher.Id })">@publisher.Name</a></li>
+        }
+    </ul>
+}

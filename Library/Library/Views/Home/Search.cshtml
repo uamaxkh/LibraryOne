@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Пошук";
+}
+
+<h2>Пошук</h2>
+
+@if (ViewBag.findedAuthors.Count > 0)
+{
+<h5 class="alertInfo bg-success text-primary">Знайдено <span class="badge">@ViewBag.findedAuthors.Count</span> авторів за цим запитом</h5>
+    <ul>
+        @foreach (var author in ViewBag.findedAuthors)
+        {
+            <li><a href="@Url.Action("ShowAuthor","Home",new { id = author.Id})">@author.Name</a></li>
+        }
+    </ul>
+}
+else
+{
+    <h5 class="alertInfo bg-warning text-primary">Авторів за цим запитом не знайдено...</h5>
+}
+
+@if (ViewBag.findedBooks.Count > 0)
+{
+    <h5 class="alertInfo bg-success text-primary">Знайдено <span class="badge">@ViewBag.findedBooks.Count</span> книг за цим запитом</h5>
+    <ul>
+        @foreach (var book in ViewBag.findedBooks)
+        {
+            <li><a href="@Url.Action("ShowBook","Home",new { id = book.Id})">@book.Title</a></li>
+        }
+    </ul>
+}
+else
+{
+    <h5 class="alertInfo bg-warning text-primary">Книг за цим запитом не знайдено...</h5>
+}

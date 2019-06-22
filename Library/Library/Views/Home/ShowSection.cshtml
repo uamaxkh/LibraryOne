@@ -1,0 +1,35 @@
+﻿@if (Model != null)
+{
+    ViewBag.Title = "Розділ: " + Model.Name;
+    @model DBLib.Models.Section
+
+    <h2>Розділ: @Model.Name</h2>
+
+    if (Model.Books.Count > 0)
+    {
+        <h5 class="alertInfo bg-success text-primary">Цей розділ містить <span class="badge">@Model.Books.Count</span> книг</h5>
+        <ul>
+            @foreach (var book in Model.Books)
+            {
+                <li><a href="@Url.Action("ShowBook", "Home", new { id = book.Id })">@book.Title</a></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <h5 class="alertInfo bg-warning text-primary">Цей розділ не містить книг</h5>
+    }
+}
+else
+{
+    ViewBag.Title = "Розділи";
+        <h2>Розділи</h2>
+    <h4 class="alertInfo bg-success text-primary">До вашої уваги такі розділи:</h4>
+
+    <ul>
+        @foreach (var oneSection in ViewBag.OtherSections)
+        {
+            <li><a href="@Url.Action("ShowSection", "Home", new { id = oneSection.Id })">@oneSection.Name</a></li>
+        }
+    </ul>
+}
