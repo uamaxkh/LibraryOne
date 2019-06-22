@@ -6,20 +6,25 @@
 <div class="jumbotron">
     <div>Пошук за назвою</div>
     <div>
-        Сортувати за:
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Title", sortingOrder = "ASC" })">Назвою ↑</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Title", sortingOrder = "DESC" })"> ↓</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Author", sortingOrder = "ASC" })">Автором ↑</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Author", sortingOrder = "DESC" })"> ↓</a> |
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Publisher", sortingOrder = "ASC" })">Виданням ↑</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "Publisher", sortingOrder = "DESC" })"> ↓</a> |
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "PublicationDate", sortingOrder = "ASC" })">Даті видання ↑</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "PublicationDate", sortingOrder = "DESC" })"> ↓</a> |
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "AddingDate", sortingOrder = "ASC" })">Даті додавання ↑</a>
-        <a href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = "AddingDate", sortingOrder = "DESC" })"> ↓</a>
+        <span>Сортувати за:</span>
+        @SortBtn("Title", "Назвою ↑")
+        @SortBtn("Author", "Автором ↑")
+        @SortBtn("Publisher", "Виданням ↑")
+        @SortBtn("PublicationDate", "Даті видання ↑")
+        @SortBtn("AddingDate", "Даті додавання ↑")
     </div>
     <a href="@Url.Action("Authors")">Автори</a> |
     <a href="@Url.Action("Sections")">Розділи</a> |
     <a href="@Url.Action("Publishers")">Видання</a>
 </div>
 @Html.Partial("_BooksView", Model)
+
+@helper SortBtn(string sortValue, string title)
+{
+    <div class="btn-group">
+        <a name="sortBtn" class="btn btn-default" href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = sortValue,
+            sortingOrder = "ASC" })">@title</a>
+            <a name="sortBtn" class="btn btn-default" href="@Url.Action("Index", new { id = ViewBag.currentPage, sortingBy = sortValue,
+            sortingOrder = "DESC" })">↓</a>
+        </div>
+}

@@ -46,9 +46,9 @@ namespace DBLib.Models
         public DateTime AddingDate { get; set; }
 
         [Display(Name = "Автор(и)")]
-        public virtual ICollection<Author> Authors { get; set; }
+        public virtual List<Author> Authors { get; set; }
         
-        public virtual ICollection<BooksRenting> BooksRenting { get; set; }
+        public virtual List<BooksRenting> BooksRenting { get; set; }
 
         public Book()
         {
@@ -75,6 +75,14 @@ namespace DBLib.Models
         public int FreeBooksCount()
         {
             return DBCommands.FreeBookCountById(Id);
+        }
+
+        public string getFirstAuthorName
+        {
+            get
+            {
+                return Authors[0].Name;
+            }
         }
     }
 }

@@ -37,7 +37,6 @@ namespace DBLib
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 --startNum;
-                var allBooks = GetAllBooks();
                 
                 switch (sortingBy)
                 {
@@ -46,8 +45,17 @@ namespace DBLib
                             return db.Books.OrderBy(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
                         else
                             return db.Books.OrderByDescending(b => b.Title).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
-                    //case "Author":
-                    //    return db.Books.OrderBy(b => b.Authors).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
+                    case "Author":
+                        if (sortingOrder == "ASC")
+                        {
+                            var allBooks = GetAllBooks();
+                            return allBooks.OrderBy(b => b.getFirstAuthorName).Skip(startNum).Take(takenNum).ToList();
+                        }
+                        else
+                        {
+                            var allBooks = GetAllBooks();
+                            return allBooks.OrderByDescending(b => b.getFirstAuthorName).Skip(startNum).Take(takenNum).ToList();
+                        }
                     case "Publisher":
                         if (sortingOrder == "ASC")
                             return db.Books.OrderBy(b => b.Publisher.Name).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(takenNum).ToList();
