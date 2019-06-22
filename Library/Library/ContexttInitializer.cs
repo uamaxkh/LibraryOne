@@ -431,7 +431,7 @@ namespace Library
                 Id = System.Guid.Parse("3c290746-9fd4-46ff-9fb3-0515c08c0ee1"),
                 Title = "Язык программирования C# 7 и платформы .NET и .NET Core, 8-е издание",
                 Authors = new List<Author>() { a16, a17 },
-                Year = 209,
+                Year = 2009,
                 Publisher = p11,
                 Pages = 1328,
                 ISBN = "978-5-6040723-1-8",

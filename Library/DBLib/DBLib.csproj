@@ -67,6 +67,7 @@
     <Compile Include="Models\Publisher.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\BooksRenting.cs" />
+    <Compile Include="Pagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

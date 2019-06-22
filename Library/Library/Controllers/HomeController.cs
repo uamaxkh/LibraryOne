@@ -13,9 +13,14 @@ namespace Library.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        Pagination pagination = new Pagination(12, DBCommands.GetBooksCount);
+
+        public ActionResult Index(int id = 1)
         {
-            var books = DBLib.DBCommands.GetAllBooks();
+            pagination.setPage(id);
+            ViewBag.MaxPage = pagination.GetMaxPage;
+            ViewBag.currentPage = id;
+            var books = DBLib.DBCommands.GetBooksRange(pagination.StartPage, pagination.Step);
 
             return View(books);
         }

@@ -28,7 +28,23 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).ToList();
+                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).ToList();
+            }
+        }
+
+        public static List<Book> GetBooksRange(int startNum, int endNum)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Skip(startNum).Take(endNum).ToList();
+            }
+        }
+
+        public static int GetBooksCount()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.Books.Count();
             }
         }
 
