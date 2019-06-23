@@ -97,8 +97,7 @@ namespace Library.Controllers
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
                 ViewBag.freeBookCount = book.FreeBooksCount();
-                ViewBag.Comments = DBCommands.GetCommentsByBookId((Guid)id);
-                ViewBag.bookId = (Guid)id;
+                
 
                 var userId = User.Identity.GetUserId();                if (userId != null)
                 {
@@ -112,7 +111,12 @@ namespace Library.Controllers
                 {
                     ViewBag.userExist = false;
                     ViewBag.userOrderedTheBook = false;
-                }
+                }
+
+                //For _Comments
+                ViewBag.Comments = DBCommands.GetCommentsByBookId((Guid)id);
+                ViewBag.bookId = (Guid)id;
+                ViewBag.userId = userId;
                 return View(book);
         }
             catch
@@ -185,6 +189,18 @@ namespace Library.Controllers
             }
 
             return RedirectToAction("ShowBook", new { id = bookId});
+        }
+        
+        public ActionResult DeleteComment(Guid commentId, Guid bookId)
+        {
+            var userId = User.Identity.GetUserId();
+
+            if (userId != null)
+            {
+                DBCommands.deleteComment(userId, commentId);
+            }
+
+            return RedirectToAction("ShowBook", new { id = bookId });
         }
 
 

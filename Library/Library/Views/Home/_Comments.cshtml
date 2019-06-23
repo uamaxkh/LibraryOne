@@ -6,7 +6,19 @@
     foreach (var review in Model)
     {
         <div class="panel panel-default">
-            <div class="panel-heading text-uppercase">@review.ApplicationUser.Name @review.ApplicationUser.Surname | @review.Date.ToString("yyyy/MM/dd")</div>
+            <div class="panel-heading text-uppercase">
+                @if (@ViewBag.userId == review.ApplicationUser.Id)
+                {
+                    using (Html.BeginForm("DeleteComment", "Home", null, FormMethod.Post, new { @class="displayInline-block"}))
+                    {
+                        @Html.Hidden("bookId", (Guid)ViewBag.bookId)
+                        <button name="commentId" class = "btn btn-xs btn-danger" value="@review.Id" type="submit">X</button>
+                    }
+
+                    
+                }
+                @review.ApplicationUser.Name @review.ApplicationUser.Surname | @review.Date.ToString("yyyy/MM/dd - HH:mm")
+            </div>
             <div class="panel-body">@review.CommentText</div>
         </div>
     }
@@ -36,3 +48,8 @@ else
             }
         </div>
     </div>
+<script>
+    function deleteComment(id) {
+
+    }
+</script>

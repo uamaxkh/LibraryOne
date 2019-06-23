@@ -62,3 +62,7 @@ textarea {
     max-height: 200px;
     box-shadow: 1px 1px 2px gray;
 }
+
+.displayInline-block{
+    display: inline-block;
+}

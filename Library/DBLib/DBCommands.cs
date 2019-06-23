@@ -467,5 +467,21 @@ namespace DBLib
                 db.SaveChanges();
             }
         }
+
+        //with verifying user
+        public static void deleteComment(string userId, Guid commentId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Comment comment = db.Comments.Include(c => c.ApplicationUser)
+                    .Where(c => c.Id == commentId).FirstOrDefault();
+
+                if(comment.ApplicationUser.Id == userId)
+                {
+                    db.Comments.Remove(comment);
+                    db.SaveChanges();
+                }
+            }
+        }
     }
 }
