@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Library.Models;
+using DBLib;
 
 namespace DBLib.Models
 {
@@ -19,5 +20,50 @@ namespace DBLib.Models
         public DateTime? TakingDate { get; set; }
 
         public DateTime? ReturningDate { get; set; }
+
+        public DateTime getReturningDate
+        {
+            get
+            {
+                if(TakingDate != null)
+                {
+                    return ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
+                }
+                return DateTime.MinValue;
+            }
+        }
+
+        public bool isHavePenalty
+        {
+            get
+            {
+                if (TakingDate != null)
+                {
+                    var returningDate = ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
+                    int penaltyDays = (DateTime.Now - returningDate).Days;
+                    if (penaltyDays > 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                return false;
+            }
+        }
+
+        public double getFineValue
+        {
+            get
+            {
+                if (TakingDate != null)
+                {
+                    var returningDate = ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
+                    int penaltyDays = (DateTime.Now - returningDate).Days;
+                    double fine = penaltyDays * LibrarySettings.getFinePerDay();
+                    return fine;
+                }
+                return 0.0;
+            }
+        }
     }
 }

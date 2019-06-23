@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Мої книги";
+    @model DBLib.Models.BooksRenting
+}
+
+<h2>Мої книги</h2>
+
+<h4 class="bg-info alertMessage">Замовлені книги</h4>
+<ul id="booksOrdered">
+    @{
+        foreach (var br in ViewBag.booksOrdered)
+        {
+            <li>
+                @using (Html.BeginForm("CancelOrder", "Home", FormMethod.Post, new { @class = "displayInline-block" }))
+                {
+                    <a href="@Url.Action("ShowBook", new { id = br.Book.Id})">@br.Book.Title</a>
+                    <button type="submit" value="@br.Id" name="orderId" class="btn btn-xs btn-danger">x</button>
+                }
+            </li>
+        }
+    }
+</ul>
+
+<h4 class="bg-info alertMessage">Взяті книги</h4>
+<ul id="booksTaked">
+    @{
+        foreach (var br in ViewBag.booksTaked)
+        {
+        <li class="@(br.isHavePenalty ? "bg-danger" : "" )">
+            <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
+                @br.Book.Title
+            </a>
+            <ul>
+                <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+                <li>
+                    Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
+                    @if (br.isHavePenalty)
+                    {
+                        <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
+                    }
+                </li>
+            </ul>
+        </li>
+        }
+    }
+</ul>
+
+
+@*<ul id="booksTaked">
+    @{
+        foreach (var br in ViewBag.booksTaked)
+        {
+            <li>
+                <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
+                    @br.Book.Title
+                </a>
+                <span>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</span>
+                @if (!br.isHavePenalty)
+                {
+                    <span>Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")</span>
+                }
+                else if (br.isHavePenalty)
+                {
+                    <span class="bg-danger">
+                        Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
+                        <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
+                    </span>
+                }
+            </li>
+        }
+    }
+</ul>*@

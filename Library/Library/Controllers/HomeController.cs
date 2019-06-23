@@ -144,7 +144,7 @@ namespace Library.Controllers
 
                 if (state)
                 {
-                    return new JsonResult { Data = "Успішно додано!" };
+                    return new JsonResult { Data = "success" };
                 }
                 return new JsonResult { Data = "Помилка при замовленні книги" };
             }
@@ -168,7 +168,7 @@ namespace Library.Controllers
 
                 if (state != false)
                 {
-                    return new JsonResult { Data = "Успішно видалено!" };
+                    return new JsonResult { Data = "success" };
                 }
                 return new JsonResult { Data = "Помилка при скасуванні замовлення книги" };
             }
@@ -191,6 +191,7 @@ namespace Library.Controllers
             return RedirectToAction("ShowBook", new { id = bookId});
         }
         
+        [HttpPost]
         public ActionResult DeleteComment(Guid commentId, Guid bookId)
         {
             var userId = User.Identity.GetUserId();
@@ -203,6 +204,32 @@ namespace Library.Controllers
             return RedirectToAction("ShowBook", new { id = bookId });
         }
 
+        public ActionResult MyBooks()
+        {
+            var userId = User.Identity.GetUserId();
+
+            if(userId == null)
+                return RedirectToAction("Login", "Account");
+
+
+            List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(userId);
+
+            List<BooksRenting> booksOrdered = allBooksRentings.Where(br => br.TakingDate == null).ToList();
+
+            List<BooksRenting> booksTaked = allBooksRentings.Where(br => br.ReturningDate == null
+                && br.TakingDate != null).ToList();
+
+            ViewBag.booksOrdered = booksOrdered;
+            ViewBag.booksTaked = booksTaked;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CancelOrder(Guid orderId)
+        {
+            DBCommands.cancelBookOrderById(orderId);
+            return RedirectToAction("MyBooks");
+        }
 
 
 

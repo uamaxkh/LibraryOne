@@ -26,25 +26,10 @@ namespace Library
 
             List<Book> booksList = new List<Book>();
 
-            //var commentsList = new List<Comment>();
-            //var c1 = new Comment()
-            //{
-            //    //Book = ,
-            //    //ApplicationUser = ,
-            //    //Date = ,
-            //    CommentText = ""
-            //};
+            var commentsList = new List<Comment>();
 
-            //var booksRentingsList = new List<BooksRenting>();
-            //var br1 = new BooksRenting()
-            //{
-            //    //Book = ,
-            //    //ApplicationUser = ,
-            //    //TakingDate = ;
-            //    //ReturningDate = 
-            //};
-
-            //aaa
+            var booksRentingsList = new List<BooksRenting>();
+            
             var a0 = new Author() { Name = "---" }; authorsList.Add(a0);
             var a1 = new Author() { Name = "Юрій Горліс-Горський" }; authorsList.Add(a1);
             var a2 = new Author() { Name = "Анджей Сапковский" }; authorsList.Add(a2);
@@ -606,14 +591,16 @@ namespace Library
             roleManager.Create(registeredRole);
 
             // создаем пользователей
-            var adminUser = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com", Name="Василь", Surname="Петрович" };
+            var adminUser = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com", Name="Василь", Surname="Адміністраторович" };
             string adminPassword = "123qwe";
 
-            var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", Name = "Іванка", Surname = "Хомич" };
+            var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", Name = "Іванка", Surname = "Бібліотекар" };
             string librarianPassword = "123qwe";
 
             var registeredUser = new ApplicationUser { Email = "registered@gmail.com", UserName = "registered@gmail.com", Name = "Артем", Surname = "Дуб" };
             string registeredPassword = "123qwe";
+            var registeredUser2 = new ApplicationUser { Email = "registered2@gmail.com", UserName = "registered2@gmail.com", Name = "Тимофій", Surname = "Зібров" };
+            var registeredUser3 = new ApplicationUser { Email = "registered3@gmail.com", UserName = "registered3@gmail.com", Name = "Олена", Surname = "Ємець" };
 
             var result1 = userManager.Create(adminUser, adminPassword);
             userManager.AddToRole(adminUser.Id, adminRole.Name);
@@ -626,13 +613,82 @@ namespace Library
 
             var result3 = userManager.Create(registeredUser, registeredPassword);
             userManager.AddToRole(registeredUser.Id, registeredRole.Name);
+            var result4 = userManager.Create(registeredUser2, registeredPassword);
+            userManager.AddToRole(registeredUser2.Id, registeredRole.Name);
+            var result5 = userManager.Create(registeredUser3, registeredPassword);
+            userManager.AddToRole(registeredUser3.Id, registeredRole.Name);
+
+
+            var c1 = new Comment()
+            {
+                Book = b18,
+                ApplicationUser = registeredUser,
+                CommentText = "Гарний посібник для англійської"
+            }; commentsList.Add(c1);
+
+            var c2 = new Comment()
+            {
+                Book = b18,
+                ApplicationUser = librarianUser,
+                CommentText = "Так, і справді"
+            }; commentsList.Add(c2);
+
+            var br1 = new BooksRenting()
+            {
+                Book = b17,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-5),
+                TakingDate = DateTime.Now.AddDays(-4),
+                ReturningDate = DateTime.Now.AddDays(-2)
+            }; booksRentingsList.Add(br1);
+
+            var br2 = new BooksRenting()
+            {
+                Book = b18,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-2),
+                TakingDate = DateTime.Now.AddDays(-1),
+            }; booksRentingsList.Add(br2);
+
+            var br3 = new BooksRenting()
+            {
+                Book = b19,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-2),
+                TakingDate = DateTime.Now.AddDays(-1),
+            }; booksRentingsList.Add(br3);
+
+            var br4 = new BooksRenting()
+            {
+                Book = b20,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now,
+            }; booksRentingsList.Add(br4);
+
+            var br5 = new BooksRenting()
+            {
+                Book = b16,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now,
+            }; booksRentingsList.Add(br5);
+
+            var br6 = new BooksRenting()
+            {
+                Book = b5,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-18),
+                TakingDate = DateTime.Now.AddDays(-17),
+            }; booksRentingsList.Add(br6);
+
+
+
 
             booksList.ForEach(el => context.Books.Add(el));
             authorsList.ForEach(el => context.Authors.Add(el));
             publishersList.ForEach(el => context.Publishers.Add(el));
             sectionsList.ForEach(el => context.Sections.Add(el));
-            //commentsList.ForEach(el => context.Comments.Add(el));
-            //booksRentingsList.ForEach(el => context.BooksRenting.Add(el));
+            commentsList.ForEach(el => context.Comments.Add(el));
+            booksRentingsList.ForEach(el => context.BooksRenting.Add(el));
             base.Seed(context);
         }
     }

@@ -13,7 +13,7 @@ using DBLib;
 namespace DBLib
 {
 
-    public class DBCommands
+    public static class DBCommands
     {
         public static List<Book> SearchBookByTitle(string searchString)
         {
@@ -418,6 +418,21 @@ namespace DBLib
                 return true;
             }
         }
+        //!!!
+        public static void cancelBookOrderById(Guid bookRentingId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var bookRenting = db.BooksRenting.Find(bookRentingId);
+
+                if(bookRenting != null)
+                {
+                    db.BooksRenting.Remove(bookRenting);
+
+                    db.SaveChanges();
+                }
+            }
+        }
 
         public static int FreeBookCountById(Guid Id, ApplicationDbContext dbContext = null)
         {
@@ -483,5 +498,33 @@ namespace DBLib
                 }
             }
         }
+        
+        public static List<BooksRenting> getUserOrderedBooks(string userId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.BooksRenting.Include(br => br.Book).Where(br => br.ApplicationUser.Id == userId
+                    && br.ReturningDate == null).ToList();
+            }
+        }
+
+        ////OrderedForTaking
+        //public static List<BooksRenting> getUserOrderedBooks(string userId)
+        //{
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        return db.BooksRenting.Include(br => br.Book).Include(br => br.).Where(br => br.ApplicationUser.Id == userId
+        //            && br.TakingDate == null).ToList();
+        //    }
+        //}
+
+        //public static List<BooksRenting> getUserTakedBooks(string userId)
+        //{
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        return db.BooksRenting.Where(br => br.ApplicationUser.Id == userId
+        //            && br.ReturningDate == null && br.TakingDate != null).ToList();
+        //    }
+        //}
     }
 }

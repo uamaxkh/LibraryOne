@@ -1,11 +1,12 @@
 ﻿
 @{
     @model DBLib.Models.Book
+    ViewBag.Title = @Model.Title;
 }
 
 <!DOCTYPE html>
 
-<h1>Books</h1>
+<h1>@Model.Title</h1>
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-6 col-md-4">
@@ -101,7 +102,8 @@
                 success: function (data)
                 {
                     toggleOrderBtn();
-                    alert(data);
+                    if (data != "success")
+                        alert(data);
                 },
                 error: function(xhr, status, error){
                     alert("Помилка :(");
@@ -118,7 +120,8 @@
                 success: function (data)
                 {
                     toggleOrderBtn();
-                    alert(data);
+                    if (data != "success")
+                        alert(data);
                 },
                 error: function(xhr, status, error){
                     alert("Помилка :(");
