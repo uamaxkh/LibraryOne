@@ -8,9 +8,16 @@
     <ul>
         @foreach (var user in Model)
         {
-            <li>
+        <li>
+            @if (user.userHasPenalty)
+            {
+            <a class="bg-danger" href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Name @user.Surname - Штраф: @user.getSummaryFineValue</a>
+            }
+            else
+            {
                 <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Name @user.Surname</a>
-            </li>
+            }
+        </li>
         }
     </ul>
 <input list="userList" />

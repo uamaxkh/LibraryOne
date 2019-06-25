@@ -44,5 +44,36 @@ using DBLib.Models;
             BooksRenting = new List<BooksRenting>();
             IsBanned = false;
         }
+
+        public bool userHasPenalty
+        {
+            get
+            {
+                foreach(var bookRenting in BooksRenting)
+                {
+                    if (bookRenting.isHavePenalty)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public double getSummaryFineValue
+        {
+            get
+            {
+                double summaryFine = 0;
+                foreach (var bookRenting in BooksRenting)
+                {
+                    //if (bookRenting.isHavePenalty)
+                    //{
+                        summaryFine += bookRenting.getFineValue;
+                    //}
+                }
+                return summaryFine;
+            }
+        }
     }
 }

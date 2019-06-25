@@ -55,7 +55,7 @@ namespace DBLib.Models
         {
             get
             {
-                if (TakingDate != null && ReturningDate == null)
+                if (TakingDate != null && ReturningDate == null && getReturningDate < DateTime.Now)
                 {
                     var returningDate = ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
                     int penaltyDays = (DateTime.Now - returningDate).Days;
