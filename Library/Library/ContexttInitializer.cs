@@ -581,9 +581,9 @@ namespace Library
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
 
             // создаем две роли
-            var adminRole = new IdentityRole { Name = "Admin" };
-            var librarianRole = new IdentityRole { Name = "Librarian" };
-            var registeredRole = new IdentityRole { Name = "Registered" };
+            var adminRole = new IdentityRole { Name = "admin" };
+            var librarianRole = new IdentityRole { Name = "librarian" };
+            var registeredRole = new IdentityRole { Name = "registered" };
 
             // добавляем роли в бд
             roleManager.Create(adminRole);

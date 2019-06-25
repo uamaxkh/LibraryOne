@@ -8,6 +8,7 @@ using DBLib.Models;
 using Library.Models;
 using DBLib;
 using Microsoft.AspNet.Identity;
+using System.Web.Security;
 
 namespace Library.Controllers
 {
@@ -255,6 +256,9 @@ namespace Library.Controllers
 
         public ActionResult Test()
         {
+            string[] rolesArray;
+            RolePrincipal r = (RolePrincipal)User;
+            rolesArray = r.GetRoles();
             return View();
         }
 

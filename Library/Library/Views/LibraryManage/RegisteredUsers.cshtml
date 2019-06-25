@@ -1,0 +1,22 @@
+﻿@{
+        ViewBag.Title = "Зареєстровані користувачі";
+        @model List<Library.Models.ApplicationUser>
+    }
+
+    <h2>Зареєстровані користувачі</h2>
+
+    <ul>
+        @foreach (var user in Model)
+        {
+            <li>
+                <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Name @user.Surname</a>
+            </li>
+        }
+    </ul>
+<input list="userList" />
+    <datalist id="userList">
+        @foreach (var user in Model)
+        {
+        <option>@user.Name @user.Surname</option>
+        }
+    </datalist>

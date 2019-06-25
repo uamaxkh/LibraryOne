@@ -134,11 +134,11 @@ namespace Library.Controllers
                     return View();
                 }
             }
-            catch(ExceptionExt ex)
+            catch (ExceptionExt ex)
             {
                 return RedirectToAction("Error", "Home", ex);
             }
-            
+
             return RedirectToAction("Error", "Home", new ExceptionExt("Видання успішно додано", null, MessageState.Succes));
         }
 
@@ -168,6 +168,13 @@ namespace Library.Controllers
             }
 
             return RedirectToAction("Error", "Home", new ExceptionExt("Розділ успішно додано", null, MessageState.Succes));
+        }
+
+        public ActionResult RegisteredUsers()
+        {
+            var registeredUsers = DBCommands.getOnlyRegisteredUsers();
+
+            return View(registeredUsers);
         }
     }
 }

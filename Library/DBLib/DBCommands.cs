@@ -503,7 +503,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.BooksRenting.Include(br => br.Book).Where(br => br.ApplicationUser.Id == userId
+                return db.BooksRenting.OrderBy(br => br.OrderDate).Include(br => br.Book).Where(br => br.ApplicationUser.Id == userId
                     && br.ReturningDate == null).ToList();
             }
         }
@@ -524,23 +524,19 @@ namespace DBLib
             }
         }
 
-        ////OrderedForTaking
-        //public static List<BooksRenting> getUserOrderedBooks(string userId)
-        //{
-        //    using (ApplicationDbContext db = new ApplicationDbContext())
-        //    {
-        //        return db.BooksRenting.Include(br => br.Book).Include(br => br.).Where(br => br.ApplicationUser.Id == userId
-        //            && br.TakingDate == null).ToList();
-        //    }
-        //}
 
-        //public static List<BooksRenting> getUserTakedBooks(string userId)
-        //{
-        //    using (ApplicationDbContext db = new ApplicationDbContext())
-        //    {
-        //        return db.BooksRenting.Where(br => br.ApplicationUser.Id == userId
-        //            && br.ReturningDate == null && br.TakingDate != null).ToList();
-        //    }
-        //}
+        //public static List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole> getOnlyRegisteredUsers()
+        public static List<ApplicationUser> getOnlyRegisteredUsers()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                string adminRoleId = db.Roles.Where(r => r.Name == "admin").Select(r => r.Id).SingleOrDefault();
+                string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
+
+                var users = db.Users.Include(u => u.BooksRenting).Where(u => u.Roles.All(r => r.RoleId != librarianRoleId)).ToList();
+
+                return users;
+            }
+        }
     }
 }
