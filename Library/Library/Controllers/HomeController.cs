@@ -99,15 +99,19 @@ namespace Library.Controllers
                 ViewBag.freeBookCount = book.FreeBooksCount();
                 
 
-                var userId = User.Identity.GetUserId();                if (userId != null)
+                var userId = User.Identity.GetUserId();
+
+                if (userId != null)
                 {
                     ViewBag.userId = userId;
                     ViewBag.userExist = true;
+                    ViewBag.userHasPenalty = DBCommands.UserHasPenalty(userId);
 
                     //Перевірка, чи цей користувач вже замовив книгу
                     bool userOrderedTheBook = DBCommands.GetBookOrderByBookAndUserId((Guid)id, userId) != null;
                     ViewBag.userOrderedTheBook = userOrderedTheBook;
-                }                else
+                }
+                else
                 {
                     ViewBag.userExist = false;
                     ViewBag.userOrderedTheBook = false;
@@ -116,7 +120,8 @@ namespace Library.Controllers
                 //For _Comments
                 ViewBag.Comments = DBCommands.GetCommentsByBookId((Guid)id);
                 ViewBag.bookId = (Guid)id;
-                ViewBag.userId = userId;
+                ViewBag.userId = userId;
+
                 return View(book);
         }
             catch

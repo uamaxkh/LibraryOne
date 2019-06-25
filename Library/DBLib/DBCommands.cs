@@ -507,6 +507,22 @@ namespace DBLib
                     && br.ReturningDate == null).ToList();
             }
         }
+        
+        public static bool UserHasPenalty(string userId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var rentings = db.BooksRenting.Where(br => br.ApplicationUser.Id == userId).ToList();
+                foreach(var rent in rentings)
+                {
+                    if (rent.isHavePenalty)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
 
         ////OrderedForTaking
         //public static List<BooksRenting> getUserOrderedBooks(string userId)

@@ -52,22 +52,30 @@
             </div>
             @if (@ViewBag.userExist)
             {
-                if (@ViewBag.userOrderedTheBook) //книга вже замовлена
+                if (@ViewBag.userOrderedTheBook) //Book is ordered by tish user
                 {
                     <div id="addBookOrder" class="btn btn-primary hidden">Замовити</div>
                     <div id="cancelBookOrder" class="btn btn-danger">Відмінити</div>
                 }
                 else
                 {
-
-                    if (@ViewBag.freeBookCount > 0)
+                    //User don`t has penalty, he can order book
+                    if (!ViewBag.userHasPenalty)
                     {
-                        <div id="addBookOrder" class="btn btn-primary">Замовити</div>
-                        <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+                        //If the book is free (at least one)
+                        if (@ViewBag.freeBookCount > 0)
+                        {
+                            <div id="addBookOrder" class="btn btn-primary">Замовити</div>
+                            <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>
+                        }
+                        else
+                        {
+                            <div class="btn btn-default">Вільних книг немає</div>
+                        }
                     }
                     else
                     {
-                        <div class="btn btn-default">Вільних книг немає</div>
+                            <a href="@Url.Action("MyBooks")"><div class="btn btn-danger">Ви маєте заборгованість!</div></a>
                     }
                 }
             }
