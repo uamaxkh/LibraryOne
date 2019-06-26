@@ -21,7 +21,7 @@ namespace DBLib.Models
 
         public DateTime? ReturningDate { get; set; }
 
-        public DateTime getReturningDate
+        public DateTime GetReturningDate
         {
             get
             {
@@ -33,13 +33,13 @@ namespace DBLib.Models
             }
         }
 
-        public bool isHasPenalty
+        public bool IsHasPenalty
         {
             get
             {
                 if (TakingDate != null && ReturningDate == null)
                 {
-                    var returningDate = ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
+                    var returningDate = GetReturningDate;
                     int penaltyDays = (DateTime.Now - returningDate).Days;
                     if (penaltyDays > 0)
                     {
@@ -51,13 +51,13 @@ namespace DBLib.Models
             }
         }
 
-        public double getFineValue
+        public double GetFineValue
         {
             get
             {
-                if (TakingDate != null && ReturningDate == null && getReturningDate < DateTime.Now)
+                if (TakingDate != null && ReturningDate == null && GetReturningDate < DateTime.Now)
                 {
-                    var returningDate = ((DateTime)TakingDate).AddDays(LibrarySettings.getDaysForTaking());
+                    var returningDate = GetReturningDate;
                     int penaltyDays = (DateTime.Now - returningDate).Days;
                     double fine = penaltyDays * LibrarySettings.getFinePerDay();
                     return fine;

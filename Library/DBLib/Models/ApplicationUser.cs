@@ -51,7 +51,7 @@ using DBLib.Models;
             {
                 foreach(var bookRenting in BooksRenting)
                 {
-                    if (bookRenting.isHasPenalty)
+                    if (bookRenting.IsHasPenalty)
                     {
                         return true;
                     }
@@ -67,9 +67,9 @@ using DBLib.Models;
                 double summaryFine = 0;
                 foreach (var bookRenting in BooksRenting)
                 {
-                    //if (bookRenting.isHasPenalty)
+                    //if (bookRenting.IsHasPenalty)
                     //{
-                        summaryFine += bookRenting.getFineValue;
+                        summaryFine += bookRenting.GetFineValue;
                     //}
                 }
                 return summaryFine;

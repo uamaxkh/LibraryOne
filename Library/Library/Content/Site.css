@@ -66,3 +66,7 @@ textarea {
 .displayInline-block{
     display: inline-block;
 }
+
+.noPadding{
+    padding: 0px;
+}

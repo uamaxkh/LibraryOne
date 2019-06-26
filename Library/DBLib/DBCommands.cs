@@ -68,7 +68,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.Select(b => b.Title).ToList();
+                return db.Books.OrderBy(a => a.Title).Select(b => b.Title).ToList();
             }
         }
 
@@ -76,7 +76,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Authors.Select(a => a.Name).ToList();
+                return db.Authors.OrderBy(a => a.Name).Select(a => a.Name).ToList();
             }
         }
 
@@ -192,7 +192,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Authors.ToList();
+                return db.Authors.OrderBy(a => a.Name).ToList();
             }
         }
 
@@ -200,7 +200,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Sections.ToList();
+                return db.Sections.OrderBy(a => a.Name).ToList();
             }
         }
 
@@ -208,7 +208,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Publishers.ToList();
+                return db.Publishers.OrderBy(a => a.Name).ToList();
             }
         }
 
@@ -515,7 +515,7 @@ namespace DBLib
                 var rentings = db.BooksRenting.Where(br => br.ApplicationUser.Id == userId).ToList();
                 foreach(var rent in rentings)
                 {
-                    if (rent.isHasPenalty)
+                    if (rent.IsHasPenalty)
                     {
                         return true;
                     }

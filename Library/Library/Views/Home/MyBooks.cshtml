@@ -32,7 +32,7 @@
     @{
         foreach (var br in ViewBag.booksTaked)
         {
-    <li class="@(br.isHasPenalty ? "bg-danger" : "" )">
+    <li class="@(br.IsHasPenalty ? "bg-danger" : "" )">
         <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
             @br.Book.Title
         </a>
@@ -46,10 +46,10 @@
             @if (!br.Book.LibraryReading)
             {
                 <li>
-                    Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
-                    @if (br.isHasPenalty)
+                    Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                    @if (br.IsHasPenalty)
                     {
-                        <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
+                        <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
                     }
                 </li>
             }
@@ -69,15 +69,15 @@
                     @br.Book.Title
                 </a>
                 <span>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</span>
-                @if (!br.isHasPenalty)
+                @if (!br.IsHasPenalty)
                 {
-                    <span>Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")</span>
+                    <span>Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")</span>
                 }
-                else if (br.isHasPenalty)
+                else if (br.IsHasPenalty)
                 {
                     <span class="bg-danger">
-                        Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
-                        <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
+                        Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                        <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
                     </span>
                 }
             </li>

@@ -11,7 +11,7 @@
     @{
         using (Html.BeginForm("UserTakingBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
         {
-            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" hidden />
+            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
             foreach (var br in ViewBag.booksOrdered)
             {
                 <li>
@@ -33,10 +33,10 @@
     @{
         using (Html.BeginForm("UserReturningBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
         {
-            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" hidden />
+            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
             foreach (var br in ViewBag.booksTaked)
             {
-                <li class="@(br.isHasPenalty ? "bg-danger" : "" )">
+                <li class="@(br.IsHasPenalty ? "bg-danger" : "" )">
                     <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
                         @br.Book.Title
                     </a>
@@ -50,10 +50,10 @@
                         <ul>
                             <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
                             <li>
-                                Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
-                                @if (br.isHasPenalty)
+                                Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                                @if (br.IsHasPenalty)
                                 {
-                                    <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
+                                    <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
                                 }
                             </li>
                         </ul>

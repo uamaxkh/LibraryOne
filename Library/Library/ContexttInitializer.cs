@@ -676,8 +676,8 @@ namespace Library
             {
                 Book = b16,
                 ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-18),
-                TakingDate = DateTime.Now.AddDays(-17),
+                OrderDate = DateTime.Now.AddDays(-12),
+                TakingDate = DateTime.Now.AddDays(-11),
             }; booksRentingsList.Add(br6);
 
             var br7 = new BooksRenting()
@@ -687,6 +687,14 @@ namespace Library
                 OrderDate = DateTime.Now.AddHours(-2),
                 TakingDate = DateTime.Now,
             }; booksRentingsList.Add(br7);
+
+            var br8 = new BooksRenting()
+            {
+                Book = b32,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-13),
+                TakingDate = DateTime.Now.AddDays(-12),
+            }; booksRentingsList.Add(br8);
 
 
 
