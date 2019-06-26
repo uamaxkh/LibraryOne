@@ -33,7 +33,7 @@ namespace DBLib.Models
             }
         }
 
-        public bool isHavePenalty
+        public bool isHasPenalty
         {
             get
             {

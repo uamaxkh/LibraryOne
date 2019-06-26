@@ -9,39 +9,52 @@
 <h4 class="bg-info alertMessage">Замовлені книги</h4>
 <ul id="booksOrdered">
     @{
-        foreach (var br in ViewBag.booksOrdered)
+        using (Html.BeginForm("CancelOrder", "Home", FormMethod.Post, new { @class = "displayInline-block" }))
         {
-            <li>
-                @using (Html.BeginForm("CancelOrder", "Home", FormMethod.Post, new { @class = "displayInline-block" }))
-                {
+            foreach (var br in ViewBag.booksOrdered)
+            {
+                <li>
                     <a href="@Url.Action("ShowBook", new { id = br.Book.Id})">@br.Book.Title</a>
+                    @if (br.Book.LibraryReading)
+                    {
+                    <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+                    }
                     <button type="submit" value="@br.Id" name="orderId" class="btn btn-xs btn-danger">x</button>
-                }
-            </li>
+                    
+                </li>
+            }
         }
-    }
-</ul>
+        }
+    </ul>
 
 <h4 class="bg-info alertMessage">Взяті книги</h4>
 <ul id="booksTaked">
     @{
         foreach (var br in ViewBag.booksTaked)
         {
-        <li class="@(br.isHavePenalty ? "bg-danger" : "" )">
-            <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
-                @br.Book.Title
-            </a>
-            <ul>
-                <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+    <li class="@(br.isHasPenalty ? "bg-danger" : "" )">
+        <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
+            @br.Book.Title
+        </a>
+        @if (br.Book.LibraryReading)
+        {
+        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+        }
+        <ul>
+            <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+
+            @if (!br.Book.LibraryReading)
+            {
                 <li>
                     Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")
-                    @if (br.isHavePenalty)
+                    @if (br.isHasPenalty)
                     {
                         <strong> - Нараховано ШТРАФ: @br.getFineValue грн.</strong>
                     }
                 </li>
+            }
             </ul>
-        </li>
+    </li>
         }
     }
 </ul>
@@ -56,11 +69,11 @@
                     @br.Book.Title
                 </a>
                 <span>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</span>
-                @if (!br.isHavePenalty)
+                @if (!br.isHasPenalty)
                 {
                     <span>Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")</span>
                 }
-                else if (br.isHavePenalty)
+                else if (br.isHasPenalty)
                 {
                     <span class="bg-danger">
                         Повернути: @br.getReturningDate.ToString("yyyy/MM/dd")

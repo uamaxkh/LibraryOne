@@ -541,8 +541,8 @@ namespace Library
                 Pages = 263,
                 ISBN = "978-617-7682-22-5",
                 Section = s4,
-                LibraryReading = false,
-                Quantity = 5
+                LibraryReading = true,
+                Quantity = 2
             };
             booksList.Add(b31);
 
@@ -667,18 +667,26 @@ namespace Library
 
             var br5 = new BooksRenting()
             {
-                Book = b16,
+                Book = b5,
                 ApplicationUser = registeredUser,
                 OrderDate = DateTime.Now,
             }; booksRentingsList.Add(br5);
 
             var br6 = new BooksRenting()
             {
-                Book = b5,
+                Book = b16,
                 ApplicationUser = registeredUser,
                 OrderDate = DateTime.Now.AddDays(-18),
                 TakingDate = DateTime.Now.AddDays(-17),
             }; booksRentingsList.Add(br6);
+
+            var br7 = new BooksRenting()
+            {
+                Book = b31,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddHours(-2),
+                TakingDate = DateTime.Now,
+            }; booksRentingsList.Add(br7);
 
 
 

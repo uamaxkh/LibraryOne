@@ -291,6 +291,7 @@
     <Content Include="Views\Home\_Comments.cshtml" />
     <Content Include="Views\Home\MyBooks.cshtml" />
     <Content Include="Views\LibraryManage\RegisteredUsers.cshtml" />
+    <Content Include="Views\LibraryManage\ShowUserInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

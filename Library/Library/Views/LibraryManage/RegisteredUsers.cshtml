@@ -1,29 +1,67 @@
 ﻿@{
-        ViewBag.Title = "Зареєстровані користувачі";
-        @model List<Library.Models.ApplicationUser>
-    }
+    ViewBag.Title = "Зареєстровані користувачі";
+    @model List<Library.Models.ApplicationUser>
+}
 
-    <h2>Зареєстровані користувачі</h2>
+<h2>Зареєстровані користувачі</h2>
 
-    <ul>
-        @foreach (var user in Model)
-        {
-        <li>
+<div class="form-group">
+    <div class="input-group">
+        <input id="userSearch" class="form-control" size="52" placeholder="Введіть перші 3 літери імені" onkeyup="userSearchByName()" type="text" />
+        <button id="clearUserSearch" onclick="clearUserSearch()" class="btn btn-default">X</button>
+
+    </div>
+</div>
+<ul>
+    @foreach (var user in Model)
+    {
+        <li id="@user.Id">
             @if (user.userHasPenalty)
             {
-            <a class="bg-danger" href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Name @user.Surname - Штраф: @user.getSummaryFineValue</a>
+                <a class="bg-danger" href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Surname @user.Name  - Штраф: @user.getSummaryFineValue</a>
             }
             else
             {
-                <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Name @user.Surname</a>
+                <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Surname @user.Name</a>
             }
         </li>
-        }
-    </ul>
-<input list="userList" />
-    <datalist id="userList">
+    }
+</ul>
+@section scripts
+{
+    <script>
+        var userList = [];
+
         @foreach (var user in Model)
         {
-        <option>@user.Name @user.Surname</option>
+            @:userList.push({ id: "@user.Id", name: "@user.Surname @user.Name"})
         }
-    </datalist>
+
+        function userSearchByName() {
+            var nameTherm = $("#userSearch").val();
+            if (nameTherm.length > 2)
+            {
+                userList.map(
+                    (el) => {
+                        if (el.name.toLowerCase().includes(nameTherm.toLowerCase())) {
+                            $("#" + el.id).removeClass("hidden");
+                        }
+                        else {
+                            $("#" + el.id).addClass("hidden");
+                        }
+                    }
+                )
+            }
+        }
+
+        function clearUserSearch() {
+            $("#userSearch").val("");
+            userList.map
+                (
+                    (el) => {
+                        $("#" + el.id).removeClass("hidden");
+                    }
+                )
+        }
+    </script>
+}

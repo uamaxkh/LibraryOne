@@ -515,7 +515,7 @@ namespace DBLib
                 var rentings = db.BooksRenting.Where(br => br.ApplicationUser.Id == userId).ToList();
                 foreach(var rent in rentings)
                 {
-                    if (rent.isHavePenalty)
+                    if (rent.isHasPenalty)
                     {
                         return true;
                     }
@@ -533,9 +533,29 @@ namespace DBLib
                 string adminRoleId = db.Roles.Where(r => r.Name == "admin").Select(r => r.Id).SingleOrDefault();
                 string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
 
-                var users = db.Users.Include(u => u.BooksRenting).Where(u => u.Roles.All(r => r.RoleId != librarianRoleId)).ToList();
+                var users = db.Users.OrderBy(u => u.Surname).Include(u => u.BooksRenting).Where(u => u.Roles.All(r => r.RoleId != librarianRoleId)).ToList();
 
                 return users;
+            }
+        }
+        
+        public static void TakeBook(string orderForTakingId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                BooksRenting booksrenting = db.BooksRenting.Find(Guid.Parse(orderForTakingId));
+                booksrenting.TakingDate = DateTime.Now;
+                db.SaveChanges();
+            }
+        }
+
+        public static void ReturnBook(string orderForTakingId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            { 
+                BooksRenting booksrenting = db.BooksRenting.Find(Guid.Parse(orderForTakingId));
+                booksrenting.ReturningDate = DateTime.Now;
+                db.SaveChanges();
             }
         }
     }

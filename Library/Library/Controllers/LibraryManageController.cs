@@ -176,5 +176,44 @@ namespace Library.Controllers
 
             return View(registeredUsers);
         }
+
+        public ActionResult ShowUserInfo(string id)
+        {
+            var usersInfo = DBCommands.GetUserById(id);
+            if(usersInfo == null)
+            {
+                return RedirectToAction("Error", "Home", new ExceptionExt("Користувач не знайдений", null, MessageState.Error));
+            }
+
+            ViewBag.usersInfo = usersInfo;
+
+            List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(id);
+
+            List<BooksRenting> booksOrdered = allBooksRentings.Where(br => br.TakingDate == null).ToList();
+
+            List<BooksRenting> booksTaked = allBooksRentings.Where(br => br.ReturningDate == null
+                && br.TakingDate != null).ToList();
+
+            ViewBag.booksOrdered = booksOrdered;
+            ViewBag.booksTaked = booksTaked;
+
+            return View(allBooksRentings);
+        }
+
+        [HttpPost]
+        public ActionResult UserTakingBook(string orderForTakingId, string userId)
+        {
+            DBCommands.TakeBook(orderForTakingId);
+
+            return RedirectToAction("ShowUserInfo", new { id = userId });
+        }
+
+        [HttpPost]
+        public ActionResult UserReturningBook(string orderForReturningId, string userId)
+        {
+            DBCommands.ReturnBook(orderForReturningId);
+
+            return RedirectToAction("ShowUserInfo", new { id = userId });
+        }
     }
 }
