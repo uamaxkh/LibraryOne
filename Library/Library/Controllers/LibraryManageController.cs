@@ -215,5 +215,36 @@ namespace Library.Controllers
 
             return RedirectToAction("ShowUserInfo", new { id = userId });
         }
+
+        [HttpGet]
+        public ActionResult EditBook(Guid? id)
+        {
+            if(id == null)
+            {
+                return RedirectToAction("Error", "Home", new ExceptionExt("Id книги не вказано", null, MessageState.Error));
+            }
+
+            var book = DBCommands.GetBookWithAdditionalInfoById((Guid)id);
+            ViewBag.Publishers = DBCommands.GetAllPublishers();
+            ViewBag.Sections = DBCommands.GetAllSections();
+            ViewBag.Authors = DBCommands.GetAllAuthors();
+
+            if (book == null)
+            {
+                return RedirectToAction("Error", "Home", new ExceptionExt("Книгу не знайдено", null, MessageState.Error));
+            }
+
+            return View(book);
+        }
+
+        [HttpPost]
+        public ActionResult EditBook(Book book, Guid Section, Guid Publisher, Guid[] Authors, HttpPostedFileBase TitlePic)
+        {
+
+            ViewBag.Publishers = DBCommands.GetAllPublishers();
+            ViewBag.Sections = DBCommands.GetAllSections();
+            ViewBag.Authors = DBCommands.GetAllAuthors();
+            return View(book);
+        }
     }
 }

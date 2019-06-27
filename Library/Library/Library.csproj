@@ -292,6 +292,7 @@
     <Content Include="Views\Home\MyBooks.cshtml" />
     <Content Include="Views\LibraryManage\RegisteredUsers.cshtml" />
     <Content Include="Views\LibraryManage\ShowUserInfo.cshtml" />
+    <Content Include="Views\LibraryManage\EditBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,214 @@
+﻿
+@{
+    @model DBLib.Models.Book
+    ViewBag.Title = "Редагувати: " + @Model.Title;
+}
+
+<h2>Редагувати: @Model.Title</h2>
+
+
+@using (Html.BeginForm("EditBook", "LibraryManage", null, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.HiddenFor(b => b.Id)
+        @Html.LabelFor(b => b.Title)
+        @Html.TextBoxFor(b => b.Title, new { size = "50", @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Title)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Year)
+        @Html.TextBoxFor(b => b.Year, new { size = "50", @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.Year)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.ISBN)
+        @Html.TextBoxFor(b => b.ISBN, new { size = "50", @class = "form-control" })
+        @Html.ValidationMessageFor(b => b.ISBN)
+    </div>
+    <div class="checkbox">
+        <label for="LibraryReading">
+            @Html.EditorFor(b => b.LibraryReading, new { htmlAttributes = new { @class = "form-check-input" } })
+            Читання в бібліотеці
+        </label>
+        @Html.ValidationMessageFor(b => b.LibraryReading)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Pages)
+        @Html.EditorFor(b => b.Pages, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(b => b.Pages)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Quantity)
+        @Html.EditorFor(b => b.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(b => b.Quantity)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Section)
+        <div class="input-group">
+            <select id="SectionSelect" name="Section" class="form-control">
+                @foreach (var aSection in ViewBag.Sections)
+                {
+                    if (aSection.Id == Model.Section.Id)
+                    {
+                        <option id="@aSection.Id" selected value="@aSection.Id">@aSection.Name</option>
+                    }
+                    else
+                    {
+                        <option id="@aSection.Id" value="@aSection.Id">@aSection.Name</option>
+                    }
+                }
+                @Html.ValidationMessageFor(b => b.Section)
+            </select>
+            <span class="btn btn-success btn-xs"><span id="searchSectionBtn" class="glyphicon glyphicon-menu-down"></span></span>
+            <div><input id="searchSectionInput" onkeyup="searchSection('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Publisher)
+        <div class="input-group">
+            <select id="PublisherSelect" name="Publisher" class="form-control">
+                @foreach (var publisher in ViewBag.Publishers)
+                {
+                    if (publisher.Id == Model.Publisher.Id)
+                    {
+                        <option id="@publisher.Id" selected value="@publisher.Id">@publisher.Name</option>
+                    }
+                    else
+                    {
+                        <option id="@publisher.Id" value="@publisher.Id">@publisher.Name</option>
+                    }
+                }
+                @Html.ValidationMessageFor(b => b.Publisher)
+            </select>
+            <span class="btn btn-success btn-xs"><span id="searchPublisherBtn" class="glyphicon glyphicon-menu-down"></span></span>
+            <div><input id="searchPublisherInput" onkeyup="searchPublisher('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(b => b.Authors)
+
+        @for (int i = 0; i < Model.Authors.Count; i++)
+        {
+            <div id="AuthorSelect-@i" class="input-group">
+                <select name="Authors" class="form-control">
+                    @foreach (var author in ViewBag.Authors)
+                    {
+                        if (author.Id == Model.Authors[i].Id)
+                        {
+                            <option id="@author.Id" selected value="@author.Id">@author.Name</option>
+                        }
+                        else
+                        {
+                            <option id="@author.Id" value="@author.Id">@author.Name</option>
+                        }
+                    }
+                </select>
+                <span class="btn btn-danger btn-xs"><span onclick="removeAuthor('AuthorSelect-@i')" class="glyphicon glyphicon glyphicon-remove"></span></span>
+            </div>
+        }
+        <span class="btn btn-success btn-xs"><span id="searchAuthorsBtn" class="glyphicon glyphicon glyphicon-plus"></span></span>
+        <div><input id="searchAuthorsInput" onkeyup="searchAuthors('Authors')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+
+        @Html.ValidationMessageFor(b => b.Authors)
+    </div>
+    <div class="form-group">
+        @Html.Label("Обкладинка (якщо треба змінити)")
+        <input type="file" name="TitlePic" id="TitlePic" accept=".jpg" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary btn-block" value="Зберегти зміни">
+    </div>
+}
+
+@section scripts
+{
+    <script>
+    var listOfPublisher = [];
+    @foreach (var publisher in ViewBag.Publishers)
+            {
+                @:listOfPublisher.push({ id: '@publisher.Id', name: '@publisher.Name'});
+            }
+
+    var listOfSection = [];
+            @foreach (var aSection in ViewBag.Sections)
+            {
+                @:listOfSection.push({ id: '@aSection.Id', name: '@aSection.Name'});
+            }
+
+     var listOfAuthors = [];
+            @foreach (var author in ViewBag.Authors)
+            {
+                @:listOfAuthors.push({ id: '@author.Id', name: '@author.Name'});
+            }
+
+        function toggleInput(typeOfModelEl) {
+            var searchBtn = 'search' + typeOfModelEl + 'Btn';
+            var searchInput = 'search' + typeOfModelEl + 'Input';
+
+            $('#' + searchBtn).toggleClass('glyphicon-menu-down');
+            $('#' + searchBtn).toggleClass('glyphicon-menu-up');
+            $('#' + searchInput).toggleClass('hidden');
+        }
+
+    function searchPublisher() {
+        var searchTerm = $('#searchPublisherInput').val();
+
+        listOfPublisher.map(
+            (el) => {
+                if (el.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    $("#" + el.id).removeClass("hidden");
+                }
+                else {
+                    $("#" + el.id).addClass("hidden");
+                }
+            }
+        );
+
+        $('#PublisherSelect :selected').removeAttr("selected");
+        $('#PublisherSelect :not(.hidden):first').attr("selected", "selected");
+    }
+
+    function searchSection() {
+        var searchTerm = $('#searchSectionInput').val();
+
+        listOfSection.map(
+            (el) => {
+                if (el.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    $("#" + el.id).removeClass("hidden");
+                }
+                else {
+                    $("#" + el.id).addClass("hidden");
+                }
+            }
+        );
+
+        $('#SectionSelect :selected').removeAttr("selected");
+        $('#SectionSelect :not(.hidden):first').attr("selected", "selected");
+     }
+
+        $("#searchPublisherBtn").click(() => { return toggleInput("Publisher") });
+        $("#searchSectionBtn").click(() => { return toggleInput("Section") });
+        $("#searchAuthorsBtn").click(() => { return toggleInput("Authors") });
+
+        function removeAuthor(authorSectionId) {
+            $('#' + authorSectionId).remove();
+        }
+
+
+
+        function searchAuthors() {
+            var searchTerm = $('#searchAuthorsInput').val();
+
+            listOfAuthors.map(
+                (el) => {
+                    if (el.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                        $("#" + el.id + ":last").removeClass("hidden");
+                    }
+                    else {
+                        $("#" + el.id + ":last").addClass("hidden");
+                    }
+                }
+            );
+        }
+    </script>
+}
