@@ -64,6 +64,12 @@ namespace Library.Controllers
                         return false;
                     }
                     string path = Path.Combine(Server.MapPath("~/TitlePic/"), Id.ToString() + ".jpg");
+
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+
                     titlePic.SaveAs(path);
                 }
                 catch
@@ -240,11 +246,26 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult EditBook(Book book, Guid Section, Guid Publisher, Guid[] Authors, HttpPostedFileBase TitlePic)
         {
+            try
+            {
+                DBCommands.EditBook(book, Section, Publisher, Authors);
 
-            ViewBag.Publishers = DBCommands.GetAllPublishers();
-            ViewBag.Sections = DBCommands.GetAllSections();
-            ViewBag.Authors = DBCommands.GetAllAuthors();
-            return View(book);
+                if (TitlePic != null)
+                {
+                    bool picSaved = SaveTitlePic(TitlePic, book.Id);
+
+                    if (picSaved == false)
+                    {
+                        throw new ExceptionExt("Файл обкладинки не вдалося додати");
+                    }
+                }
+
+                return RedirectToAction("Error", "Home", new ExceptionExt("Успішо відредаговано", null, MessageState.Succes));
+            }
+            catch (ExceptionExt ex)
+            {
+                return RedirectToAction("Error", "Home", ex);
+            }
         }
     }
 }

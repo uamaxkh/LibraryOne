@@ -7,7 +7,8 @@
 <div class="panel panel-info">
     <div class="panel-heading text-uppercase">Додати книгу</div>
     <div class="panel-body">
-        <form method="post" action="/LibraryManage/AddBook" role="form" enctype="multipart/form-data">
+        @using (Html.BeginForm("AddBook", "LibraryManage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
             <div class="form-group">
                 @Html.LabelFor(m => m.AuthorsId)
                 <input id="authorSearch" class="form-control" type="text" oninput="getAuthorsByNameTerm()" />
@@ -65,12 +66,12 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.TitlePic)
-                <input type="file" name="TitlePic" id="TitlePic"  accept=".jpg"/>
+                <input type="file" name="TitlePic" id="TitlePic" accept=".jpg" />
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary btn-block" value="Додати книгу">
             </div>
-        </form>
+        }
     </div>
 </div>
 

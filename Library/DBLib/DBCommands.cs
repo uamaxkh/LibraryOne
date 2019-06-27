@@ -260,12 +260,22 @@ namespace DBLib
             }
         }
 
-        public static Author GetAuthorById(Guid Id)
+        public static Author GetAuthorById(Guid Id, ApplicationDbContext applicationDbContext = null)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            Author author;
+
+            if (applicationDbContext == null)
             {
-                return db.Authors.Find(Id);
+                applicationDbContext = new ApplicationDbContext();
+                author = applicationDbContext.Authors.Find(Id);
+                applicationDbContext.Dispose();
             }
+            else
+            {
+                author = applicationDbContext.Authors.Find(Id);
+            }
+
+            return author;
         }
 
         public static Author GetAuthorByName(string Name)
@@ -276,20 +286,40 @@ namespace DBLib
             }
         }
 
-        public static Publisher GetPublisherById(Guid Id)
+        public static Publisher GetPublisherById(Guid Id, ApplicationDbContext applicationDbContext = null)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            Publisher publisher;
+
+            if (applicationDbContext == null)
             {
-                return db.Publishers.Find(Id);
+                applicationDbContext = new ApplicationDbContext();
+                publisher = applicationDbContext.Publishers.Find(Id);
+                applicationDbContext.Dispose();
             }
+            else
+            {
+                publisher = applicationDbContext.Publishers.Find(Id);
+            }
+
+            return publisher;
         }
 
-        public static Section GetSectionById(Guid Id)
+        public static Section GetSectionById(Guid Id, ApplicationDbContext applicationDbContext = null)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            Section section;
+
+            if (applicationDbContext == null)
             {
-                return db.Sections.Find(Id);
+                applicationDbContext = new ApplicationDbContext();
+                section = applicationDbContext.Sections.Find(Id);
+                applicationDbContext.Dispose();
             }
+            else
+            {
+                section = applicationDbContext.Sections.Find(Id);
+            }
+
+            return section;
         }
 
         public static string AddAuthor(string Name)
@@ -557,6 +587,43 @@ namespace DBLib
                 booksrenting.ReturningDate = DateTime.Now;
                 db.SaveChanges();
             }
+        }
+
+        public static bool EditBook(Book editedBook, Guid SectionId, Guid editedPublisherId, Guid[] editedAuthorsId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Book book = GetBookById(editedBook.Id);
+                if (book != null)
+                {
+                    Section section = GetSectionById(SectionId, db);
+                    Publisher publisher = GetPublisherById(editedPublisherId, db);
+
+                    List<Author> authors = new List<Author>();
+
+                    foreach(var authorId in editedAuthorsId)
+                    {
+                        authors.Add(GetAuthorById(authorId, db));
+                    }
+
+                    book.ISBN = editedBook.ISBN;
+                    book.LibraryReading = editedBook.LibraryReading;
+                    book.Pages = editedBook.Pages;
+                    book.Quantity = editedBook.Quantity;
+                    book.Title = editedBook.Title;
+                    book.Year = editedBook.Year;
+
+                    book.Publisher = publisher;
+                    book.Section = section;
+                    book.Authors = authors;
+
+                    db.Entry(book).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                }
+            }
+
+            return true;
         }
     }
 }
