@@ -84,6 +84,16 @@ namespace Library.Controllers
             return true;
         }
 
+        public void RemoveTitlePic(Guid Id)
+        {
+            string path = Path.Combine(Server.MapPath("~/TitlePic/"), Id.ToString() + ".jpg");
+
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+        }
+
         public JsonResult GetAuthorsJson()
         {
             var authors = DBCommands.GetAllAuthors();
@@ -266,6 +276,20 @@ namespace Library.Controllers
             {
                 return RedirectToAction("Error", "Home", ex);
             }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteBook(Guid bookId)
+        {
+            DBCommands.DeleteBook(bookId);
+            return RedirectToAction("Error", "Home", new ExceptionExt("Успішо видалено", null, MessageState.Succes));
+        }
+
+        [HttpPost]
+        public ActionResult ReturnBook(Guid bookId)
+        {
+            DBCommands.ReturnBook(bookId);
+            return RedirectToAction("Error", "Home", new ExceptionExt("Успішо повернуто", null, MessageState.Succes));
         }
     }
 }

@@ -4,4 +4,15 @@
     return true;
 }
 
-//<img onerror="imgError(this)" id="img" src="3.jpg">
+function addFormSubmitConfirmation(formId, confirmationMessage) {
+    $("#" + formId).on('submit',
+        () => {
+            var reallyDelete = confirm(confirmationMessage);
+            if (reallyDelete) {
+                return true;
+            }
+            return false;
+        }
+    );
+}
+

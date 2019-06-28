@@ -5,139 +5,159 @@
 }
 
 <h2>Редагувати: @Model.Title</h2>
-
-
-<div class="row">
-    <div class="col-md-4">
-        @using (Html.BeginForm("EditBook", "LibraryManage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form-group">
-                @Html.HiddenFor(b => b.Id)
-                @Html.LabelFor(b => b.Title)
-                @Html.TextBoxFor(b => b.Title, new { size = "50", @class = "form-control" })
-                @Html.ValidationMessageFor(b => b.Title)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Year)
-                @Html.TextBoxFor(b => b.Year, new { size = "50", @class = "form-control" })
-                @Html.ValidationMessageFor(b => b.Year)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.ISBN)
-                @Html.TextBoxFor(b => b.ISBN, new { size = "50", @class = "form-control" })
-                @Html.ValidationMessageFor(b => b.ISBN)
-            </div>
-            <div class="checkbox">
-                <label for="LibraryReading">
-                    @Html.EditorFor(b => b.LibraryReading, new { htmlAttributes = new { @class = "form-check-input" } })
-                    Читання в бібліотеці
-                </label>
-                @Html.ValidationMessageFor(b => b.LibraryReading)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Pages)
-                @Html.EditorFor(b => b.Pages, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(b => b.Pages)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Quantity)
-                @Html.EditorFor(b => b.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(b => b.Quantity)
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Section)
-                <div class="input-group">
-                    <select id="SectionSelect" name="Section" class="form-control">
-                        @foreach (var aSection in ViewBag.Sections)
-                        {
-                            if (aSection.Id == Model.Section.Id)
-                            {
-                                <option id="@aSection.Id" selected value="@aSection.Id">@aSection.Name</option>
-                            }
-                            else
-                            {
-                                <option id="@aSection.Id" value="@aSection.Id">@aSection.Name</option>
-                            }
-                        }
-                        @Html.ValidationMessageFor(b => b.Section)
-                    </select>
-                    <span class="btn btn-success btn-xs"><span id="searchSectionBtn" class="glyphicon glyphicon-menu-down"></span></span>
-                    <div><input id="searchSectionInput" onkeyup="searchSection('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Publisher)
-                <div class="input-group">
-                    <select id="PublisherSelect" name="Publisher" class="form-control">
-                        @foreach (var publisher in ViewBag.Publishers)
-                        {
-                            if (publisher.Id == Model.Publisher.Id)
-                            {
-                                <option id="@publisher.Id" selected value="@publisher.Id">@publisher.Name</option>
-                            }
-                            else
-                            {
-                                <option id="@publisher.Id" value="@publisher.Id">@publisher.Name</option>
-                            }
-                        }
-                        @Html.ValidationMessageFor(b => b.Publisher)
-                    </select>
-                    <span class="btn btn-success btn-xs"><span id="searchPublisherBtn" class="glyphicon glyphicon-menu-down"></span></span>
-                    <div><input id="searchPublisherInput" onkeyup="searchPublisher('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(b => b.Authors)
-
-                <div id="AuthorsWasSelected">
-                    @foreach (var authorModel in Model.Authors)
-                    {
-                        foreach (var author in ViewBag.Authors)
-                        {
-                            if (author.Id == authorModel.Id)
-                            {
-                                <span class="selectedBox" id="AuthorSelect-@author.Id">
-                                    <input hidden type="text" name="Authors" value="@author.Id">
-                                    @author.Name
-                                    <span onclick="removeAuthor('AuthorSelect-@authorModel.Id')" class="btn btn-danger btn-xs glyphicon glyphicon glyphicon-remove"></span>
-                                </span>
-                            }
-                        }
-                    }
-                </div>
-
-                <div class="input-group">
-                    <select id="AuthorsSelect" class="form-control hidden">
-                        @foreach (var author in ViewBag.Authors)
-                        {
-                            <option id="@author.Id" value="@author.Id">@author.Name</option>
-                        }
-                    </select>
-                    <div><input id="searchAuthorsInput" onkeyup="searchAuthors('Authors')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
-                </div>
-
-                <span id="searchAuthorsBtn" class="btn btn-success btn-xs glyphicon glyphicon-plus"></span>
-                <span id="addAuthorsBtn" class="btn btn-success btn-xs glyphicon glyphicon-ok hidden"></span>
-
-                @Html.ValidationMessageFor(b => b.Authors)
-            </div>
-            <div class="form-group">
-                @Html.Label("Обкладинка (якщо треба змінити)")
-                <input type="file" name="TitlePic" id="TitlePic" accept=".jpg" />
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-block" value="Зберегти зміни">
-            </div>
-        }
-    </div>
-    <div class="col-md-8">
-        <img class="bookTitleImgLj" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
-    </div>
-</div>
-
-@section scripts
+@if (Model.Deleted)
 {
-    <script>
+    <h3 class="alertInfo bg-danger text-primary"><strong>КНИГУ ВИДАЛЕНО!</strong></h3>
+}
+
+    <div class="container-fluid @(Model.Deleted ? "bg-danger": "")">
+        <div class="row">
+            <div class="col-md-4">
+                @using (Html.BeginForm("EditBook", "LibraryManage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(b => b.Id)
+                        @Html.LabelFor(b => b.Title)
+                        @Html.TextBoxFor(b => b.Title, new { size = "50", @class = "form-control" })
+                        @Html.ValidationMessageFor(b => b.Title)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Year)
+                        @Html.TextBoxFor(b => b.Year, new { size = "50", @class = "form-control" })
+                        @Html.ValidationMessageFor(b => b.Year)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.ISBN)
+                        @Html.TextBoxFor(b => b.ISBN, new { size = "50", @class = "form-control" })
+                        @Html.ValidationMessageFor(b => b.ISBN)
+                    </div>
+                    <div class="checkbox">
+                        <label for="LibraryReading">
+                            @Html.EditorFor(b => b.LibraryReading, new { htmlAttributes = new { @class = "form-check-input" } })
+                            Читання в бібліотеці
+                        </label>
+                        @Html.ValidationMessageFor(b => b.LibraryReading)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Pages)
+                        @Html.EditorFor(b => b.Pages, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(b => b.Pages)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Quantity)
+                        @Html.EditorFor(b => b.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(b => b.Quantity)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Section)
+                        <div class="input-group">
+                            <select id="SectionSelect" name="Section" class="form-control">
+                                @foreach (var aSection in ViewBag.Sections)
+                                {
+                                    if (aSection.Id == Model.Section.Id)
+                                    {
+                                        <option id="@aSection.Id" selected value="@aSection.Id">@aSection.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option id="@aSection.Id" value="@aSection.Id">@aSection.Name</option>
+                                    }
+                                }
+                                @Html.ValidationMessageFor(b => b.Section)
+                            </select>
+                            <span class="btn btn-success btn-xs"><span id="searchSectionBtn" class="glyphicon glyphicon-menu-down"></span></span>
+                            <div><input id="searchSectionInput" onkeyup="searchSection('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Publisher)
+                        <div class="input-group">
+                            <select id="PublisherSelect" name="Publisher" class="form-control">
+                                @foreach (var publisher in ViewBag.Publishers)
+                                {
+                                    if (publisher.Id == Model.Publisher.Id)
+                                    {
+                                        <option id="@publisher.Id" selected value="@publisher.Id">@publisher.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option id="@publisher.Id" value="@publisher.Id">@publisher.Name</option>
+                                    }
+                                }
+                                @Html.ValidationMessageFor(b => b.Publisher)
+                            </select>
+                            <span class="btn btn-success btn-xs"><span id="searchPublisherBtn" class="glyphicon glyphicon-menu-down"></span></span>
+                            <div><input id="searchPublisherInput" onkeyup="searchPublisher('Publisher')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(b => b.Authors)
+
+                        <div id="AuthorsWasSelected">
+                            @foreach (var authorModel in Model.Authors)
+                            {
+                                foreach (var author in ViewBag.Authors)
+                                {
+                                    if (author.Id == authorModel.Id)
+                                    {
+                                        <span class="selectedBox" id="AuthorSelect-@author.Id">
+                                            <input hidden type="text" name="Authors" value="@author.Id">
+                                            @author.Name
+                                            <span onclick="removeAuthor('AuthorSelect-@authorModel.Id')" class="btn btn-danger btn-xs glyphicon glyphicon glyphicon-remove"></span>
+                                        </span>
+                                    }
+                                }
+                            }
+                        </div>
+
+                        <div class="input-group">
+                            <select id="AuthorsSelect" class="form-control hidden">
+                                @foreach (var author in ViewBag.Authors)
+                                {
+                                    <option id="@author.Id" value="@author.Id">@author.Name</option>
+                                }
+                            </select>
+                            <div><input id="searchAuthorsInput" onkeyup="searchAuthors('Authors')" class="hidden" type="text" placeholder="Почніть друкувати" size="50" /></div>
+                        </div>
+
+                        <span id="searchAuthorsBtn" class="btn btn-success btn-xs glyphicon glyphicon-plus"></span>
+                        <span id="addAuthorsBtn" class="btn btn-success btn-xs glyphicon glyphicon-ok hidden"></span>
+
+                        @Html.ValidationMessageFor(b => b.Authors)
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Обкладинка (якщо треба змінити)")
+                        <div id="removeTitlePicBtn" class="btn btn-danger btn-xs">Видалити наявну</div>
+                        <input type="file" name="TitlePic" id="TitlePic" accept=".jpg" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block fullWidth" value="Зберегти зміни">
+                    </div>
+                }
+                @if (!Model.Deleted)
+                {
+                    using (Html.BeginForm("DeleteBook", "LibraryManage", null, FormMethod.Post, new { id="deleteBookForm"}))
+                    {
+                        <button id="deleteBookBtn" class="btn btn-danger btn-block" name="bookId" value="@Model.Id">Видалити книгу</button>
+                    }
+                }
+                else
+                {
+                    using (Html.BeginForm("ReturnBook", "LibraryManage", null, FormMethod.Post))
+                    {
+                        <button id="returnBookBtn" class="btn btn-success btn-block" name="bookId" value="@Model.Id">Повернути книгу</button>
+                    }
+                }
+            </div>
+            <div class="col-md-8">
+                <img class="bookTitleImgLj" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
+            </div>
+        </div>
+    </div>
+
+    @section scripts
+{
+        <script>
     var listOfPublisher = [];
     @foreach (var publisher in ViewBag.Publishers)
             {
@@ -209,6 +229,9 @@
         $("#searchSectionBtn").click(() => { return toggleInput("Section") });
         $("#searchAuthorsBtn").click(() => { return toggleInput("Authors") });
         $("#addAuthorsBtn").click(() => { return addSelectedAuthor() });
+        //$("#deleteBookBtn").click(() => { return deleteBook() });
+        $("#removeTitlePicBtn").click(removeTitlePic);
+
 
         function removeAuthor(authorSectionId) {
             $('#' + authorSectionId).remove();
@@ -241,6 +264,30 @@
             $('<span class="selectedBox" id="AuthorSelect-' + id + '"><input hidden type="text" name="Authors" value="' + id
                 + '">' + name + ' <span onclick="removeAuthor(\'AuthorSelect-' + id
                 + '\')" class="btn btn-danger btn-xs glyphicon glyphicon glyphicon-remove"></span></div>').appendTo("#AuthorsWasSelected");
-        }
-    </script>
-}
+            }
+
+
+            //$("#deleteBookForm").on('submit', deleteBook);
+            //function deleteBook() {
+            //    var reallyDelete = confirm("Дійсно видалити?");
+            //    if (reallyDelete) {
+            //        return true;
+            //    }
+            //    return false;
+            //}
+
+            addFormSubmitConfirmation('deleteBookForm', "Дійсно видалити?");
+
+            function removeTitlePic() {
+                $.ajax({
+                    url: '@Url.Action("RemoveTitlePic", "LibraryManage")',
+                    type: 'POST',
+                    data: { Id: '@Model.Id'},
+                    success: () => { alert("Обкладинка видалена") },
+                    error: function () {
+                        alert('Помилка при видаленні');
+                    }
+                });
+            }
+        </script>
+    }

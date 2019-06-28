@@ -19,7 +19,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.Where(b=>b.Title.ToLower().Contains(searchString.ToLower())).ToList();
+                return db.Books.Where(b=>b.Title.ToLower().Contains(searchString.ToLower()) && b.Deleted == false).ToList();
             }
         }
 
@@ -35,10 +35,25 @@ namespace DBLib
         {
             if (Id == null)
                 return null;
+            Author author;
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Authors.Include(a => a.Books).Where(a => a.Id==Id).FirstOrDefault();
+                author = db.Authors.Include(a => a.Books)
+                    .Where(a => a.Id == Id).FirstOrDefault();
+                List<Book> notDeletedbooks = author.Books
+                    .Where(b => b.Deleted == false).ToList();
+
+                if(notDeletedbooks != null)
+                {
+                    author.Books = notDeletedbooks;
+                }
+                else
+                {
+                    author.Books = new List<Book>();
+                }
+
+                return author;
             }
         }
 
@@ -47,9 +62,25 @@ namespace DBLib
             if (Id == null)
                 return null;
 
+            Publisher publisher;
+
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Publishers.Include(a => a.Books).Where(a => a.Id == Id).FirstOrDefault();
+                publisher = db.Publishers.Include(a => a.Books)
+                    .Where(a => a.Id == Id).FirstOrDefault();
+                List<Book> notDeletedbooks = publisher.Books
+                    .Where(b => b.Deleted == false).ToList();
+
+                if (notDeletedbooks != null)
+                {
+                    publisher.Books = notDeletedbooks;
+                }
+                else
+                {
+                    publisher.Books = new List<Book>();
+                }
+
+                return publisher;
             }
         }
 
@@ -58,9 +89,25 @@ namespace DBLib
             if (Id == null)
                 return null;
 
+            Section section;
+
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Sections.Include(a => a.Books).Where(a => a.Id == Id).FirstOrDefault();
+                section = db.Sections.Include(a => a.Books)
+                    .Where(a => a.Id == Id).FirstOrDefault();
+                List<Book> notDeletedbooks = section.Books
+                    .Where(b => b.Deleted == false).ToList();
+
+                if (notDeletedbooks != null)
+                {
+                    section.Books = notDeletedbooks;
+                }
+                else
+                {
+                    section.Books = new List<Book>();
+                }
+
+                return section;
             }
         }
 
@@ -68,7 +115,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.OrderBy(a => a.Title).Select(b => b.Title).ToList();
+                return db.Books.Where(b => b.Deleted == false).OrderBy(a => a.Title).Select(b => b.Title).ToList();
             }
         }
 
@@ -84,7 +131,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).ToList();
+                return db.Books.Where(b => b.Deleted == false).OrderByDescending(b => b.AddingDate).Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).ToList();
             }
         }
 
@@ -153,7 +200,7 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                return db.Books.Count();
+                return db.Books.Where(b => b.Deleted == false).Count();
             }
         }
 
@@ -589,7 +636,7 @@ namespace DBLib
             }
         }
 
-        public static bool EditBook(Book editedBook, Guid SectionId, Guid editedPublisherId, Guid[] editedAuthorsId)
+        public static void EditBook(Book editedBook, Guid SectionId, Guid editedPublisherId, Guid[] editedAuthorsId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -622,8 +669,28 @@ namespace DBLib
                     db.SaveChanges();
                 }
             }
+        }
 
-            return true;
+        public static void DeleteBook(Guid Id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Book book = GetBookById(Id, db);
+                book.Deleted = true;
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public static void ReturnBook(Guid Id)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Book book = GetBookById(Id, db);
+                book.Deleted = false;
+                db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
     }
 }

@@ -70,3 +70,7 @@ textarea {
 .noPadding{
     padding: 0px;
 }
+
+.fullWidth{
+    max-width: 100%;
+}

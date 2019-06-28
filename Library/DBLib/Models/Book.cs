@@ -44,6 +44,8 @@ namespace DBLib.Models
         [Required]
         [Display(Name = "Дата додавання")]
         public DateTime AddingDate { get; set; }
+        
+        public bool Deleted { get; set; }
 
         [Display(Name = "Автор(и)")]
         public virtual List<Author> Authors { get; set; }
@@ -58,6 +60,7 @@ namespace DBLib.Models
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
             Comments = new List<Comment>();
+            Deleted = false;
         }
 
         public Book(string ISBN, string Title, bool LibraryReading, int Pages,
@@ -70,6 +73,7 @@ namespace DBLib.Models
             this.Pages = Pages;
             this.Quantity = Quantity;
             this.Year = Year;
+            Deleted = false;
 
             BooksRenting = new List<BooksRenting>();
             Authors = new List<Author>();
