@@ -32,7 +32,27 @@
                             <li>@Html.ActionLink("Видання", "ShowPublisher", "Home")</li>
                         </ul>
                     </li>
-                    <li>@Html.ActionLink("Мої книги", "MyBooks", "Home")</li>
+                    @if (!User.IsInRole("librarian"))
+                    {
+                        <li>@Html.ActionLink("Мої книги", "MyBooks", "Home")</li>
+                    }
+                    @if (User.IsInRole("librarian"))
+                    {
+                        <li>@Html.ActionLink("Зареєстровані користувачі", "RegisteredUsers", "LibraryManage")</li>
+
+                        if (User.IsInRole("admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Керування <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Додати книгу", "AddBook", "LibraryManage")</li>
+                                    <li>@Html.ActionLink("Додати розділ", "AddSection", "LibraryManage")</li>
+                                    <li>@Html.ActionLink("Додати видавця", "AddPublisher", "LibraryManage")</li>
+                                    <li>@Html.ActionLink("Керувати бібліотекарями", "ManageLibrarians", "LibraryManage")</li>
+                                </ul>
+                            </li>
+                        }
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -41,36 +61,11 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <div class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a href="#">&copy; @DateTime.Now.Year - Бібліотека OneLibrary</a></li>
-                            <li>@Html.ActionLink("Зареєстровані користувачі", "RegisteredUsers", "LibraryManage")</li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Адмін інструменти <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Додати книгу", "AddBook", "LibraryManage")</li>
-                                    <li>@Html.ActionLink("Додати розділ", "AddSection", "LibraryManage")</li>
-                                    <li>@Html.ActionLink("Додати видавця", "AddPublisher", "LibraryManage")</li>
-                                    <li>@Html.ActionLink("!Керувати користувачами", "AddBook", "LibraryManage")</li>
-                                    <li>@Html.ActionLink("!Керувати бібліотекарями", "AddBook", "LibraryManage")</li>
-                                    <li>@Html.ActionLink("!Редагувати книгу", "AddBook", "LibraryManage")</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <div class="bottomAlign">
+                <footer>
+                    <div>&copy; @DateTime.Now.Year - Бібліотека OneLibrary</div>
+                </footer>
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")

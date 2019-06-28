@@ -12,15 +12,18 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Library.Controllers
 {
+    [Authorize(Roles = "librarian")]
     public class LibraryManageController : Controller
     {
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult AddBook()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult AddBook(AddBooksViewModels bookViewModel)
         {
             if (ModelState.IsValid)
@@ -133,12 +136,14 @@ namespace Library.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult AddPublisher()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult AddPublisher(Publisher publisher)
         {
             try
@@ -161,12 +166,14 @@ namespace Library.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult AddSection()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult AddSection(Section section)
         {
             try
@@ -235,6 +242,7 @@ namespace Library.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult EditBook(Guid? id)
         {
             if(id == null)
@@ -256,6 +264,7 @@ namespace Library.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public ActionResult EditBook(Book book, Guid Section, Guid Publisher, Guid[] Authors, HttpPostedFileBase TitlePic)
         {
             try
@@ -307,6 +316,7 @@ namespace Library.Controllers
             DBCommands.SetUserBlocking(userId, setBlock);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult ManageLibrarians()
         {
             var librarians = DBCommands.getAllUsers();

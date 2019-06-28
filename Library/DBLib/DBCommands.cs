@@ -745,5 +745,22 @@ namespace DBLib
                 return librarianRoleId;
             }
         }
+
+        public static bool isUserBannedById(string userEmail)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser user = db.Users.Where(u => u.Email == userEmail).SingleOrDefault();
+
+                //if(user != null)
+                //{
+                    return user.IsBanned;
+                //}
+                //else
+                //{
+                //    return false;
+                //}
+            }
+        }
     }
 }

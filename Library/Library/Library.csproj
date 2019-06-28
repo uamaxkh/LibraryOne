@@ -277,9 +277,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\ShowBook.cshtml" />
-    <Content Include="..\..\..\..\RealDesktop\Test.cshtml">
-      <Link>Views\Home\Test.cshtml</Link>
-    </Content>
     <Content Include="Views\LibraryManage\AddPublisher.cshtml" />
     <Content Include="Views\LibraryManage\AddSection.cshtml" />
     <Content Include="Views\Shared\_BooksView.cshtml" />
