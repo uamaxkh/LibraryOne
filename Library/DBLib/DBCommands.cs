@@ -616,7 +616,6 @@ namespace DBLib
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                string adminRoleId = db.Roles.Where(r => r.Name == "admin").Select(r => r.Id).SingleOrDefault();
                 string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
 
                 var users = db.Users.OrderBy(u => u.Surname).Include(u => u.BooksRenting).Where(u => u.Roles.All(r => r.RoleId != librarianRoleId)).ToList();
@@ -713,6 +712,18 @@ namespace DBLib
                 user.IsBanned = setBlock;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+            }
+        }
+
+        public static List<ApplicationUser> getLibrarians()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
+
+                var users = db.Users.OrderBy(u => u.Surname).Where(u => u.Roles.All(r => r.RoleId == librarianRoleId)).ToList();
+
+                return users;
             }
         }
     }

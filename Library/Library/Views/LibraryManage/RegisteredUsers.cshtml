@@ -17,13 +17,12 @@
     @foreach (var user in Model)
     {
         <li id="@user.Id">
-            @if (user.userHasPenalty)
+            <a class="@(user.userHasPenalty? "bg-danger" : "")" 
+               href="@Url.Action("ShowUserInfo", new { id = user.Id})">
+                @user.Surname @user.Name @(user.userHasPenalty ? "Штраф : "+user.getSummaryFineValue : "")</a>
+            @if (user.IsBanned)
             {
-                <a class="bg-danger" href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Surname @user.Name  - Штраф: @user.getSummaryFineValue</a>
-            }
-            else
-            {
-                <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">@user.Surname @user.Name</a>
+                <span class="btn btn-danger btn-xs">Заблокований!</span>
             }
         </li>
     }

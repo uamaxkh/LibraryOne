@@ -304,5 +304,12 @@ namespace Library.Controllers
         {
             DBCommands.SetUserBlocking(userId, setBlock);
         }
+
+        public ActionResult ManageLibrarians()
+        {
+            var librarians = DBCommands.getLibrarians();
+            
+            return View();
+        }
     }
 }
