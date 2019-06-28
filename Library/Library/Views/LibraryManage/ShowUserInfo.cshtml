@@ -4,62 +4,130 @@
     @model List<DBLib.Models.BooksRenting>
 }
 
-<h2>Користувач: @ViewBag.usersInfo.Surname @ViewBag.usersInfo.Name</h2>
+<h2>
+    Користувач: @ViewBag.usersInfo.Surname @ViewBag.usersInfo.Name
+    @if (User.IsInRole("admin"))
+    {
+        <button id="unBlockUserBtn" class="btn btn-success @(ViewBag.usersInfo.IsBanned ? "" : "hidden")">Розблокувати користувача</button>
+        <button id="blockUserBtn" class="btn btn-danger @(ViewBag.usersInfo.IsBanned ? "hidden" : "")">Заблокувати користувача</button>
+    }
+</h2>
 
-<h4 class="bg-info alertMessage">Замовлені книги</h4>
-<ul id="booksOrdered">
-    @{
-        using (Html.BeginForm("UserTakingBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
-        {
-            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
-            foreach (var br in ViewBag.booksOrdered)
+@if (ViewBag.booksOrdered.Count > 0)
+{
+    <h4 class="bg-info alertMessage">Замовлені книги</h4>
+    <ul id="booksOrdered">
+        @{
+            using (Html.BeginForm("UserTakingBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
             {
-                <li>
-                    <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
-                    @if (br.Book.LibraryReading)
-                    {
-                        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
-                    }
-                    <button type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
+                <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
+                foreach (var br in ViewBag.booksOrdered)
+                {
+                    <li>
+                        <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
+                        @if (br.Book.LibraryReading)
+                        {
+                            <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+                        }
+                        <button type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
 
-                </li>
+                    </li>
+                }
             }
         }
-    }
-</ul>
+    </ul>
+}
+else
+{
+    <h4 class="bg-warning alertMessage">Замовлені книги відсутні</h4>
+}
 
-<h4 class="bg-info alertMessage">Взяті книги</h4>
-<ul id="booksTaked">
-    @{
-        using (Html.BeginForm("UserReturningBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
-        {
-            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
-            foreach (var br in ViewBag.booksTaked)
+
+@if (ViewBag.booksTaked.Count > 0)
+{
+    <h4 class="bg-info alertMessage">Взяті книги</h4>
+    <ul id="booksTaked">
+        @{
+            using (Html.BeginForm("UserReturningBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
             {
-                <li class="@(br.IsHasPenalty ? "bg-danger" : "" )">
-                    <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
-                        @br.Book.Title
-                    </a>
-                    @if (br.Book.LibraryReading)
-                    {
-                        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
-                    }
-                    <button type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
-                    @if (!br.Book.LibraryReading)
-                    {
-                        <ul>
-                            <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
-                            <li>
-                                Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
-                                @if (br.IsHasPenalty)
-                                {
-                                    <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
-                                }
-                            </li>
-                        </ul>
-                    }
-                </li>
+                <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
+                foreach (var br in ViewBag.booksTaked)
+                {
+                    <li class="@(br.IsHasPenalty ? "bg-danger" : "" )">
+                        <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
+                            @br.Book.Title
+                        </a>
+                        @if (br.Book.LibraryReading)
+                        {
+                            <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+                        }
+                        <button type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
+                        @if (!br.Book.LibraryReading)
+                        {
+                            <ul>
+                                <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+                                <li>
+                                    Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                                    @if (br.IsHasPenalty)
+                                    {
+                                        <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
+                                    }
+                                </li>
+                            </ul>
+                        }
+                    </li>
+                }
             }
         }
-    }
-</ul>
+    </ul>
+}
+else
+{
+    <h4 class="bg-warning alertMessage">Взяті книги відсутні</h4>
+}
+
+@section scripts
+{
+    <script>
+        function toggleBlockUserBtns() {
+            $("#unBlockUserBtn").toggleClass("hidden");
+            $("#blockUserBtn").toggleClass("hidden");
+        }
+
+        function blockUser()
+        {
+            $.ajax({
+                url: '@Url.Action("BlockingUser", "LibraryManage")',
+                type: 'POST',
+                data: { userId: '@ViewBag.usersInfo.Id', setBlock: 'true'},
+                success: () => {
+                     alert("Користувач заблокований");
+                     toggleBlockUserBtns();
+                },
+                error: function () {
+                     alert('Помилка при блокуванні');
+                }
+            });
+        }
+
+        function unBlockUser()
+        {
+            $.ajax({
+                url: '@Url.Action("BlockingUser", "LibraryManage")',
+                type: 'POST',
+                data: { userId: '@ViewBag.usersInfo.Id', setBlock: 'false'},
+                success: () => {
+                     alert("Користувач розблокований");
+                     toggleBlockUserBtns();
+                },
+                error: function () {
+                     alert('Помилка при розблокуванні');
+                }
+            });
+        }
+
+
+        $("#unBlockUserBtn").click(unBlockUser);
+        $("#blockUserBtn").click(blockUser);
+    </script>
+}

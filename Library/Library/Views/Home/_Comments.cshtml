@@ -7,7 +7,7 @@
     {
         <div class="panel panel-default">
             <div class="panel-heading text-uppercase">
-                @if (@ViewBag.userId == review.ApplicationUser.Id)
+                @if (@ViewBag.userId == review.ApplicationUser.Id || User.IsInRole("librarian"))
                 {
                     using (Html.BeginForm("DeleteComment", "Home", null, FormMethod.Post, new { @class="displayInline-block"}))
                     {

@@ -229,7 +229,6 @@
         $("#searchSectionBtn").click(() => { return toggleInput("Section") });
         $("#searchAuthorsBtn").click(() => { return toggleInput("Authors") });
         $("#addAuthorsBtn").click(() => { return addSelectedAuthor() });
-        //$("#deleteBookBtn").click(() => { return deleteBook() });
         $("#removeTitlePicBtn").click(removeTitlePic);
 
 
@@ -267,6 +266,7 @@
             }
 
 
+            //$("#deleteBookBtn").click(() => { return deleteBook() });
             //$("#deleteBookForm").on('submit', deleteBook);
             //function deleteBook() {
             //    var reallyDelete = confirm("Дійсно видалити?");
@@ -283,7 +283,7 @@
                     url: '@Url.Action("RemoveTitlePic", "LibraryManage")',
                     type: 'POST',
                     data: { Id: '@Model.Id'},
-                    success: () => { alert("Обкладинка видалена") },
+                    success: () => { alert("Обкладинка видалена"); },
                     error: function () {
                         alert('Помилка при видаленні');
                     }

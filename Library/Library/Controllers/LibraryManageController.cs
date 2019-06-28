@@ -201,7 +201,7 @@ namespace Library.Controllers
                 return RedirectToAction("Error", "Home", new ExceptionExt("Користувач не знайдений", null, MessageState.Error));
             }
 
-            ViewBag.usersInfo = usersInfo;
+            ViewBag.usersInfo = usersInfo; 
 
             List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(id);
 
@@ -258,19 +258,26 @@ namespace Library.Controllers
         {
             try
             {
-                DBCommands.EditBook(book, Section, Publisher, Authors);
-
-                if (TitlePic != null)
+                if(book != null && Section != null && Publisher != null && Authors != null)
                 {
-                    bool picSaved = SaveTitlePic(TitlePic, book.Id);
+                    DBCommands.EditBook(book, Section, Publisher, Authors);
 
-                    if (picSaved == false)
+                    if (TitlePic != null)
                     {
-                        throw new ExceptionExt("Файл обкладинки не вдалося додати");
-                    }
-                }
+                        bool picSaved = SaveTitlePic(TitlePic, book.Id);
 
-                return RedirectToAction("Error", "Home", new ExceptionExt("Успішо відредаговано", null, MessageState.Succes));
+                        if (picSaved == false)
+                        {
+                            throw new ExceptionExt("Файл обкладинки не вдалося додати");
+                        }
+                    }
+
+                    return RedirectToAction("Error", "Home", new ExceptionExt("Успішо відредаговано", null, MessageState.Succes));
+                }
+                else
+                {
+                    return RedirectToAction("Error", "Home", new ExceptionExt("Не всі дані були вказані", null, MessageState.Error));
+                }
             }
             catch (ExceptionExt ex)
             {
@@ -290,6 +297,12 @@ namespace Library.Controllers
         {
             DBCommands.ReturnBook(bookId);
             return RedirectToAction("Error", "Home", new ExceptionExt("Успішо повернуто", null, MessageState.Succes));
+        }
+
+        [HttpPost]
+        public void BlockingUser(string userId, bool setBlock)
+        {
+            DBCommands.SetUserBlocking(userId, setBlock);
         }
     }
 }

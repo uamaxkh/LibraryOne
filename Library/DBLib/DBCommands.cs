@@ -204,13 +204,22 @@ namespace DBLib
             }
         }
 
-        public static Book GetBookWithAdditionalInfoById(Guid Id)
+        public static Book GetBookWithAdditionalInfoById(Guid Id, ApplicationDbContext applicationDbContext = null)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
+            Book book;
+
+            if (applicationDbContext == null)
             {
-                Book book = db.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Include(b => b.Comments).SingleOrDefault(b => b.Id == Id);
-                return book;
+                applicationDbContext = new ApplicationDbContext();
+                book = applicationDbContext.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Include(b => b.Comments).SingleOrDefault(b => b.Id == Id);
+                applicationDbContext.Dispose();
             }
+            else
+            {
+                book = applicationDbContext.Books.Include(b => b.Authors).Include(b => b.Section).Include(b => b.Publisher).Include(b => b.Comments).SingleOrDefault(b => b.Id == Id);
+            }
+
+            return book;
         }
 
         public static void AddComment(string userId, Guid id, string commentText)
@@ -636,11 +645,11 @@ namespace DBLib
             }
         }
 
-        public static void EditBook(Book editedBook, Guid SectionId, Guid editedPublisherId, Guid[] editedAuthorsId)
+        public static bool EditBook(Book editedBook, Guid SectionId, Guid editedPublisherId, Guid[] editedAuthorsId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                Book book = GetBookById(editedBook.Id);
+                Book book = GetBookWithAdditionalInfoById(editedBook.Id, db);
                 if (book != null)
                 {
                     Section section = GetSectionById(SectionId, db);
@@ -650,7 +659,8 @@ namespace DBLib
 
                     foreach(var authorId in editedAuthorsId)
                     {
-                        authors.Add(GetAuthorById(authorId, db));
+                        Author author = GetAuthorById(authorId, db);
+                        authors.Add(author);
                     }
 
                     book.ISBN = editedBook.ISBN;
@@ -669,6 +679,8 @@ namespace DBLib
                     db.SaveChanges();
                 }
             }
+
+            return true;
         }
 
         public static void DeleteBook(Guid Id)
@@ -689,6 +701,17 @@ namespace DBLib
                 Book book = GetBookById(Id, db);
                 book.Deleted = false;
                 db.Entry(book).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+
+        public static void SetUserBlocking(string userId, bool setBlock)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                ApplicationUser user = GetUserById(userId, db);
+                user.IsBanned = setBlock;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
