@@ -1,7 +1,127 @@
 ﻿
 @{
-    ViewBag.Title = "ManageLibrarians";
+    ViewBag.Title = "Управління бібліотекарями";
+    @model List<Library.Models.ApplicationUser>
 }
 
-<h2>ManageLibrarians</h2>
+<h2>@ViewBag.Title</h2>
 
+<div class="form-group navbar-form">
+    <div class="input-group">
+        <input id="userSearch" class="form-control" size="52" placeholder="Введіть перші 2 літери імені" onkeyup="userSearchByName()" type="text" />
+        <div class="input-group-btn">
+            <button id="clearUserSearch" onclick="clearUserSearch()" class="btn btn-default">X</button>
+        </div>
+    </div>
+    @*<div class="input-group">
+        <button id="showOnlyLibrarianBtn" onclick="showOnlyLibrarian()" class="btn btn-default">Показати лише бібліотекарів</button>
+    </div>*@
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Прізвище ім'я</th>
+            <th>Стан</th>
+            <th>Дія</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+        <tr id="@user.Id" class="">
+            <td class="col-md-2">
+                <a href="@Url.Action("ShowUserInfo", "LibraryManage", new { id = user.Id})">@user.Surname @user.Name</a>
+            </td>
+
+            <td class="col-md-2">
+                <button class="btn @(user.IsBanned ? "btn-danger" : "btn-success") btn-sm disabled">@(user.IsBanned ? "Заблокований" : "Дійсний")</button>
+            </td>
+
+            <td class="col-md-2">
+                <button id="set-@user.Id" onclick="setLibrarian('@user.Id', true)" class="btn btn-success btn-sm @(user.Roles.Any(u => u.RoleId == ViewBag.LibrarianRoleId) ? "hidden" : "")">Призначити бібліотекарем</button>
+                <button id="unset-@user.Id" onclick="setLibrarian('@user.Id', false)" class="btn btn-danger btn-sm @(user.Roles.Any(u => u.RoleId == ViewBag.LibrarianRoleId) ? "" : "hidden")">Виключити бібліотекаря</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+<script>
+    var userList = [];
+
+    @foreach (var user in Model)
+    {
+        @:userList.push({ id: "@user.Id", name: "@user.Surname @user.Name"})
+    }
+
+    function userSearchByName() {
+        var nameTherm = $("#userSearch").val();
+        if (nameTherm.length > 1) {
+            userList.map(
+                (el) => {
+                    if (el.name.toLowerCase().includes(nameTherm.toLowerCase())) {
+                        $("#" + el.id).removeClass("hidden");
+                    }
+                    else {
+                        $("#" + el.id).addClass("hidden");
+                    }
+                }
+            )
+        }
+    }
+
+    //function showOnlyLibrarian() {
+    //    var nameTherm = $("#userSearch").val();
+    //    if (nameTherm.length > 2) {
+    //        userList.map(
+    //            (el) => {
+    //                if (el.name.toLowerCase().includes(nameTherm.toLowerCase())) {
+    //                    $("#" + el.id).removeClass("hidden");
+    //                }
+    //                else {
+    //                    $("#" + el.id).addClass("hidden");
+    //                }
+    //            }
+    //        )
+    //    }
+    //}
+
+    function clearUserSearch() {
+        $("#userSearch").val("");
+        userList.map
+            (
+            (el) => {
+                $("#" + el.id).removeClass("hidden");
+            }
+            )
+    }
+
+    function toggleLibrarianBtns(userId) {
+        $('#set-' + userId).toggleClass('hidden');
+        $('#unset-' + userId).toggleClass('hidden');
+    }
+
+    function setLibrarian(userId, nowIsLibrarian)
+            {
+                $.ajax({
+                    url: '@Url.Action("SetLibrarian", "LibraryManage")',
+                    type: 'POST',
+                    data: { userId: userId, nowIsLibrarian: nowIsLibrarian},
+                    success: () => {
+                        toggleLibrarianBtns(userId);
+                    },
+                    error: function () {
+                        if (nowIsLibrarian == true) {
+                            alert("Сталася помилка при призначенні бібліотекаря");
+                        }
+                        else {
+                            alert("Сталася помилка при знятті бібліотекаря");
+                        }
+                    }
+                });
+            }
+</script>
+}

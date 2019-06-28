@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using DBLib.Models;
 using Library.Models;
 using DBLib;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Library.Controllers
 {
@@ -307,9 +309,32 @@ namespace Library.Controllers
 
         public ActionResult ManageLibrarians()
         {
-            var librarians = DBCommands.getLibrarians();
+            var librarians = DBCommands.getAllUsers();
+            ViewBag.LibrarianRoleId = DBCommands.getLibrarianRoleId();
             
-            return View();
+            return View(librarians);
         }
+
+        [HttpPost]
+        public void SetLibrarian(string userId, bool nowIsLibrarian)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+
+                if (nowIsLibrarian)
+                {
+                    userManager.AddToRole(userId, "librarian");
+                }
+                else
+                {
+                    userManager.RemoveFromRole(userId, "librarian");
+                }
+
+                db.SaveChanges();
+            }
+        }
+
     }
 }

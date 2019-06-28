@@ -721,9 +721,28 @@ namespace DBLib
             {
                 string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
 
-                var users = db.Users.OrderBy(u => u.Surname).Where(u => u.Roles.All(r => r.RoleId == librarianRoleId)).ToList();
+                var users = db.Users.OrderBy(u => u.Surname).Where(u => u.Roles.Any(r => r.RoleId == librarianRoleId)).ToList();
 
                 return users;
+            }
+        }
+
+        public static List<ApplicationUser> getAllUsers()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var users = db.Users.Include(u => u.Roles).OrderBy(u => u.Surname).ToList();
+
+                return users;
+            }
+        }
+
+        public static string getLibrarianRoleId()
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                string librarianRoleId = db.Roles.Where(r => r.Name == "librarian").Select(r => r.Id).SingleOrDefault();
+                return librarianRoleId;
             }
         }
     }

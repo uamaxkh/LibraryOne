@@ -7,7 +7,7 @@
 
 <div class="form-group navbar-form">
     <div class="input-group">
-        <input id="userSearch" class="form-control" size="52" placeholder="Введіть перші 3 літери імені" onkeyup="userSearchByName()" type="text" />
+        <input id="userSearch" class="form-control" size="52" placeholder="Введіть перші 2 літери імені" onkeyup="userSearchByName()" type="text" />
         <div class="input-group-btn">
             <button id="clearUserSearch" onclick="clearUserSearch()" class="btn btn-default">X</button>
         </div>
@@ -39,7 +39,7 @@
 
         function userSearchByName() {
             var nameTherm = $("#userSearch").val();
-            if (nameTherm.length > 2)
+            if (nameTherm.length > 1)
             {
                 userList.map(
                     (el) => {
