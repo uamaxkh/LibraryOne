@@ -3,7 +3,21 @@
     ViewBag.Title = "Розділ: " + Model.Name;
     @model DBLib.Models.Section
 
-    <h2>Розділ: @Model.Name</h2>
+<h2>
+    Розділ: @Model.Name@if (User.IsInRole("admin"))
+    {
+        <span id="editFormShowBtn" class="btn btn-warning btn-xs glyphicon glyphicon-pencil"></span>
+    }
+</h2>
+
+    if (User.IsInRole("admin"))
+    {
+        <div id="editForm" class="hidden">
+            <input hidden id="IdInput" size="50" value="@Model.Id" />
+            <input id="newNameInput" size="50" value="@Model.Name" />
+            <button id="saveChangesBtn" class="btn btn-success btn-sm">Зберегти зміни</button>
+        </div>
+    }
 
     if (Model.Books.Count > 0)
     {
@@ -23,7 +37,7 @@
 else
 {
     ViewBag.Title = "Розділи";
-        <h2>Розділи</h2>
+    <h2>Розділи</h2>
     <h4 class="alertInfo bg-success text-primary">До вашої уваги такі розділи:</h4>
 
     <ul>
@@ -32,4 +46,43 @@ else
             <li><a href="@Url.Action("ShowSection", "Home", new { id = oneSection.Id })">@oneSection.Name</a></li>
         }
     </ul>
+}
+
+@if (User.IsInRole("admin"))
+{
+    @section scripts
+{
+        <script>
+        function toggleEditForm() {
+            $("#editForm").toggleClass("hidden");
+        }
+
+        function saveChanges() {
+            var newName = $("#newNameInput").val();
+            var Id = $("#IdInput").val();
+            if (newName.length > 1)
+            {
+                $.ajax({
+                    url: '@Url.Action("EditSection", "LibraryManage")',
+                    type: 'POST',
+                    data: { Id: Id, Name: newName },
+                    success: () => {
+                        alert("Успішно змінено");
+                        toggleEditForm();
+                        toggleBlockUserBtns();
+                    },
+                    error: function () {
+                        alert('Помилка при зміні');
+                    }
+                });
+            }
+            else {
+                alert("Закоротка назва");
+            }
+        }
+
+            $("#editFormShowBtn").click(toggleEditForm);
+            $("#saveChangesBtn").click(saveChanges);
+        </script>
+    }
 }

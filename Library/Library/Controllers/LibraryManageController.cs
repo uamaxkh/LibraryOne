@@ -384,5 +384,23 @@ namespace Library.Controllers
             DBCommands.cancelBookOrderById(orderId);
         }
 
+        [HttpPost]
+        public void EditAuthor(Author author)
+        {
+            DBCommands.EditAuthor(author);
+        }
+
+        [HttpPost]
+        public void EditPublisher(Publisher publisher)
+        {
+            DBCommands.EditPublisher(publisher);
+        }
+
+        [HttpPost]
+        public void EditSection(Section section)
+        {
+            DBCommands.EditSection(section);
+        }
+
     }
 }

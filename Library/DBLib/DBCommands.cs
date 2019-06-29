@@ -41,17 +41,21 @@ namespace DBLib
             {
                 author = db.Authors.Include(a => a.Books)
                     .Where(a => a.Id == Id).FirstOrDefault();
-                List<Book> notDeletedbooks = author.Books
-                    .Where(b => b.Deleted == false).ToList();
+                if(author != null)
+                {
+                    List<Book> notDeletedbooks = author.Books
+                        .Where(b => b.Deleted == false).ToList();
 
-                if(notDeletedbooks != null)
-                {
-                    author.Books = notDeletedbooks;
+                    if (notDeletedbooks != null)
+                    {
+                        author.Books = notDeletedbooks;
+                    }
+                    else
+                    {
+                        author.Books = new List<Book>();
+                    }
                 }
-                else
-                {
-                    author.Books = new List<Book>();
-                }
+
 
                 return author;
             }
@@ -68,17 +72,21 @@ namespace DBLib
             {
                 publisher = db.Publishers.Include(a => a.Books)
                     .Where(a => a.Id == Id).FirstOrDefault();
-                List<Book> notDeletedbooks = publisher.Books
-                    .Where(b => b.Deleted == false).ToList();
+                if(publisher != null)
+                {
+                    List<Book> notDeletedbooks = publisher.Books
+                        .Where(b => b.Deleted == false).ToList();
 
-                if (notDeletedbooks != null)
-                {
-                    publisher.Books = notDeletedbooks;
+                    if (notDeletedbooks != null)
+                    {
+                        publisher.Books = notDeletedbooks;
+                    }
+                    else
+                    {
+                        publisher.Books = new List<Book>();
+                    }
                 }
-                else
-                {
-                    publisher.Books = new List<Book>();
-                }
+
 
                 return publisher;
             }
@@ -95,16 +103,19 @@ namespace DBLib
             {
                 section = db.Sections.Include(a => a.Books)
                     .Where(a => a.Id == Id).FirstOrDefault();
-                List<Book> notDeletedbooks = section.Books
-                    .Where(b => b.Deleted == false).ToList();
+                if(section != null)
+                {
+                    List<Book> notDeletedbooks = section.Books
+                        .Where(b => b.Deleted == false).ToList();
 
-                if (notDeletedbooks != null)
-                {
-                    section.Books = notDeletedbooks;
-                }
-                else
-                {
-                    section.Books = new List<Book>();
+                    if (notDeletedbooks != null)
+                    {
+                        section.Books = notDeletedbooks;
+                    }
+                    else
+                    {
+                        section.Books = new List<Book>();
+                    }
                 }
 
                 return section;
@@ -779,6 +790,55 @@ namespace DBLib
                             db.BooksRenting.Remove(order);
                         }
                     }
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void EditAuthor(Author newAuthor)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Author author = GetAuthorById(newAuthor.Id);
+                if (author != null)
+                {
+                    author.Name = newAuthor.Name;
+
+                    db.Entry(author).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void EditPublisher(Publisher newPublisher)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Publisher publisher = GetPublisherById(newPublisher.Id);
+                if (publisher != null)
+                {
+                    publisher.Name = newPublisher.Name;
+                    publisher.City = newPublisher.City;
+
+                    db.Entry(publisher).State = EntityState.Modified;
+
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void EditSection(Section newSection)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                Section section = GetSectionById(newSection.Id);
+                if (section != null)
+                {
+                    section.Name = newSection.Name;
+
+                    db.Entry(section).State = EntityState.Modified;
 
                     db.SaveChanges();
                 }
