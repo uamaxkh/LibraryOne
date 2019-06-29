@@ -26,6 +26,8 @@ using DBLib.Models;
         [UIHint("Boolean")]
         public bool IsBanned { get; set; }
 
+        public DateTime RegistrationDate { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<BooksRenting> BooksRenting { get; set; }
@@ -43,6 +45,7 @@ using DBLib.Models;
             Comments = new List<Comment>();
             BooksRenting = new List<BooksRenting>();
             IsBanned = false;
+            RegistrationDate = DateTime.Now;
         }
 
         public bool userHasPenalty

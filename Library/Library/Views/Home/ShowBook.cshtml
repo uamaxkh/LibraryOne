@@ -4,9 +4,13 @@
     ViewBag.Title = @Model.Title;
 }
 
-<!DOCTYPE html>
-
 <h1>@Model.Title</h1>
+@if (User.IsInRole("librarian"))
+{
+    <h4><span class="label label-default">Додано: @Model.AddingDate</span></h4>
+}
+<hr />
+
 @if (Model.Deleted)
 {
     <h3 class="alertInfo bg-danger text-primary"><strong>КНИГУ ВИДАЛЕНО!</strong></h3>
