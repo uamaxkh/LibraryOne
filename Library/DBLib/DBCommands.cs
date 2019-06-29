@@ -505,6 +505,17 @@ namespace DBLib
             return booksRenting;
         }
 
+        public static bool IsUserTakeThisBook(Guid BookId, string UserId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                var order = db.BooksRenting.Where(br => br.ApplicationUser.Id == UserId
+                    && br.Book.Id == BookId && br.ReturningDate == null).FirstOrDefault();
+
+                return (order != null ? true : false);
+            }
+        }
+
         public static bool cancelBookOrderInDB(Guid BookId, string UserId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -581,18 +592,15 @@ namespace DBLib
         }
 
         //with verifying user
-        public static void deleteComment(string userId, Guid commentId)
+        public static void deleteComment(Guid commentId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 Comment comment = db.Comments.Include(c => c.ApplicationUser)
                     .Where(c => c.Id == commentId).FirstOrDefault();
 
-                if(comment.ApplicationUser.Id == userId)
-                {
-                    db.Comments.Remove(comment);
-                    db.SaveChanges();
-                }
+                db.Comments.Remove(comment);
+                db.SaveChanges();
             }
         }
         

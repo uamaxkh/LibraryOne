@@ -38,7 +38,7 @@
                     }
                     @if (User.IsInRole("librarian"))
                     {
-                        <li>@Html.ActionLink("Зареєстровані користувачі", "RegisteredUsers", "LibraryManage")</li>
+                        <li>@Html.ActionLink("Користувачі", "RegisteredUsers", "LibraryManage")</li>
 
                         if (User.IsInRole("admin"))
                         {

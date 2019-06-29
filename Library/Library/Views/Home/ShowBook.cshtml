@@ -70,7 +70,7 @@
             </div>
             @if (@ViewBag.userExist && !User.IsInRole("librarian"))
             {
-                if (@ViewBag.userOrderedTheBook) //Book is ordered by this user
+                if (ViewBag.userOrderedTheBook) //Book is ordered by this user
                 {
                     <div id="addBookOrder" class="btn btn-primary hidden">Замовити</div>
                     <div id="cancelBookOrder" class="btn btn-danger">Відмінити</div>
@@ -80,8 +80,12 @@
                     //User don`t has penalty, he can order book
                     if (!ViewBag.userHasPenalty)
                     {
+                        if (ViewBag.userTakeTheBook)
+                        {
+                            <div class="btn btn-warning">Ця книга вже у вас на руках</div>
+                        }
                         //If the book is free (at least one)
-                        if (@ViewBag.freeBookCount > 0)
+                        else if (@ViewBag.freeBookCount > 0)
                         {
                             <div id="addBookOrder" class="btn btn-primary">Замовити</div>
                             <div id="cancelBookOrder" class="btn btn-danger hidden">Відмінити</div>

@@ -126,6 +126,9 @@ namespace Library.Controllers
                     //Перевірка, чи цей користувач вже замовив книгу
                     bool userOrderedTheBook = DBCommands.GetBookOrderByBookAndUserId((Guid)id, userId) != null;
                     ViewBag.userOrderedTheBook = userOrderedTheBook;
+
+                    bool userTakeTheBook = DBCommands.IsUserTakeThisBook((Guid)id, userId);
+                    ViewBag.userTakeTheBook = userTakeTheBook;
                 }
                 else
                 {
@@ -202,14 +205,22 @@ namespace Library.Controllers
         [HttpPost]
         public ActionResult AddCommnet(string CommentText, Guid bookId)
         {
-            var userId = User.Identity.GetUserId();
-
-            if (userId != null)
+            if(CommentText.Length > 1)
             {
-                DBCommands.AddComment(userId, bookId, CommentText);
-            }
+                var userId = User.Identity.GetUserId();
 
-            return RedirectToAction("ShowBook", new { id = bookId});
+                if (userId != null)
+                {
+                    DBCommands.AddComment(userId, bookId, CommentText);
+                }
+
+                return RedirectToAction("ShowBook", new { id = bookId });
+            }
+            else
+            {
+                return RedirectToAction("Error", new ExceptionExt("Коментар без коментаря?", "Коментар повинен містити текст", MessageState.Error));
+            }
+            
         }
         
         [HttpPost]
@@ -219,7 +230,7 @@ namespace Library.Controllers
 
             if (userId != null)
             {
-                DBCommands.deleteComment(userId, commentId);
+                DBCommands.deleteComment(commentId);
             }
 
             return RedirectToAction("ShowBook", new { id = bookId });

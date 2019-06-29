@@ -6,6 +6,7 @@
 <div id="ifBanned-Red" class="@(ViewBag.usersInfo.IsBanned ? "bg-danger" : "")">
     <h2>
         Користувач: @ViewBag.usersInfo.Surname @ViewBag.usersInfo.Name
+        <input id="userId" type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
         @if (User.IsInRole("admin"))
         {
             <button id="unBlockUserBtn" class="btn btn-success @(ViewBag.usersInfo.IsBanned ? "" : "hidden")">Розблокувати користувача</button>
@@ -27,27 +28,23 @@
     <h4 class="bg-info alertMessage">Замовлені книги</h4>
     <ul id="booksOrdered">
         @{
-            using (Html.BeginForm("UserTakingBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
+            foreach (var br in ViewBag.booksOrdered)
             {
-                <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
-                foreach (var br in ViewBag.booksOrdered)
-                {
                 <li id="order-@br.Id" class="bookRentingUl">
                     <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
                     @if (br.Book.LibraryReading)
                     {
                         <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
                     }
-                    
+
                     <ul>
                         <li>Заброньовано: @br.OrderDate.ToString("dd/MM/yyyy")</li>
                         <li>
-                            <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
+                            <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") onclick="takeOrder('@br.Id')" class="btn btn-xs btn-success">Видати книгу</button>
                             <div onclick="removeOrder('@br.Id')" class="btn btn-xs btn-danger">Скасувати замовлення</div>
                         </li>
                     </ul>
                 </li>
-                }
             }
         }
     </ul>
@@ -64,37 +61,35 @@ else
     <h4 class="bg-info alertMessage">Взяті книги</h4>
     <ul id="booksTaked">
         @{
-            using (Html.BeginForm("UserReturningBook", "LibraryManage", FormMethod.Post, new { @class = "displayInline-block" }))
+            <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
+            foreach (var br in ViewBag.booksTaked)
             {
-                <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
-                foreach (var br in ViewBag.booksTaked)
-                {
-                    <li class="bookRentingUl @(br.IsHasPenalty ? "bg-danger" : "" )">
-                        <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
-                            @br.Book.Title
-                        </a>
-                        @if (br.Book.LibraryReading)
-                        {
-                            <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
-                        }
+                <li class="bookRentingUl @(br.IsHasPenalty ? "bg-danger" : "" )">
+                    <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
+                        @br.Book.Title
+                    </a>
+                    @if (br.Book.LibraryReading)
+                    {
+                        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+                    }
+
+                    <ul>
                         @if (!br.Book.LibraryReading)
                         {
-                            <ul>
-                                <li>Взято: @br.TakingDate.ToString("dd/MM/yyyy")</li>
-                                <li>
-                                    Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")
-                                    @if (br.IsHasPenalty)
-                                    {
-                                        <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
-                                    }
-                                </li>
-                                <li>
-                                    <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
-                                </li>
-                            </ul>
+                            <li>Взято: @br.TakingDate.ToString("dd/MM/yyyy")</li>
+                            <li>
+                                Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")
+                                @if (br.IsHasPenalty)
+                                {
+                                    <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
+                                }
+                            </li>
                         }
-                    </li>
-                }
+                        <li>
+                            <div onclick="returnBook('@br.Id')" class="btn btn-xs btn-success">Повернути книгу</div>
+                        </li>
+                    </ul>
+                </li>
             }
         }
     </ul>
@@ -149,6 +144,38 @@ else
 
         $("#unBlockUserBtn").click(unBlockUser);
         $("#blockUserBtn").click(blockUser);
+
+        function takeOrder(orderId) {
+            var userId = $("#userId").val();
+            $.ajax({
+                url: '@Url.Action("UserTakingBook", "LibraryManage")',
+                type: 'POST',
+                data: { orderForTakingId: orderId, userId: userId},
+                success: () => {
+                    alert("Замовлення видано");
+                    location.reload();
+                },
+                error: function () {
+                     alert('Помилка при видаленні замовлення');
+                }
+            });
+        }
+
+        function returnBook(orderId) {
+            var userId = $("#userId").val();
+            $.ajax({
+                url: '@Url.Action("UserReturningBook", "LibraryManage")',
+                type: 'POST',
+                data: { orderForReturningId: orderId, userId: userId},
+                success: () => {
+                    alert("Книгу повернено");
+                    location.reload();
+                },
+                error: function () {
+                     alert('Помилка при поверненні книги');
+                }
+            });
+        }
 
         function removeOrder(orderId) {
             $.ajax({
