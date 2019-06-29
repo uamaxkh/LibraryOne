@@ -113,7 +113,7 @@ namespace Library.Controllers
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
                 ViewBag.freeBookCount = book.FreeBooksCount();
-                
+                ViewBag.BookRating = DBCommands.GetBookRatingByBookId((Guid)id);
 
                 var userId = User.Identity.GetUserId();
 

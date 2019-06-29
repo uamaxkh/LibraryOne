@@ -1,14 +1,16 @@
-﻿
-@{
+﻿@{
     @model DBLib.Models.Book
     ViewBag.Title = @Model.Title;
 }
 
 <h1>@Model.Title</h1>
-@if (User.IsInRole("librarian"))
-{
-    <h4><span class="label label-default">Додано: @Model.AddingDate</span></h4>
-}
+<h4 title="Кількість прочитань">
+    <span class="label label-default"><span class="glyphicon glyphicon-lamp"> @ViewBag.BookRating</span></span>
+    @if (User.IsInRole("librarian"))
+    {
+        <span class="btn btn-default btn-sm">Додано: @Model.AddingDate</span>
+    }
+</h4>
 <hr />
 
 @if (Model.Deleted)

@@ -844,5 +844,14 @@ namespace DBLib
                 }
             }
         }
+
+        public static int GetBookRatingByBookId(Guid bookId)
+        {
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                return db.BooksRenting.Where(br => br.Book.Id == bookId 
+                    && br.TakingDate != null).Count();
+            }
+        }
     }
 }
