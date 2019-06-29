@@ -17,9 +17,10 @@
     @foreach (var user in Model)
     {
         <li id="@user.Id">
-            <a class="@(user.userHasPenalty? "bg-danger" : "")" 
+            <a class="@(user.userHasPenalty? "bg-danger" : "")"
                href="@Url.Action("ShowUserInfo", new { id = user.Id})">
-                @user.Surname @user.Name @(user.userHasPenalty ? "Штраф : "+user.getSummaryFineValue : "")</a>
+                @user.Surname @user.Name (@user.getCountOfOrderedBooks<text>/</text>@user.getCountOfTakedBooks) @(user.userHasPenalty ? " – Штраф : " + user.getSummaryFineValue + "грн" : "")
+            </a>
             @if (user.IsBanned)
             {
                 <span class="btn btn-danger btn-xs">Заблокований!</span>
@@ -27,6 +28,7 @@
         </li>
     }
 </ul>
+
 @section scripts
 {
     <script>

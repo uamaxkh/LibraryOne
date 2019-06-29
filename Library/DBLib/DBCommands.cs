@@ -752,14 +752,36 @@ namespace DBLib
             {
                 ApplicationUser user = db.Users.Where(u => u.Email == userEmail).SingleOrDefault();
 
-                //if(user != null)
-                //{
+                if (user != null)
+                {
                     return user.IsBanned;
-                //}
-                //else
-                //{
-                //    return false;
-                //}
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static void removeOldUserOrders(string userId)
+        {
+            DateTime Today = DateTime.Now;
+            using (ApplicationDbContext db = new ApplicationDbContext())
+            {
+                List<BooksRenting> oldUserOrders = db.BooksRenting.Where(br => br.ApplicationUser.Id == userId
+                    && br.TakingDate == null).ToList();
+                if (oldUserOrders.Count > 0 && oldUserOrders != null)
+                {
+                    foreach(var order in oldUserOrders)
+                    {
+                        if ((Today - order.OrderDate).Days > 1)
+                        {
+                            db.BooksRenting.Remove(order);
+                        }
+                    }
+
+                    db.SaveChanges();
+                }
             }
         }
     }

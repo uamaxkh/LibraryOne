@@ -78,5 +78,21 @@ using DBLib.Models;
                 return summaryFine;
             }
         }
+
+        public int getCountOfTakedBooks
+        {
+            get
+            {
+                return BooksRenting.Where(br => br.TakingDate != null && br.ReturningDate == null).Count();
+            }
+        }
+
+        public int getCountOfOrderedBooks
+        {
+            get
+            {
+                return BooksRenting.Where(br => br.TakingDate == null).Count();
+            }
+        }
     }
 }

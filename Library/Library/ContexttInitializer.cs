@@ -696,6 +696,13 @@ namespace Library
                 TakingDate = DateTime.Now.AddDays(-12),
             }; booksRentingsList.Add(br8);
 
+            var br9 = new BooksRenting()
+            {
+                Book = b6,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-2),
+            }; booksRentingsList.Add(br9);
+
 
 
 

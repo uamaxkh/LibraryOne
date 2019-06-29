@@ -3,15 +3,22 @@
     ViewBag.Title = "Інформація про користувача";
     @model List<DBLib.Models.BooksRenting>
 }
-
-<h2>
-    Користувач: @ViewBag.usersInfo.Surname @ViewBag.usersInfo.Name
-    @if (User.IsInRole("admin"))
-    {
-        <button id="unBlockUserBtn" class="btn btn-success @(ViewBag.usersInfo.IsBanned ? "" : "hidden")">Розблокувати користувача</button>
-        <button id="blockUserBtn" class="btn btn-danger @(ViewBag.usersInfo.IsBanned ? "hidden" : "")">Заблокувати користувача</button>
-    }
-</h2>
+<div id="ifBanned-Red" class="@(ViewBag.usersInfo.IsBanned ? "bg-danger" : "")">
+    <h2>
+        Користувач: @ViewBag.usersInfo.Surname @ViewBag.usersInfo.Name
+        @if (User.IsInRole("admin"))
+        {
+            <button id="unBlockUserBtn" class="btn btn-success @(ViewBag.usersInfo.IsBanned ? "" : "hidden")">Розблокувати користувача</button>
+            <button id="blockUserBtn" class="btn btn-danger @(ViewBag.usersInfo.IsBanned ? "hidden" : "")">Заблокувати користувача</button>
+        }
+        else
+        {
+            if (ViewBag.usersInfo.IsBanned)
+            {
+                <button class="btn btn-danger">Заблокований</button>
+            }
+        }
+    </h2>
 
 <h5>Дата реєстрації: @ViewBag.usersInfo.RegistrationDate</h5>
 
@@ -25,19 +32,23 @@
                 <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
                 foreach (var br in ViewBag.booksOrdered)
                 {
-                    <li>
-                        <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
-                        @if (br.Book.LibraryReading)
-                        {
-                            <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
-                        }
-                        <button type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
-
-                    </li>
+                <li id="order-@br.Id">
+                    <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
+                    @if (br.Book.LibraryReading)
+                    {
+                        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
+                    }
+                    <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
+                    <div onclick="removeOrder('@br.Id')" class="btn btn-xs btn-danger">X</div>
+                    <ul>
+                        <li>Заброньовано: @br.OrderDate.ToString("dd/MM/yyyy")</li>
+                    </ul>
+                </li>
                 }
             }
         }
     </ul>
+    <div class="text-muted text-center">Замовлення, яким більше 24 годин, видаляються автоматично</div>
 }
 else
 {
@@ -63,7 +74,7 @@ else
                         {
                             <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
                         }
-                        <button type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
+                        <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
                         @if (!br.Book.LibraryReading)
                         {
                             <ul>
@@ -87,6 +98,7 @@ else
 {
     <h4 class="bg-warning alertMessage">Взяті книги відсутні</h4>
 }
+</div>
 
 @section scripts
 {
@@ -94,6 +106,7 @@ else
         function toggleBlockUserBtns() {
             $("#unBlockUserBtn").toggleClass("hidden");
             $("#blockUserBtn").toggleClass("hidden");
+            $("#ifBanned-Red").toggleClass("bg-danger");
         }
 
         function blockUser()
@@ -131,5 +144,20 @@ else
 
         $("#unBlockUserBtn").click(unBlockUser);
         $("#blockUserBtn").click(blockUser);
+
+        function removeOrder(orderId) {
+            $.ajax({
+                url: '@Url.Action("removeBookOrder", "LibraryManage")',
+                type: 'POST',
+                data: { orderId: orderId},
+                success: () => {
+                    alert("Замовлення видалено");
+                    $("#order-" + orderId).remove();
+                },
+                error: function () {
+                     alert('Помилка при видаленні замовлення');
+                }
+            });
+        }
     </script>
 }

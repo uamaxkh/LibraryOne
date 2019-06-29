@@ -168,6 +168,36 @@ namespace Library.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
+        public ActionResult AddAuthor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public ActionResult AddAuthor(Author author)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    DBCommands.AddAuthor(author.Name);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch (ExceptionExt ex)
+            {
+                return RedirectToAction("Error", "Home", ex);
+            }
+
+            return RedirectToAction("Error", "Home", new ExceptionExt("Автора успішно додано", null, MessageState.Succes));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult AddSection()
         {
             return View();
@@ -213,6 +243,7 @@ namespace Library.Controllers
 
             ViewBag.usersInfo = usersInfo; 
 
+            DBCommands.removeOldUserOrders(id);
             List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(id);
 
             List<BooksRenting> booksOrdered = allBooksRentings.Where(br => br.TakingDate == null).ToList();
@@ -345,6 +376,12 @@ namespace Library.Controllers
 
                 db.SaveChanges();
             }
+        }
+
+        [HttpPost]
+        public void removeBookOrder(Guid orderId)
+        {
+            DBCommands.cancelBookOrderById(orderId);
         }
 
     }
