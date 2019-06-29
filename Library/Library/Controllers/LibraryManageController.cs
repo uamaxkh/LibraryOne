@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Library.Controllers
 {
+    [CheckingIfBanned]
     [Authorize(Roles = "librarian")]
     public class LibraryManageController : Controller
     {

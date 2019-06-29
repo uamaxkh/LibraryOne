@@ -81,15 +81,6 @@ namespace Library.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var userEmail = model.Email;
-                    bool isBanned = DBLib.DBCommands.isUserBannedById(userEmail);
-                    if (isBanned)
-                    {
-                        var AuthenticationManager = HttpContext.GetOwinContext().Authentication;
-                        AuthenticationManager.SignOut();
-                        return RedirectToAction("Error", "Home", new ExceptionExt("Ви були заблоковані",
-                            "У вас немає можливості працювати з бібліотекою. Якщо ви вважаєте, що сталася помилка - зверніться до адміністратора", MessageState.Error));
-                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

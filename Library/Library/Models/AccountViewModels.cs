@@ -77,20 +77,17 @@ namespace Library.Models
         [Required]
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
-        [Required]
-        [Display(Name = "Бан")]
-        public bool IsBanned { get; set; }
         #endregion
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} повинен мати не менше {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Підтвердження паролю")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Новий пароль і підтвердження не збігаються.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -102,14 +99,14 @@ namespace Library.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} повинен мати не менше {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Підтвердження паролю")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare("Password", ErrorMessage = "Новий пароль і підтвердження не збігаються.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
