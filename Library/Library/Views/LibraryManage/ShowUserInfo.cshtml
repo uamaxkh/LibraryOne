@@ -32,16 +32,19 @@
                 <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
                 foreach (var br in ViewBag.booksOrdered)
                 {
-                <li id="order-@br.Id">
+                <li id="order-@br.Id" class="bookRentingUl">
                     <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id})">@br.Book.Title</a>
                     @if (br.Book.LibraryReading)
                     {
                         <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
                     }
-                    <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
-                    <div onclick="removeOrder('@br.Id')" class="btn btn-xs btn-danger">X</div>
+                    
                     <ul>
                         <li>Заброньовано: @br.OrderDate.ToString("dd/MM/yyyy")</li>
+                        <li>
+                            <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForTakingId" class="btn btn-xs btn-success">Видати книгу</button>
+                            <div onclick="removeOrder('@br.Id')" class="btn btn-xs btn-danger">Скасувати замовлення</div>
+                        </li>
                     </ul>
                 </li>
                 }
@@ -66,7 +69,7 @@ else
                 <input type="hidden" name="userId" value="@ViewBag.usersInfo.Id" />
                 foreach (var br in ViewBag.booksTaked)
                 {
-                    <li class="@(br.IsHasPenalty ? "bg-danger" : "" )">
+                    <li class="bookRentingUl @(br.IsHasPenalty ? "bg-danger" : "" )">
                         <a href="@Url.Action("ShowBook", "Home", new { id = br.Book.Id })">
                             @br.Book.Title
                         </a>
@@ -74,7 +77,6 @@ else
                         {
                             <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
                         }
-                        <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
                         @if (!br.Book.LibraryReading)
                         {
                             <ul>
@@ -85,6 +87,9 @@ else
                                     {
                                         <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
                                     }
+                                </li>
+                                <li>
+                                    <button @(ViewBag.usersInfo.IsBanned ? "disabled" : "") type="submit" value="@br.Id" name="orderForReturningId" class="btn btn-xs btn-success">Повернути книгу</button>
                                 </li>
                             </ul>
                         }

@@ -74,3 +74,14 @@ textarea {
 .fullWidth{
     max-width: 100%;
 }
+
+.bookRentingUl{
+    border: 1px #cbcbcb solid;
+    border-radius: 6px;
+    padding: 8px;
+    margin: 9px 0px;
+}
+
+.bookRentingUl li{
+    margin: 5px 0px;
+}
