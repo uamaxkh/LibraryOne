@@ -13,11 +13,11 @@ namespace DBLib.Models
         [Display(Name = "Дата")]
         public DateTime Date { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Текст коментаря")]
         public string CommentText { get; set; }
 
-        //[Required]
+        //[Required(ErrorMessage = "Необхідне поле")]
         //[Range(1, 5, ErrorMessage = "Оцінка може бути від 1 до 5")]
         //[Display(Name = "Оцінка книги")]
         //public int BookRate {

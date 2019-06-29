@@ -15,7 +15,7 @@
                         <button name="commentId" class = "btn btn-xs btn-danger" value="@review.Id" type="submit">X</button>
                     }
                 }
-                @review.ApplicationUser.Name @review.ApplicationUser.Surname | @review.Date.ToString("yyyy/MM/dd - HH:mm")
+                @review.ApplicationUser.Name @review.ApplicationUser.Surname | @review.Date.ToString("dd/MM/yyyy - HH:mm")
             </div>
             <div class="panel-body">@review.CommentText</div>
         </div>

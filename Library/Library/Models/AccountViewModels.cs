@@ -6,7 +6,7 @@ namespace Library.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
@@ -26,10 +26,10 @@ namespace Library.Models
 
     public class VerifyCodeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         public string Provider { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Code")]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
@@ -42,19 +42,19 @@ namespace Library.Models
 
     public class ForgotViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
@@ -65,21 +65,21 @@ namespace Library.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         #region MyAdded
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Ім'я")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
         #endregion
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [StringLength(100, ErrorMessage = "{0} повинен мати не менше {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
@@ -93,12 +93,12 @@ namespace Library.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [StringLength(100, ErrorMessage = "{0} повинен мати не менше {2} символів.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
@@ -114,7 +114,7 @@ namespace Library.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

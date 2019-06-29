@@ -9,7 +9,7 @@ namespace DBLib.Models
 {
     public class Section : BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Назва розділу")]
         public string Name { get; set; }
         

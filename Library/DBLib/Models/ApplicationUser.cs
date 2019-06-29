@@ -14,11 +14,11 @@ using DBLib.Models;
 {
     public class ApplicationUser : IdentityUser
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Ім'я")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Прізвище")]
         public string Surname { get; set; }
 

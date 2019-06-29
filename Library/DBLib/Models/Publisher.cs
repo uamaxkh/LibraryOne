@@ -9,11 +9,11 @@ namespace DBLib.Models
 {
     public class Publisher : BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Назва видавця")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Місто")]
         public string City { get; set; }
 

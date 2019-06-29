@@ -9,11 +9,11 @@ namespace DBLib.Models
 {
     public class Author : BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Ім'я і прізвище")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Книги")]
         [UIHint("Collection")]
         public virtual ICollection<Book> Books { get; set; }

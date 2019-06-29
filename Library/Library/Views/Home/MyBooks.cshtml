@@ -50,12 +50,12 @@ else
                         <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
                     }
                     <ul>
-                        <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+                        <li>Взято: @br.TakingDate.ToString("dd/MM/yyyy")</li>
 
                         @if (!br.Book.LibraryReading)
                         {
                             <li>
-                                Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                                Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")
                                 @if (br.IsHasPenalty)
                                 {
                                     <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
@@ -82,15 +82,15 @@ else
                     <a href="@Url.Action("ShowBook", new { id = br.Book.Id })">
                         @br.Book.Title
                     </a>
-                    <span>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</span>
+                    <span>Взято: @br.TakingDate.ToString("dd/MM/yyyy")</span>
                     @if (!br.IsHasPenalty)
                     {
-                        <span>Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")</span>
+                        <span>Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")</span>
                     }
                     else if (br.IsHasPenalty)
                     {
                         <span class="bg-danger">
-                            Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                            Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")
                             <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
                         </span>
                     }

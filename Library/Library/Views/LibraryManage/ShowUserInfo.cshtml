@@ -67,9 +67,9 @@ else
                         @if (!br.Book.LibraryReading)
                         {
                             <ul>
-                                <li>Взято: @br.TakingDate.ToString("yyyy/MM/dd")</li>
+                                <li>Взято: @br.TakingDate.ToString("dd/MM/yyyy")</li>
                                 <li>
-                                    Повернути: @br.GetReturningDate.ToString("yyyy/MM/dd")
+                                    Повернути: @br.GetReturningDate.ToString("dd/MM/yyyy")
                                     @if (br.IsHasPenalty)
                                     {
                                         <strong> - Нараховано ШТРАФ: @br.GetFineValue грн.</strong>
