@@ -86,9 +86,9 @@ namespace DBLib
         public void setPage(out int StartElement, out int EndElement, int page)
         {
             Page = page < 1 ? 1 : page;
+            ElementsCount = ElementsCountRefresh();
             StartElement = this.StartElement;
             EndElement = this.EndElement;
-            ElementsCount = ElementsCountRefresh();
         }
     }
 }
