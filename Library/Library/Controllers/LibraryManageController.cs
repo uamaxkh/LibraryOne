@@ -158,9 +158,10 @@ namespace Library.Controllers
                     return View();
                 }
             }
-            catch (ExceptionExt ex)
+            catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home", ex);
+                var exExt = new ExceptionExt(ex);
+                return RedirectToAction("Error", "Home", exExt);
             }
 
             return RedirectToAction("Error", "Home", new ExceptionExt("Видання успішно додано", null, MessageState.Succes));
@@ -188,9 +189,10 @@ namespace Library.Controllers
                     return View();
                 }
             }
-            catch (ExceptionExt ex)
+            catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home", ex);
+                var exExt = new ExceptionExt(ex);
+                return RedirectToAction("Error", "Home", exExt);
             }
 
             return RedirectToAction("Error", "Home", new ExceptionExt("Автора успішно додано", null, MessageState.Succes));
@@ -218,9 +220,10 @@ namespace Library.Controllers
                     return View();
                 }
             }
-            catch (ExceptionExt ex)
+            catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home", ex);
+                var exExt = new ExceptionExt(ex);
+                return RedirectToAction("Error", "Home", exExt);
             }
 
             return RedirectToAction("Error", "Home", new ExceptionExt("Розділ успішно додано", null, MessageState.Succes));
@@ -238,7 +241,7 @@ namespace Library.Controllers
             var usersInfo = DBCommands.GetUserById(id);
             if(usersInfo == null)
             {
-                return RedirectToAction("Error", "Home", new ExceptionExt("Користувач не знайдений", null, MessageState.Error));
+                return RedirectToAction("Error", "Home", new ExceptionExt("Користувач не знайдений", "Немає користувача з таким Id, або Id не вказаний", MessageState.Error));
             }
 
             ViewBag.usersInfo = usersInfo; 
@@ -322,9 +325,10 @@ namespace Library.Controllers
                     return RedirectToAction("Error", "Home", new ExceptionExt("Не всі дані були вказані", null, MessageState.Error));
                 }
             }
-            catch (ExceptionExt ex)
+            catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home", ex);
+                var exExt = new ExceptionExt(ex);
+                return RedirectToAction("Error", "Home", exExt);
             }
         }
 

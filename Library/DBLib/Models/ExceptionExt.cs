@@ -15,6 +15,13 @@ namespace DBLib.Models
         public ExceptionExt()
         : base(){ }
 
+        public ExceptionExt(Exception ex)
+        : base() {
+            MessageExt = ex.Message;
+            AdditionalInfo = ex.StackTrace;
+            State = MessageState.Error;
+        }
+
         public ExceptionExt(string MessageExt)
         : base(){
             this.MessageExt = MessageExt;

@@ -132,12 +132,12 @@ namespace Library.Controllers
                 ViewBag.userId = userId;
 
                 return View(book);
-        }
+            }
             catch
             {
                 return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
             }
-}
+        }
 
         public ActionResult Error(ExceptionExt ms)
         {
@@ -210,7 +210,6 @@ namespace Library.Controllers
             {
                 return RedirectToAction("Error", new ExceptionExt("Коментар без коментаря?", "Коментар повинен містити текст", MessageState.Error));
             }
-            
         }
         
         [HttpPost]
