@@ -9,39 +9,42 @@ namespace DBLib.Models
 {
     public class Book : BaseEntity
     {
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Заголовок")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Рік видання")]
+        [Range(1900, 3000, ErrorMessage = "{0} не може бути меншим за {1}")]
         public short Year { get; set; }
         
         [Display(Name = "Читання в бібліотеці")]
         [UIHint("Boolean")]
         public bool LibraryReading { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Кількість книг")]
+        [Range(1, int.MaxValue, ErrorMessage = "{0} не може бути менша за {1}")]
         public int Quantity { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Сторінок")]
+        [Range(1, int.MaxValue, ErrorMessage = "{0} не може бути менше за {1}")]
         public int Pages { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Код ISBN")]
         public string ISBN { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "А де ж назва розділу?")]
         [Display(Name = "Назва розділу")]
         public Section Section { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Як же без видавця")]
         [Display(Name = "Видавець")]
         public Publisher Publisher { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Дата додавання")]
         public DateTime AddingDate { get; set; }
         
