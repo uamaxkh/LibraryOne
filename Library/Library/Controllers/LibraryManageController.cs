@@ -49,14 +49,14 @@ namespace Library.Controllers
                 }
                 catch (ExceptionExt ex)
                 {
-                    return RedirectToAction("Error", "Home", new ExceptionExt("Помилка додавання книги", ex.ToString(), MessageState.Error));
+                    return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Помилка додавання книги", ex.ToString(), MessageState.Error));
                 }
             }
             else
             {
                 return View();
             }
-            return RedirectToAction("Error", "Home", new ExceptionExt("Книгу додано", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Книгу додано", null, MessageState.Succes));
         }
 
         public bool SaveTitlePic(HttpPostedFileBase titlePic, Guid Id)
@@ -161,10 +161,10 @@ namespace Library.Controllers
             catch (Exception ex)
             {
                 var exExt = new ExceptionExt(ex);
-                return RedirectToAction("Error", "Home", exExt);
+                return RedirectToAction("ErrorExt", "Error", exExt);
             }
 
-            return RedirectToAction("Error", "Home", new ExceptionExt("Видання успішно додано", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Видання успішно додано", null, MessageState.Succes));
         }
 
         [HttpGet]
@@ -192,10 +192,10 @@ namespace Library.Controllers
             catch (Exception ex)
             {
                 var exExt = new ExceptionExt(ex);
-                return RedirectToAction("Error", "Home", exExt);
+                return RedirectToAction("ErrorExt", "Error", exExt);
             }
 
-            return RedirectToAction("Error", "Home", new ExceptionExt("Автора успішно додано", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Автора успішно додано", null, MessageState.Succes));
         }
 
         [HttpGet]
@@ -223,10 +223,10 @@ namespace Library.Controllers
             catch (Exception ex)
             {
                 var exExt = new ExceptionExt(ex);
-                return RedirectToAction("Error", "Home", exExt);
+                return RedirectToAction("ErrorExt", "Error", exExt);
             }
 
-            return RedirectToAction("Error", "Home", new ExceptionExt("Розділ успішно додано", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Розділ успішно додано", null, MessageState.Succes));
         }
 
         public ActionResult RegisteredUsers()
@@ -241,7 +241,7 @@ namespace Library.Controllers
             var usersInfo = DBCommands.GetUserById(id);
             if(usersInfo == null)
             {
-                return RedirectToAction("Error", "Home", new ExceptionExt("Користувач не знайдений", "Немає користувача з таким Id, або Id не вказаний", MessageState.Error));
+                return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Користувач не знайдений", "Немає користувача з таким Id, або Id не вказаний", MessageState.Error));
             }
 
             ViewBag.usersInfo = usersInfo; 
@@ -282,7 +282,7 @@ namespace Library.Controllers
         {
             if(id == null)
             {
-                return RedirectToAction("Error", "Home", new ExceptionExt("Id книги не вказано", null, MessageState.Error));
+                return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Id книги не вказано", null, MessageState.Error));
             }
 
             var book = DBCommands.GetBookWithAdditionalInfoById((Guid)id);
@@ -292,7 +292,7 @@ namespace Library.Controllers
 
             if (book == null)
             {
-                return RedirectToAction("Error", "Home", new ExceptionExt("Книгу не знайдено", null, MessageState.Error));
+                return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Книгу не знайдено", null, MessageState.Error));
             }
 
             return View(book);
@@ -318,17 +318,17 @@ namespace Library.Controllers
                         }
                     }
 
-                    return RedirectToAction("Error", "Home", new ExceptionExt("Успішо відредаговано", null, MessageState.Succes));
+                    return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Успішо відредаговано", null, MessageState.Succes));
                 }
                 else
                 {
-                    return RedirectToAction("Error", "Home", new ExceptionExt("Не всі дані були вказані", null, MessageState.Error));
+                    return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Не всі дані були вказані", null, MessageState.Error));
                 }
             }
             catch (Exception ex)
             {
                 var exExt = new ExceptionExt(ex);
-                return RedirectToAction("Error", "Home", exExt);
+                return RedirectToAction("ErrorExt", "Error", exExt);
             }
         }
 
@@ -336,14 +336,14 @@ namespace Library.Controllers
         public ActionResult DeleteBook(Guid bookId)
         {
             DBCommands.DeleteBook(bookId);
-            return RedirectToAction("Error", "Home", new ExceptionExt("Успішо видалено", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Успішо видалено", null, MessageState.Succes));
         }
 
         [HttpPost]
         public ActionResult ReturnBook(Guid bookId)
         {
             DBCommands.ReturnBook(bookId);
-            return RedirectToAction("Error", "Home", new ExceptionExt("Успішо повернуто", null, MessageState.Succes));
+            return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Успішо повернуто", null, MessageState.Succes));
         }
 
         [HttpPost]

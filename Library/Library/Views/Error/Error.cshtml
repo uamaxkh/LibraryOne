@@ -1,0 +1,21 @@
+﻿@{
+    @model Exception
+    ViewBag.Title = "Виникла неочікувана помилка";
+}
+
+<h1 class="text-danger">@ViewBag.Title</h1>
+<h4 class="bg-danger text-info alertMessage">
+    За деталями зверніться, будь ласка, до адміністратора
+</h4>
+
+<div class="bg-warning text-info alertInfo">
+    @Model.Message<span class="btn btn-xs btn-link" data-toggle="collapse" data-target="#specInfo">+</span>
+    <div id="specInfo" class="collapse bg-dark text-muted" hidden>
+    <hr />
+        <p>Error Data: @Model.Data</p>
+        <p>Error InnerException: @Model.InnerException</p>
+        <p>Error Source: @Model.Source</p>
+        <p>Error StackTrace: @Model.StackTrace</p>
+    </div>
+</div>
+<div>Бажаєте <a href="/Home/Index">повернутися на голову?</a></div>

@@ -176,6 +176,7 @@
     <Compile Include="Attributes.cs" />
     <Compile Include="ContexttInitializer.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LibraryManageController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -252,7 +253,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Error\ErrorExt.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -294,6 +295,8 @@
     <Content Include="Views\LibraryManage\ManageLibrarians.cshtml" />
     <Content Include="Views\Shared\Banned.cshtml" />
     <Content Include="Views\LibraryManage\AddAuthor.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

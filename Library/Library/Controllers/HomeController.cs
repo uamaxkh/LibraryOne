@@ -98,7 +98,7 @@ namespace Library.Controllers
             {
                 if (id == null)
                 {
-                    return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
+                    return RedirectToAction("ErrorExt", "Error",  new ExceptionExt("Такої книги не існує", "Не вказано код книги", MessageState.Error));
                 }
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
@@ -135,13 +135,8 @@ namespace Library.Controllers
             }
             catch
             {
-                return RedirectToAction("Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
+                return RedirectToAction("ErrorExt", "Error",  new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
             }
-        }
-
-        public ActionResult Error(ExceptionExt ms)
-        {
-            return View(ms);
         }
 
         [HttpPost]
@@ -208,7 +203,7 @@ namespace Library.Controllers
             }
             else
             {
-                return RedirectToAction("Error", new ExceptionExt("Коментар без коментаря?", "Коментар повинен містити текст", MessageState.Error));
+                return RedirectToAction("ErrorExt", "Error",  new ExceptionExt("Коментар без коментаря?", "Коментар повинен містити текст", MessageState.Error));
             }
         }
         
