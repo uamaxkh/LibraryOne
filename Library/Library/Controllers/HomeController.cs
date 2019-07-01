@@ -20,23 +20,13 @@ namespace Library.Controllers
 
         public ActionResult Index(int id = 1, string sortingBy = "none", string sortingOrder = "none")
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            //    var userEmail = User.Identity.Name;
-            //    bool isBanned = DBLib.DBCommands.isUserBannedById(userEmail);
-            //    if(isBanned)
-            //    {
-            //        var AuthenticationManager = HttpContext.GetOwinContext().Authentication;
-            //        AuthenticationManager.SignOut();
-            //        return RedirectToAction("Error", "Home", new ExceptionExt("Ви були заблоковані",
-            //            "У вас немає можливості працювати з бібліотекою. Якщо ви вважаєте, що сталася помилка - зверніться до адміністратора", MessageState.Error));
-            //    }
-            //}
-
-
             pagination.setPage(id);
+
+            //For pagination
             ViewBag.MaxPage = pagination.GetMaxPage;
             ViewBag.currentPage = id;
+
+            //For search
             ViewBag.Titles = DBCommands.GetAllTitles();
             ViewBag.AuthorsName = DBCommands.GetAllAuthorsName();
 

@@ -39,7 +39,9 @@ namespace DBLib
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                author = db.Authors.Include(a => a.Books)
+                author = db.Authors.Include(a => a.Books.Select(b => b.Authors))
+                    .Include(a => a.Books.Select(b => b.Publisher))
+                    .Include(a => a.Books.Select(b => b.Section))
                     .Where(a => a.Id == Id).FirstOrDefault();
                 if(author != null)
                 {
@@ -70,7 +72,9 @@ namespace DBLib
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                publisher = db.Publishers.Include(a => a.Books)
+                publisher = db.Publishers.Include(a => a.Books.Select(b => b.Authors))
+                    .Include(a => a.Books.Select(b => b.Publisher))
+                    .Include(a => a.Books.Select(b => b.Section))
                     .Where(a => a.Id == Id).FirstOrDefault();
                 if(publisher != null)
                 {
@@ -101,7 +105,9 @@ namespace DBLib
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
-                section = db.Sections.Include(a => a.Books)
+                section = db.Sections.Include(a => a.Books.Select(b => b.Authors))
+                    .Include(a => a.Books.Select(b => b.Publisher))
+                    .Include(a => a.Books.Select(b => b.Section))
                     .Where(a => a.Id == Id).FirstOrDefault();
                 if(section != null)
                 {

@@ -3,33 +3,35 @@
     ViewBag.Title = "Видавець: " + Model.Name;
     @model DBLib.Models.Publisher
 
-<h2>
-    Видавець: @Model.Name@if (User.IsInRole("admin"))
-    {
-        <span id="editFormShowBtn" class="btn btn-warning btn-xs glyphicon glyphicon-pencil"></span>
-    }
-</h2>
+    <h2>
+        Видавець: @Model.Name@if (User.IsInRole("admin"))
+        {
+            <span id="editFormShowBtn" class="btn btn-warning btn-xs glyphicon glyphicon-pencil"></span>
+        }
+    </h2>
     <h4>Місто: @Model.City</h4>
 
     if (User.IsInRole("admin"))
     {
-    <div id="editForm" class="hidden">
-        <input hidden id="IdInput" size="50" value="@Model.Id" />
-        <input id="newNameInput" size="50" value="@Model.Name" />
-        <input id="newCityInput" size="22" value="@Model.City" />
-        <button id="saveChangesBtn" class="btn btn-success btn-sm">Зберегти зміни</button>
-    </div>
+        <div id="editForm" class="hidden">
+            <input hidden id="IdInput" size="50" value="@Model.Id" />
+            <input id="newNameInput" size="50" value="@Model.Name" />
+            <input id="newCityInput" size="22" value="@Model.City" />
+            <button id="saveChangesBtn" class="btn btn-success btn-sm">Зберегти зміни</button>
+        </div>
     }
 
     if (Model.Books.Count > 0)
     {
         <h5 class="alertInfo bg-success text-primary">Цей видавець має <span class="badge">@Model.Books.Count</span> книг</h5>
-        <ul>
-            @foreach (var book in Model.Books)
-            {
-                <li><a href="@Url.Action("ShowBook", "Home", new { id = book.Id })">@book.Title</a></li>
-            }
-        </ul>
+        @*<ul>
+                @foreach (var book in Model.Books)
+                {
+                    <li><a href="@Url.Action("ShowBook", "Home", new { id = book.Id })">@book.Title</a></li>
+                }
+            </ul>*@
+
+        @Html.Partial("_BooksView", Model.Books)
     }
     else
     {

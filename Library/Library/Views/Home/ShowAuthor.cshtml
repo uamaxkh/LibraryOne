@@ -23,12 +23,14 @@
     if (Model.Books.Count > 0)
     {
         <h5 class="alertInfo bg-success text-primary">Цей автор має <span class="badge">@Model.Books.Count</span> книг</h5>
-        <ul>
+        @*<ul>
             @foreach (var book in Model.Books)
             {
                 <li><a href="@Url.Action("ShowBook", "Home", new { id = book.Id })">@book.Title</a></li>
             }
-        </ul>
+        </ul>*@
+        
+        @Html.Partial("_BooksView", Model.Books)
     }
     else
     {

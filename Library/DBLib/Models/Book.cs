@@ -92,5 +92,17 @@ namespace DBLib.Models
                 return Authors[0].Name;
             }
         }
+
+        public string CutTitle(int maxLenght)
+        {
+                if(Title.Length > (maxLenght + 3))
+                {
+                    return Title.Substring(0, maxLenght) + "...";
+                }
+                else
+                {
+                    return Title;
+                }
+        }
     }
 }

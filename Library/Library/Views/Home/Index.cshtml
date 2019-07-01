@@ -32,9 +32,8 @@
     </div>
 </div>
 
-
-
 @Html.Partial("_BooksView", Model)
+
 <datalist id="titlesList">
     @foreach (var book in ViewBag.Titles)
     {
