@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Custom Exception
+    /// Used for different states of messages
+    /// </summary>
     public class ExceptionExt : Exception
     {
         public string MessageExt { get; set; }
@@ -48,6 +52,9 @@ namespace DBLib.Models
         }
     }
 
+    /// <summary>
+    /// MessageState used for change styling of view for error
+    /// </summary>
     public enum MessageState
     {
         Error,

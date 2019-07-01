@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DBLib
 {
+    /// <summary>
+    /// Page pagination
+    /// Used for books displaying
+    /// </summary>
     public class Pagination
     {
         public delegate int getMaxCountNumber();
@@ -15,28 +19,39 @@ namespace DBLib
         public int Step { get; set; }
         public int Page { get; set; }
 
-        public int StartPage
+        /// <summary>
+        /// Return first element for this page
+        /// Check out of the range (min page)
+        /// </summary>
+        public int StartElement
         {
             get
             {
-                int startPage = (Page - 1) * Step + 1;
-                if (startPage > ElementsCount)
+                int startElement = (Page - 1) * Step + 1;
+                if (startElement > ElementsCount)
                     return ElementsCount - Step + 1;
-                return startPage;
+                return startElement;
             }
         }
 
-        public int EndPage
+        /// <summary>
+        /// Return last element for this page
+        /// Check out of the range (max page)
+        /// </summary>
+        public int EndElement
         {
             get
             {
-                int endPage = StartPage + Step - 1;
-                if (endPage > ElementsCount)
+                int endElement = StartElement + Step - 1;
+                if (endElement > ElementsCount)
                     return ElementsCount;
-                return endPage;
+                return endElement;
             }
         }
 
+        /// <summary>
+        /// Return last page for this step
+        /// </summary>
         public int GetMaxPage
         {
             get
@@ -45,23 +60,34 @@ namespace DBLib
             }
         }
 
+        /// <summary>
+        /// Initialize Pagination class
+        /// </summary>
+        /// <param name="maxCountRefresh">Method, that return max count of elements</param>
         public Pagination(int step, getMaxCountNumber maxCountRefresh)
         {
             Step = step;
             ElementsCountRefresh = maxCountRefresh;
         }
 
+        /// <summary>
+        /// Set start & end elements for page by current page number
+        /// </summary>
         public void setPage(int page)
         {
             Page = page < 1 ? 1 : page;
             ElementsCount = ElementsCountRefresh();
         }
 
-        public void setPage(out int StartPage, out int EndPage, int page)
+        /// <summary>
+        /// Set start & end elements for page by current page number
+        /// with OUT parameters
+        /// </summary>
+        public void setPage(out int StartElement, out int EndElement, int page)
         {
             Page = page < 1 ? 1 : page;
-            StartPage = this.StartPage;
-            EndPage = this.EndPage;
+            StartElement = this.StartElement;
+            EndElement = this.EndElement;
             ElementsCount = ElementsCountRefresh();
         }
     }

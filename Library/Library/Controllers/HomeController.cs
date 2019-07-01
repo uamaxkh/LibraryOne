@@ -12,6 +12,10 @@ using System.Web.Security;
 
 namespace Library.Controllers
 {
+    /// <summary>
+    /// Contains controllers, that process requests
+    /// for unregistered/registered users
+    /// </summary>
     [CheckingIfBanned]
     public class HomeController : Controller
     {
@@ -30,7 +34,7 @@ namespace Library.Controllers
             ViewBag.Titles = DBCommands.GetAllTitles();
             ViewBag.AuthorsName = DBCommands.GetAllAuthorsName();
 
-            var books = DBCommands.GetBooksRange(pagination.StartPage, pagination.Step, sortingBy, sortingOrder);
+            var books = DBCommands.GetBooksRange(pagination.StartElement, pagination.Step, sortingBy, sortingOrder);
 
             return View(books);
         }
@@ -140,7 +144,7 @@ namespace Library.Controllers
         }
 
         [HttpPost]
-        public JsonResult bookOrder(Guid? BookId, string UserId)
+        public JsonResult BookOrder(Guid? BookId, string UserId)
         {
             try
             {
@@ -149,7 +153,7 @@ namespace Library.Controllers
                     return new JsonResult { Data = "Помилка. Не вказано Ід книги чи користувача" };
                 }
 
-                bool state = DBCommands.saveBookOrderToDB((Guid)BookId, UserId);
+                bool state = DBCommands.SaveBookOrderToDB((Guid)BookId, UserId);
 
                 if (state)
                 {
@@ -163,8 +167,12 @@ namespace Library.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Cancel book order by book Id && user Id
+        /// </summary>
         [HttpPost]
-        public JsonResult cancelBookOrder(Guid? BookId, string UserId)
+        public JsonResult CancelBookOrder(Guid? BookId, string UserId)
         {
             try
             {
@@ -173,7 +181,7 @@ namespace Library.Controllers
                     return new JsonResult { Data = "Помилка. Не вказано Ід книги чи користувача" };
                 }
 
-                bool state = DBCommands.cancelBookOrderInDB((Guid)BookId, UserId);
+                bool state = DBCommands.CancelBookOrderByBookAndUser((Guid)BookId, UserId);
 
                 if (state != false)
                 {
@@ -214,7 +222,7 @@ namespace Library.Controllers
 
             if (userId != null)
             {
-                DBCommands.deleteComment(commentId);
+                DBCommands.DeleteComment(commentId);
             }
 
             return RedirectToAction("ShowBook", new { id = bookId });
@@ -228,7 +236,7 @@ namespace Library.Controllers
                 return RedirectToAction("Login", "Account");
 
 
-            List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(userId);
+            List<BooksRenting> allBooksRentings = DBCommands.GetUserOrderedBooks(userId);
 
             List<BooksRenting> booksOrdered = allBooksRentings.Where(br => br.TakingDate == null).ToList();
 
@@ -240,10 +248,13 @@ namespace Library.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Cancel book order by order Id
+        /// </summary>
         [HttpPost]
         public ActionResult CancelOrder(Guid orderId)
         {
-            DBCommands.cancelBookOrderById(orderId);
+            DBCommands.CancelBookOrderById(orderId);
             return RedirectToAction("MyBooks");
         }
     }

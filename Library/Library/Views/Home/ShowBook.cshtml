@@ -129,7 +129,7 @@
 
         function addBookOrder() {
             $.ajax({
-                url: '@Url.Action("bookOrder")',
+                url: '@Url.Action("BookOrder")',
                 data: { BookId: '@Model.Id', UserId: '@ViewBag.userId' },
                 type: 'POST',
                 dataType: "json",
@@ -147,7 +147,7 @@
 
         function cancelBookOrder() {
             $.ajax({
-                url: '@Url.Action("cancelBookOrder")',
+                url: '@Url.Action("CancelBookOrder")',
                 data: { BookId: '@Model.Id', UserId: '@ViewBag.userId' },
                 type: 'POST',
                 dataType: "json",

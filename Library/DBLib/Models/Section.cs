@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Reflects section from DB
+    /// </summary>
     public class Section : BaseEntity
     {
         [Required(ErrorMessage = "Необхідне поле")]

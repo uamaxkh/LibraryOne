@@ -11,6 +11,10 @@ using Microsoft.Owin.Security;
 
 namespace Library
 {
+    /// <summary>
+    /// Attribute, that check registered users ban status on each page.
+    /// If user is banned, will show ban page and log out
+    /// </summary>
     public class CheckingIfBanned : FilterAttribute, IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext filterContext)
@@ -18,7 +22,7 @@ namespace Library
             if (filterContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 var userEmail = filterContext.HttpContext.User.Identity.Name;
-                bool isBanned = DBLib.DBCommands.isUserBannedById(userEmail);
+                bool isBanned = DBLib.DBCommands.IsUserBannedByEmail(userEmail);
                 if (isBanned)
                 {
                     var AuthenticationManager = filterContext.HttpContext.GetOwinContext().Authentication;

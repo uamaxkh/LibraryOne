@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Reflects Publisher from DB
+    /// </summary>
     public class Publisher : BaseEntity
     {
         [Required(ErrorMessage = "Необхідне поле")]

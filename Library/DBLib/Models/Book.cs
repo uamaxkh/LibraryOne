@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Reflects books from DB
+    /// </summary>
     public class Book : BaseEntity
     {
         [Required(ErrorMessage = "Необхідне поле")]
@@ -88,6 +91,9 @@ namespace DBLib.Models
             return DBCommands.FreeBookCountById(Id);
         }
 
+        /// <summary>
+        /// Used for sorting by (first) author name
+        /// </summary>
         public string getFirstAuthorName
         {
             get

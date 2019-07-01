@@ -12,6 +12,9 @@ using DBLib.Models;
 //namespace DBLib.Models
  namespace Library.Models
 {
+    /// <summary>
+    /// Standart ApplicationUser class with some changes for library project
+    /// </summary>
     public class ApplicationUser : IdentityUser
     {
         [Required(ErrorMessage = "Необхідне поле")]
@@ -48,6 +51,9 @@ using DBLib.Models;
             RegistrationDate = DateTime.Now;
         }
 
+        /// <summary>
+        /// Returns "has penalty" (true), if user has at least one penalty order
+        /// </summary>
         public bool userHasPenalty
         {
             get
@@ -63,6 +69,9 @@ using DBLib.Models;
             }
         }
 
+        /// <summary>
+        /// Returns summary fine for all penalty orders
+        /// </summary>
         public double getSummaryFineValue
         {
             get
@@ -79,6 +88,9 @@ using DBLib.Models;
             }
         }
 
+        /// <summary>
+        /// Return count of books, that were taked, but not returned
+        /// </summary>
         public int getCountOfTakedBooks
         {
             get
@@ -87,6 +99,9 @@ using DBLib.Models;
             }
         }
 
+        /// <summary>
+        /// Return count of books, that were ordered, but not taked
+        /// </summary>
         public int getCountOfOrderedBooks
         {
             get

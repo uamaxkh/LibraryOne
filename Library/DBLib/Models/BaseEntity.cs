@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Base entity for DB-models classes
+    /// </summary>
     public class BaseEntity
     {
         public Guid Id { get; set; }

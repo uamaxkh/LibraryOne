@@ -9,6 +9,10 @@ using DBLib;
 
 namespace Library.Models
 {
+    /// <summary>
+    /// Create an application database context
+    /// Stored collections of all DB elements
+    /// </summary>
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

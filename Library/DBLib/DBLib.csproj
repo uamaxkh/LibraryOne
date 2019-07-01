@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="DBCommands.cs" />
     <Compile Include="LibrarySettings.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -69,6 +68,7 @@
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\BooksRenting.cs" />
     <Compile Include="Pagination.cs" />
+    <Compile Include="PictureOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Reflects Author from DB
+    /// </summary>
     public class Author : BaseEntity
     {
         [Required(ErrorMessage = "Необхідне поле")]

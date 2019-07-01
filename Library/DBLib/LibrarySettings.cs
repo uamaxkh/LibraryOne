@@ -5,6 +5,9 @@ using System.Web;
 
 namespace DBLib
 {
+    /// <summary>
+    /// Save some setting for library working
+    /// </summary>
     public static class LibrarySettings
     {
         public static double getFinePerDay()

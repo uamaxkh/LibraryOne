@@ -12,7 +12,10 @@ using DBLib;
 
 namespace DBLib
 {
-
+    /// <summary>
+    /// Class with methods that interact with the database
+    /// Used the ApplicationDbContext
+    /// </summary>
     public static class DBCommands
     {
         public static List<Book> SearchBookByTitle(string searchString)
@@ -469,7 +472,7 @@ namespace DBLib
             return book;
         }
 
-        public static bool saveBookOrderToDB(Guid BookId, string UserId)
+        public static bool SaveBookOrderToDB(Guid BookId, string UserId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -522,7 +525,7 @@ namespace DBLib
             }
         }
 
-        public static bool cancelBookOrderInDB(Guid BookId, string UserId)
+        public static bool CancelBookOrderByBookAndUser(Guid BookId, string UserId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -533,7 +536,7 @@ namespace DBLib
             }
         }
         //!!!
-        public static void cancelBookOrderById(Guid bookRentingId)
+        public static void CancelBookOrderById(Guid bookRentingId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -579,7 +582,7 @@ namespace DBLib
             return freeBookCount;
         }
 
-        public static void addPublisher(Publisher publisher)
+        public static void AddPublisher(Publisher publisher)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -588,7 +591,7 @@ namespace DBLib
             }
         }
 
-        public static void addSection(Section section)
+        public static void AddSection(Section section)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -598,7 +601,7 @@ namespace DBLib
         }
 
         //with verifying user
-        public static void deleteComment(Guid commentId)
+        public static void DeleteComment(Guid commentId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -610,7 +613,7 @@ namespace DBLib
             }
         }
         
-        public static List<BooksRenting> getUserOrderedBooks(string userId)
+        public static List<BooksRenting> GetUserOrderedBooks(string userId)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -634,10 +637,11 @@ namespace DBLib
                 return false;
             }
         }
-
-
-        //public static List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole> getOnlyRegisteredUsers()
-        public static List<ApplicationUser> getOnlyRegisteredUsers()
+        
+        /// <summary>
+        /// Return users with status not admin or librarian
+        /// </summary>
+        public static List<ApplicationUser> GetOnlyRegisteredUsers()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -707,6 +711,9 @@ namespace DBLib
             return true;
         }
 
+        /// <summary>
+        /// Mark the book as deleted
+        /// </summary>
         public static void DeleteBook(Guid Id)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -718,6 +725,9 @@ namespace DBLib
             }
         }
 
+        /// <summary>
+        /// Mark the book as not deleted
+        /// </summary>
         public static void ReturnBook(Guid Id)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -729,6 +739,10 @@ namespace DBLib
             }
         }
 
+        /// <summary>
+        /// Block/unblock user
+        /// </summary>
+        /// <param name="setBlock">block status</param>
         public static void SetUserBlocking(string userId, bool setBlock)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -740,7 +754,7 @@ namespace DBLib
             }
         }
 
-        public static List<ApplicationUser> getLibrarians()
+        public static List<ApplicationUser> GetLibrarians()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -752,7 +766,7 @@ namespace DBLib
             }
         }
 
-        public static List<ApplicationUser> getAllUsers()
+        public static List<ApplicationUser> GetAllUsers()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -762,7 +776,7 @@ namespace DBLib
             }
         }
 
-        public static string getLibrarianRoleId()
+        public static string GetLibrarianRoleId()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -771,7 +785,10 @@ namespace DBLib
             }
         }
 
-        public static bool isUserBannedById(string userEmail)
+        /// <summary>
+        /// Check user ban status by email
+        /// </summary>
+        public static bool IsUserBannedByEmail(string userEmail)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -788,7 +805,12 @@ namespace DBLib
             }
         }
 
-        public static void removeOldUserOrders(string userId)
+        /// <summary>
+        /// Remove overdue orders
+        /// That older that 24 hours
+        /// </summary>
+        /// <param name="userId"></param>
+        public static void RemoveOldUserOrders(string userId)
         {
             DateTime Today = DateTime.Now;
             using (ApplicationDbContext db = new ApplicationDbContext())

@@ -12,6 +12,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Library.Controllers
 {
+    /// <summary>
+    /// Contains controllers, that process requests
+    /// for librarians/admins
+    /// </summary>
     [CheckingIfBanned]
     [Authorize(Roles = "librarian")]
     public class LibraryManageController : Controller
@@ -37,7 +41,7 @@ namespace Library.Controllers
                     //Adding book picture
                     if (bookViewModel.TitlePic != null)
                     {
-                        bool picSaved = SaveTitlePic(bookViewModel.TitlePic, book.Id);
+                        bool picSaved = PictureOperations.SaveTitlePic(bookViewModel.TitlePic, book.Id, Server.MapPath("~/TitlePic/"));
 
                         if (picSaved == false)
                         {
@@ -57,47 +61,6 @@ namespace Library.Controllers
                 return View();
             }
             return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Книгу додано", null, MessageState.Succes));
-        }
-
-        public bool SaveTitlePic(HttpPostedFileBase titlePic, Guid Id)
-        {
-            if (titlePic != null && titlePic.ContentLength > 0)
-            {
-                try
-                {
-                    if (titlePic.ContentType != "image/jpeg")
-                    {
-                        return false;
-                    }
-                    string path = Path.Combine(Server.MapPath("~/TitlePic/"), Id.ToString() + ".jpg");
-
-                    if (System.IO.File.Exists(path))
-                    {
-                        System.IO.File.Delete(path);
-                    }
-
-                    titlePic.SaveAs(path);
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public void RemoveTitlePic(Guid Id)
-        {
-            string path = Path.Combine(Server.MapPath("~/TitlePic/"), Id.ToString() + ".jpg");
-
-            if (System.IO.File.Exists(path))
-            {
-                System.IO.File.Delete(path);
-            }
         }
 
         public JsonResult GetAuthorsJson()
@@ -151,7 +114,7 @@ namespace Library.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    DBCommands.addPublisher(publisher);
+                    DBCommands.AddPublisher(publisher);
                 }
                 else
                 {
@@ -213,7 +176,7 @@ namespace Library.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    DBCommands.addSection(section);
+                    DBCommands.AddSection(section);
                 }
                 else
                 {
@@ -231,7 +194,7 @@ namespace Library.Controllers
 
         public ActionResult RegisteredUsers()
         {
-            var registeredUsers = DBCommands.getOnlyRegisteredUsers();
+            var registeredUsers = DBCommands.GetOnlyRegisteredUsers();
 
             return View(registeredUsers);
         }
@@ -246,8 +209,8 @@ namespace Library.Controllers
 
             ViewBag.usersInfo = usersInfo; 
 
-            DBCommands.removeOldUserOrders(id);
-            List<BooksRenting> allBooksRentings = DBCommands.getUserOrderedBooks(id);
+            DBCommands.RemoveOldUserOrders(id);
+            List<BooksRenting> allBooksRentings = DBCommands.GetUserOrderedBooks(id);
 
             List<BooksRenting> booksOrdered = allBooksRentings.Where(br => br.TakingDate == null).ToList();
 
@@ -310,7 +273,7 @@ namespace Library.Controllers
 
                     if (TitlePic != null)
                     {
-                        bool picSaved = SaveTitlePic(TitlePic, book.Id);
+                        bool picSaved = PictureOperations.SaveTitlePic(TitlePic, book.Id, Server.MapPath("~/TitlePic/"));
 
                         if (picSaved == false)
                         {
@@ -355,8 +318,8 @@ namespace Library.Controllers
         [Authorize(Roles = "admin")]
         public ActionResult ManageLibrarians()
         {
-            var librarians = DBCommands.getAllUsers();
-            ViewBag.LibrarianRoleId = DBCommands.getLibrarianRoleId();
+            var librarians = DBCommands.GetAllUsers();
+            ViewBag.LibrarianRoleId = DBCommands.GetLibrarianRoleId();
             
             return View(librarians);
         }
@@ -385,7 +348,7 @@ namespace Library.Controllers
         [HttpPost]
         public void removeBookOrder(Guid orderId)
         {
-            DBCommands.cancelBookOrderById(orderId);
+            DBCommands.CancelBookOrderById(orderId);
         }
 
         [HttpPost]
@@ -404,6 +367,12 @@ namespace Library.Controllers
         public void EditSection(Section section)
         {
             DBCommands.EditSection(section);
+        }
+
+        [HttpPost]
+        public void RemoveTitlePic(Guid Id)
+        {
+            PictureOperations.RemoveTitlePic(Id, Server.MapPath("~/TitlePic/"));
         }
 
     }

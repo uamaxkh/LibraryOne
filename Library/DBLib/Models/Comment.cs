@@ -8,6 +8,9 @@ using Library.Models;
 
 namespace DBLib.Models
 {
+    /// <summary>
+    /// Reflects Comment from DB
+    /// </summary>
     public class Comment : BaseEntity
     {
         [Display(Name = "Дата")]
@@ -16,31 +19,6 @@ namespace DBLib.Models
         [Required(ErrorMessage = "Необхідне поле")]
         [Display(Name = "Текст коментаря")]
         public string CommentText { get; set; }
-
-        //[Required(ErrorMessage = "Необхідне поле")]
-        //[Range(1, 5, ErrorMessage = "Оцінка може бути від 1 до 5")]
-        //[Display(Name = "Оцінка книги")]
-        //public int BookRate {
-        //    get
-        //    {
-        //        return BookRate;
-        //    }
-        //    set
-        //    {
-        //        if (value > 5)
-        //        {
-        //            BookRate = 5;
-        //        }
-        //        else if (value < 1)
-        //        {
-        //            BookRate = 1;
-        //        }
-        //        else
-        //        {
-        //            BookRate = value;
-        //        }
-        //    }
-        //}
 
         public Book Book { get; set; }
 

@@ -13,6 +13,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Library
 {
+    /// <summary>
+    /// Context initializing. Always create new DB after server starting and initialize data
+    /// </summary>
     public class ContexttInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)

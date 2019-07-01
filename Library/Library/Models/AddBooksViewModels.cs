@@ -9,6 +9,9 @@ using System.Web;
 
 namespace Library.Models
 {
+    /// <summary>
+    /// Reflects book from View for further saving in DB
+    /// </summary>
     public class AddBooksViewModels
     {
         [Required(ErrorMessage = "Необхідне поле")]
