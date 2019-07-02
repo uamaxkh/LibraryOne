@@ -44,7 +44,7 @@ namespace Library
             var a8 = new Author() { Name = "Стівен Кінг" }; authorsList.Add(a8);
             var a9 = new Author() { Name = "Толкін Джон" }; authorsList.Add(a9);
             var a10 = new Author() { Name = "Джоан Ролінґ" }; authorsList.Add(a10);
-            var a11 = new Author() { Name = "брати Стругацькіґ" }; authorsList.Add(a11);
+            var a11 = new Author() { Name = "брати Стругацькі" }; authorsList.Add(a11);
             var a12 = new Author() { Name = "Олександр Палій" }; authorsList.Add(a12);
             var a13 = new Author() { Name = "Голідей Раян" }; authorsList.Add(a13);
             var a14 = new Author() { Name = "Генсільман Стівен" }; authorsList.Add(a14);
@@ -63,7 +63,7 @@ namespace Library
             var a27 = new Author() { Name = "Джефрі Лайкер" }; authorsList.Add(a27);
             var a28 = new Author() { Name = "Ґільбо Кріс" }; authorsList.Add(a28);
 
-            var p1 = new Publisher() { Name = "Книжковий Клуб «Клуб Сімейного Дозвілля", City = "Харків" }; publishersList.Add(p1);
+            var p1 = new Publisher() { Name = "Книжковий Клуб «Клуб Сімейного Дозвілля»", City = "Харків" }; publishersList.Add(p1);
             var p2 = new Publisher() { Name = "АСТ", City = "Москва" }; publishersList.Add(p2);
             var p3 = new Publisher() { Name = "А-ба-ба-га-ла-ма-га", City = "Київ" }; publishersList.Add(p3);
             var p4 = new Publisher() { Name = "Наш Формат", City = "Київ" }; publishersList.Add(p4);
@@ -95,7 +95,8 @@ namespace Library
                 Quantity = 15,
                 Pages = 400,
                 ISBN = "978-617-12-2503-9",
-                Section = s1
+                Section = s1,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b1);
 
@@ -110,7 +111,8 @@ namespace Library
                 Quantity = 20,
                 Pages = 368,
                 ISBN = "978-617-12-0498-0",
-                Section = s2
+                Section = s2,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b2);
 
@@ -125,7 +127,8 @@ namespace Library
                 Quantity = 8,
                 Pages = 384,
                 ISBN = "978-5-17-114425-8",
-                Section = s2
+                Section = s2,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b3);
 
@@ -140,7 +143,8 @@ namespace Library
                 Quantity = 8,
                 Pages = 416,
                 ISBN = "978-966-7047-88-7",
-                Section = s3
+                Section = s3,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b4);
 
@@ -155,7 +159,8 @@ namespace Library
                 Quantity = 1,
                 Pages = 264,
                 ISBN = "978-617-7388-96-7",
-                Section = s4
+                Section = s4,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b5);
 
@@ -170,7 +175,8 @@ namespace Library
                 Quantity = 5,
                 Pages = 576,
                 ISBN = "978-966942-941",
-                Section = s2
+                Section = s2,
+                AddingDate = DateTime.Parse("2018.10.13")
             };
             booksList.Add(b6);
 
@@ -185,7 +191,8 @@ namespace Library
                 Quantity = 5,
                 Pages = 256,
                 ISBN = "978-617-7764-15-0",
-                Section = s2
+                Section = s2,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b7);
 
@@ -200,7 +207,8 @@ namespace Library
                 ISBN = "978-617-12-5418-3",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b8);
 
@@ -215,7 +223,8 @@ namespace Library
                 ISBN = "978-617-12-0498-0",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b9);
 
@@ -230,7 +239,8 @@ namespace Library
                 ISBN = "978-6-171-21037-0",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b10);
 
@@ -245,7 +255,8 @@ namespace Library
                 ISBN = "978-6-171-21038-7",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b11);
 
@@ -260,7 +271,8 @@ namespace Library
                 ISBN = "978-6-17664-078-3",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b12);
 
@@ -275,7 +287,8 @@ namespace Library
                 ISBN = "978-617-585-143-2",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b13);
 
@@ -290,7 +303,8 @@ namespace Library
                 ISBN = "978-6-176-64100-1",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b14);
 
@@ -305,7 +319,8 @@ namespace Library
                 ISBN = "978-966-10-1394-9",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b15);
 
@@ -320,7 +335,8 @@ namespace Library
                 ISBN = "978-617-585-123-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b16);
 
@@ -335,7 +351,8 @@ namespace Library
                 ISBN = "78-966-2623-69-7",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b17);
 
@@ -350,7 +367,8 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b18);
 
@@ -365,7 +383,8 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b19);
 
@@ -380,7 +399,8 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b20);
 
@@ -395,7 +415,8 @@ namespace Library
                 ISBN = "978-617-7552-79-5",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b21);
 
@@ -410,7 +431,8 @@ namespace Library
                 ISBN = "978-5-4461-0825-1",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b22);
 
@@ -425,7 +447,8 @@ namespace Library
                 ISBN = "978-5-6040723-1-8",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b23);
 
@@ -440,7 +463,8 @@ namespace Library
                 ISBN = "978-5-496-00433-6",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b24);
 
@@ -455,7 +479,8 @@ namespace Library
                 ISBN = "978-5-6040043-7-1",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b25);
 
@@ -470,7 +495,8 @@ namespace Library
                 ISBN = "978-5-9908463-9-5",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b26);
 
@@ -485,7 +511,8 @@ namespace Library
                 ISBN = "978-5-8459-1937-3",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b27);
 
@@ -500,7 +527,8 @@ namespace Library
                 ISBN = "978-5-907114-62-3",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b28);
 

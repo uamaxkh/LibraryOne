@@ -19,7 +19,7 @@
 }
 <div class="container-fluid @(Model.Deleted ? "bg-danger": "")">
     <div class="row">
-        <div class="col-xs-6 col-md-4">
+        <div class="col-sm-6 col-md-8 col-lg-6 biggerText">
             <div>
                 @Html.LabelFor(b => b.ISBN)
                 @Html.DisplayFor(b => b.ISBN)
@@ -30,12 +30,7 @@
             </div>
             <div>
                 @Html.LabelFor(b => b.Quantity)
-                @Html.DisplayFor(b => b.Quantity)
-                <div>Вільно: @ViewBag.freeBookCount</div>
-            </div>
-            <div>
-                @Html.LabelFor(b => b.Title)
-                @Html.DisplayFor(b => b.Title)
+                @Model.Quantity <span class="text-success">(@ViewBag.freeBookCount)</span>
             </div>
             <div>
                 @Html.LabelFor(b => b.Year)
@@ -63,12 +58,14 @@
             </div>
             <div>
                 @Html.LabelFor(b => b.Authors)
-                @foreach (var author in Model.Authors)
-                {
-                    <a href="@Url.Action("ShowAuthor", "Home", new { id = author.Id })">@author.Name</a>
-                }
+                <ul>
+                    @foreach (var author in Model.Authors)
+                    {
+                        <li><a href="@Url.Action("ShowAuthor", "Home", new { id = author.Id })">@author.Name</a></li>
+                    }
+                </ul>
             </div>
-            @if (@ViewBag.userExist && !User.IsInRole("librarian"))
+            @if (ViewBag.userExist && !User.IsInRole("librarian"))
             {
                 if (ViewBag.userOrderedTheBook) //Book is ordered by this user
                 {
@@ -101,16 +98,16 @@
                     }
                 }
             }
-            else if (User.IsInRole("librarian"))
+            else if (User.IsInRole("admin"))
             {
                 @Html.ActionLink("Редагувати книгу", "EditBook", "LibraryManage", new { id = Model.Id }, new { @class = "btn btn-warning" });
             }
-            else
+            else if(!ViewBag.userExist)
             {
                 @Html.ActionLink("Щоб замовити книгу, необхідно увійти", "Login", "Account", null, new { @class = "btn btn-default" });
             }
         </div>
-        <div class="col-xs-6 col-md-2">
+        <div class="col-sm-6 col-md-4 col-lg-6">
             <img class="bookTitleImgLj" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
         </div>
     </div>

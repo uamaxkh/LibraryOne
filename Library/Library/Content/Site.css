@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #FAFAFA;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -74,24 +75,95 @@ textarea {
     margin: 5px 0px;
 }
 
-.bookTitleImgLj {
-    max-width: 160px;
-    max-height: 400px;
+.tAlignCenter{
+    text-align:center;
+}
+
+.bookTitleImgLg {
+    max-width: 270px;
+    max-height: 450px;
     box-shadow: 1px 1px 3px gray;
 }
 
 .bookTitleImgSm {
-    max-width: 180px;
-    max-height: 280px;
+    max-width: 100%;
+    max-height: 300px;
     box-shadow: 1px 1px 2px gray;
 }
 
 .bookBox {
+    box-sizing: border-box;
+    background-color: white;
+    overflow: hidden;
     height: 500px;
-    width: 200px;
+    width: 240px;
     display: inline-block;
-    border: 1px black solid;
-    margin: 10px;
+    margin: 22px;
+    box-shadow: #cbcbcb 1px 1px 4px;
+    position: relative;
+    transition: 0.3s;
+}
+
+    .bookBox:hover {
+        z-index: 999;
+        overflow: visible;
+        transition: 0.3s;
+    }
+
+.fullSizeBox {
     padding: 10px;
-    box-shadow: #cbcbcb 4px 4px 8px;
+    width: 100%;
+    height: 100%;
+    transition: 0.2s;
+}
+
+.bookBox:hover .fullSizeBox {
+    background-color: inherit;
+    width: 120%;
+    height: 600px;
+    box-shadow: #cbcbcb 7px 7px 20px;
+    /*transition: 0.2s;*/
+}
+
+.cutTitle{
+    height: 40px;
+    overflow: hidden;
+    color: black;
+    text-decoration: none;
+}
+
+.threeDots::after {
+    content: "...";
+}
+
+.bookBox:hover .threeDots::after {
+    content: none;
+}
+
+.fullSizeBox:hover .cutTitle{
+    height: auto;
+}
+
+
+.fixedInLCorner {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.fixedInRCorner {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.bookGrid {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+}
+
+.biggerText{
+    line-height: 1.5em;
+    font-size: 1.1em;
 }

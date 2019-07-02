@@ -12,7 +12,7 @@
 
     <div class="container-fluid @(Model.Deleted ? "bg-danger": "")">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5 col-sm-7 biggerText">
                 @using (Html.BeginForm("EditBook", "LibraryManage", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <div class="form-group">
@@ -149,8 +149,8 @@
                     }
                 }
             </div>
-            <div class="col-md-8">
-                <img class="bookTitleImgLj" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
+            <div class="col-md-7 col-sm-5 col-xs-2">
+                <img class="bookTitleImgLg" src="~/TitlePic/@{@Model.Id;}.jpg" onerror="imgError(this)" />
             </div>
         </div>
     </div>

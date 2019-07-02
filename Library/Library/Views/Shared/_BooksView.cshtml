@@ -10,27 +10,50 @@
 
 @if (Model.Count > 0)
 {
-    <div>
-        @{
-            foreach (var book in Model)
-            {
-                <div class="bookBox">
-                    <img class="bookTitleImgSm" src="~/TitlePic/@{@book.Id;}.jpg" onerror="imgError(this)" />
+<section class="bookGrid">
+    @{
+        foreach (var book in Model)
+        {
+            <div class="bookBox">
+                <div class="fullSizeBox">
+                    <a href="@Url.Action("ShowBook", new { id = book.Id })">
+                        <div class="tAlignCenter">
+                            <img class="bookTitleImgSm" src="~/TitlePic/@{@book.Id;}.jpg" onerror="imgError(this)" />
+                            @if (book.LibraryReading)
+                            {
+                                <div class="btn btn-xs btn-warning fixedInRCorner">Читання в бібліотеці</div>
+                            }
+                            @if (book.IsNew)
+                            {
+                                <div class="btn btn-xs btn-success fixedInLCorner">
+                                    Новинка!
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </div>
+                            }
+                        </div>
+
+                        <h4 class="threeDots"><div class="cutTitle"><b>@book.Title</b></div></h4>
+                    </a>
+                    <hr />
+                    <p>@Html.ActionLink("Дивитися", "ShowBook", new { id = book.Id }, new { @class = "btn btn-xs btn-primary" })</p>
+                    <div><b>Розділ: </b>@book.Section.Name</div>
+                    <div><b>Видавництво: </b>@book.Publisher.Name</div>
+                    <div><b>Рік: </b>@book.Year</div>
                     <div>
-                        <h4><b>@book.CutTitle(52)</b></h4>
-                        <div>Розділ @book.Section.Name</div>
-                        <div>Рік @book.Year</div>
-                        <div>Видавництва @book.Publisher.Name</div>
-                        @if (book.LibraryReading)
-                        {
-                        <span class="btn btn-xs btn-warning">Читання в бібліотеці</span>
-                        }
-                        <p>@Html.ActionLink("Дивитися", "ShowBook", new { id = book.Id }, new { @class = "btn btn-xs btn-primary" })</p>
+                        <b>Автори: </b>
+                        <ul>
+                            @foreach (var author in book.Authors)
+                            {
+                                <li>@author.Name</li>
+                            }
+                        </ul>
                     </div>
+
                 </div>
-            }
+            </div>
         }
-    </div>
+    }
+</section>
     @Html.Partial("_Pagination")
 }
 else

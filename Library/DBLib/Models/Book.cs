@@ -113,5 +113,13 @@ namespace DBLib.Models
                     return Title;
                 }
         }
+
+        public bool IsNew
+        {
+            get
+            {
+                return (DateTime.Now - AddingDate).Days < 10 ?  true : false;
+            }
+        }
     }
 }
