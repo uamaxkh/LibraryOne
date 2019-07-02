@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="DBCommands.cs" />
     <Compile Include="LibrarySettings.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\BaseEntity.cs" />

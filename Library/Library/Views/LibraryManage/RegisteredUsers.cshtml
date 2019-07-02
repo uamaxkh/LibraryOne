@@ -13,21 +13,44 @@
         </div>
     </div>
 </div>
-<ul>
-    @foreach (var user in Model)
-    {
-        <li id="@user.Id">
-            <a class="@(user.userHasPenalty? "bg-danger" : "")"
-               href="@Url.Action("ShowUserInfo", new { id = user.Id})">
-                @user.Surname @user.Name (@user.getCountOfOrderedBooks<text>/</text>@user.getCountOfTakedBooks) @(user.userHasPenalty ? " – Штраф : " + user.getSummaryFineValue + "грн" : "")
-            </a>
-            @if (user.IsBanned)
-            {
-                <span class="btn btn-danger btn-xs">Заблокований!</span>
-            }
-        </li>
-    }
-</ul>
+<table class="table ">
+    <thead>
+        <tr>
+            <th>Прізвище та ім'я</th>
+            <th>Замовлено книг</th>
+            <th>Взято книг</th>
+            <th>Штраф</th>
+            <th>Статус</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr id="@user.Id" class="@(user.userHasPenalty? "bg-danger" : "")">
+                <td>
+                    <a href="@Url.Action("ShowUserInfo", new { id = user.Id})">
+                        @user.Surname @user.Name
+                    </a>
+                </td>
+                <td>@user.getCountOfOrderedBooks</td>
+                <td>@user.getCountOfTakedBooks</td>
+                <td>
+                    @(user.userHasPenalty ? user.getSummaryFineValue + "грн" : "-")
+                </td>
+                <td>
+                    @if (user.IsBanned)
+                    {
+                        <span class="btn btn-danger btn-xs disabled">Заблокований!</span>
+                    }
+                    else
+                    {
+                        <span class="btn btn-success btn-xs disabled">Дійсний</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @section scripts
 {
