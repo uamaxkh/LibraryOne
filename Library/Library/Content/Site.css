@@ -120,7 +120,7 @@ textarea {
 .bookBox:hover .fullSizeBox {
     background-color: inherit;
     width: 120%;
-    height: 600px;
+    height: auto;
     box-shadow: #cbcbcb 7px 7px 20px;
     /*transition: 0.2s;*/
 }
