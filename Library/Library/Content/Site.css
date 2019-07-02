@@ -82,13 +82,13 @@ textarea {
 .bookTitleImgLg {
     max-width: 270px;
     max-height: 450px;
-    box-shadow: 1px 1px 3px gray;
+    box-shadow: 2px 2px 4px #dedede;
 }
 
 .bookTitleImgSm {
     max-width: 100%;
     max-height: 300px;
-    box-shadow: 1px 1px 2px gray;
+    box-shadow: 1px 1px 4px #d0d0d0;
 }
 
 .bookBox {
@@ -166,4 +166,11 @@ textarea {
 .biggerText{
     line-height: 1.5em;
     font-size: 1.1em;
+}
+
+.info{
+    margin: 30px 5px;
+    padding: 10px;
+    border: 1px solid #cbcbcb;
+    border-radius: 5px;
 }

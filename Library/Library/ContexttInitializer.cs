@@ -139,8 +139,8 @@ namespace Library
                 Authors = new List<Author>() { a4 },
                 Year = 2010,
                 Publisher = p3,
-                LibraryReading = false,
-                Quantity = 8,
+                LibraryReading = true,
+                Quantity = 2,
                 Pages = 416,
                 ISBN = "978-966-7047-88-7",
                 Section = s3,
@@ -171,7 +171,7 @@ namespace Library
                 Authors = new List<Author>() { a6 },
                 Year = 2019,
                 Publisher = p5,
-                LibraryReading = false,
+                LibraryReading = true,
                 Quantity = 5,
                 Pages = 576,
                 ISBN = "978-966942-941",
@@ -188,7 +188,7 @@ namespace Library
                 Year = 2019,
                 Publisher = p6,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 8,
                 Pages = 256,
                 ISBN = "978-617-7764-15-0",
                 Section = s2,
@@ -206,8 +206,8 @@ namespace Library
                 Pages = 880,
                 ISBN = "978-617-12-5418-3",
                 Section = s2,
-                LibraryReading = false,
-                Quantity = 5,
+                LibraryReading = true,
+                Quantity = 2,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b8);
@@ -223,7 +223,7 @@ namespace Library
                 ISBN = "978-617-12-0498-0",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 8,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b9);
@@ -239,7 +239,7 @@ namespace Library
                 ISBN = "978-6-171-21037-0",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b10);
@@ -255,7 +255,7 @@ namespace Library
                 ISBN = "978-6-171-21038-7",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 9,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b11);
@@ -271,7 +271,7 @@ namespace Library
                 ISBN = "978-6-17664-078-3",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b12);
@@ -287,7 +287,7 @@ namespace Library
                 ISBN = "978-617-585-143-2",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b13);
@@ -303,7 +303,7 @@ namespace Library
                 ISBN = "978-6-176-64100-1",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 6,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b14);
@@ -319,7 +319,7 @@ namespace Library
                 ISBN = "978-966-10-1394-9",
                 Section = s2,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 7,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b15);
@@ -335,7 +335,7 @@ namespace Library
                 ISBN = "978-617-585-123-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 8,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b16);
@@ -351,7 +351,7 @@ namespace Library
                 ISBN = "78-966-2623-69-7",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 8,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b17);
@@ -367,7 +367,7 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b18);
@@ -383,7 +383,7 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b19);
@@ -399,7 +399,7 @@ namespace Library
                 ISBN = "978-966-2623-73-4",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b20);
@@ -415,7 +415,7 @@ namespace Library
                 ISBN = "978-617-7552-79-5",
                 Section = s5,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.02.18")
             };
             booksList.Add(b21);
@@ -431,7 +431,7 @@ namespace Library
                 ISBN = "978-5-4461-0825-1",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b22);
@@ -447,7 +447,7 @@ namespace Library
                 ISBN = "978-5-6040723-1-8",
                 Section = s6,
                 LibraryReading = false,
-                Quantity = 5,
+                Quantity = 10,
                 AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b23);
@@ -462,8 +462,8 @@ namespace Library
                 Pages = 896,
                 ISBN = "978-5-496-00433-6",
                 Section = s6,
-                LibraryReading = false,
-                Quantity = 5,
+                LibraryReading = true,
+                Quantity = 2,
                 AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b24);
@@ -478,8 +478,8 @@ namespace Library
                 Pages = 1024,
                 ISBN = "978-5-6040043-7-1",
                 Section = s6,
-                LibraryReading = false,
-                Quantity = 5,
+                LibraryReading = true,
+                Quantity = 1,
                 AddingDate = DateTime.Parse("2019.04.02")
             };
             booksList.Add(b25);
@@ -543,7 +543,8 @@ namespace Library
                 ISBN = "978-966-03-7620-5",
                 Section = s4,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Today.AddDays(-2)
             };
             booksList.Add(b29);
 
@@ -558,7 +559,8 @@ namespace Library
                 ISBN = "978-617-7388-75-2",
                 Section = s4,
                 LibraryReading = false,
-                Quantity = 5
+                Quantity = 5,
+                AddingDate = DateTime.Today.AddDays(-2)
             };
             booksList.Add(b30);
 
@@ -573,7 +575,8 @@ namespace Library
                 ISBN = "978-617-7682-22-5",
                 Section = s4,
                 LibraryReading = true,
-                Quantity = 2
+                Quantity = 2,
+                AddingDate = DateTime.Today.AddDays(-2)
             };
             booksList.Add(b31);
 
@@ -587,8 +590,9 @@ namespace Library
                 Pages = 424,
                 ISBN = "978-617-7388-78-3",
                 Section = s4,
-                LibraryReading = false,
-                Quantity = 5
+                LibraryReading = true,
+                Quantity = 1,
+                AddingDate = DateTime.Today.AddDays(-2)
             };
             booksList.Add(b32);
 
@@ -602,8 +606,9 @@ namespace Library
                 Pages = 238,
                 ISBN = "978-617-7682-42-3",
                 Section = s4,
-                LibraryReading = false,
-                Quantity = 5
+                LibraryReading = true,
+                Quantity = 1,
+                AddingDate = DateTime.Today.AddDays(-2)
             };
             booksList.Add(b33);
 
@@ -628,10 +633,14 @@ namespace Library
             var librarianUser = new ApplicationUser { Email = "librarian@gmail.com", UserName = "librarian@gmail.com", Name = "Іванка", Surname = "Бібліотекар" };
             string librarianPassword = "123qwe";
 
+            //User with penalty
             var registeredUser = new ApplicationUser { Email = "registered@gmail.com", UserName = "registered@gmail.com", Name = "Артем", Surname = "Дуб" };
-            string registeredPassword = "123qwe";
+            //
             var registeredUser2 = new ApplicationUser { Email = "registered2@gmail.com", UserName = "registered2@gmail.com", Name = "Тимофій", Surname = "Зібров" };
+            //
             var registeredUser3 = new ApplicationUser { Email = "registered3@gmail.com", UserName = "registered3@gmail.com", Name = "Олена", Surname = "Ємець" };
+
+            string registeredPassword = "123qwe";
 
             var result1 = userManager.Create(adminUser, adminPassword);
             userManager.AddToRole(adminUser.Id, adminRole.Name);
@@ -652,87 +661,188 @@ namespace Library
 
             var c1 = new Comment()
             {
-                Book = b18,
-                ApplicationUser = registeredUser,
-                CommentText = "Гарний посібник для англійської"
+                Book = b33,
+                ApplicationUser = registeredUser2,
+                CommentText = "Круто! Колись прочитав, і відразу підняв 1млн $ !!!",
+                Date = DateTime.Now.AddDays(-3)
             }; commentsList.Add(c1);
 
             var c2 = new Comment()
             {
-                Book = b18,
+                Book = b33,
                 ApplicationUser = librarianUser,
-                CommentText = "Так, і справді"
+                CommentText = "Та ладно, я теж читала",
+                Date = DateTime.Now.AddDays(-2)
             }; commentsList.Add(c2);
+
+            var c3 = new Comment()
+            {
+                Book = b33,
+                ApplicationUser = registeredUser,
+                CommentText = "Продам відро",
+                Date = DateTime.Now.AddDays(-1)
+            }; commentsList.Add(c3);
+
+            var c4 = new Comment()
+            {
+                Book = b32,
+                ApplicationUser = registeredUser3,
+                CommentText = "Клас, двічі перечитала! Так нічого й не зрозуміла :D",
+                Date = DateTime.Now.AddDays(-2)
+            }; commentsList.Add(c4);
+
+            //--------------------------------------------------
 
             var br1 = new BooksRenting()
             {
                 Book = b17,
                 ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-5),
-                TakingDate = DateTime.Now.AddDays(-4),
-                ReturningDate = DateTime.Now.AddDays(-2)
+                OrderDate = DateTime.Now.AddDays(-15),
+                TakingDate = DateTime.Now.AddDays(-15),
+                ReturningDate = DateTime.Now.AddDays(-4)
             }; booksRentingsList.Add(br1);
 
             var br2 = new BooksRenting()
             {
+                Book = b17,
+                ApplicationUser = registeredUser,
+                OrderDate = DateTime.Now.AddDays(-14),
+                TakingDate = DateTime.Now.AddDays(-13)
+            }; booksRentingsList.Add(br2);
+
+            var br11 = new BooksRenting()
+            {
                 Book = b18,
                 ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-2),
-                TakingDate = DateTime.Now.AddDays(-1),
-            }; booksRentingsList.Add(br2);
+                OrderDate = DateTime.Now.AddDays(-16),
+                TakingDate = DateTime.Now.AddDays(-16)
+            }; booksRentingsList.Add(br11);
 
             var br3 = new BooksRenting()
             {
                 Book = b19,
                 ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-2),
-                TakingDate = DateTime.Now.AddDays(-1),
+                OrderDate = DateTime.Now.AddDays(-8),
+                TakingDate = DateTime.Now.AddDays(-7),
             }; booksRentingsList.Add(br3);
 
             var br4 = new BooksRenting()
             {
                 Book = b20,
                 ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now,
+                OrderDate = DateTime.Now.AddDays(-11),
+                TakingDate = DateTime.Now.AddDays(-10),
             }; booksRentingsList.Add(br4);
 
+            //Deleted, orderDate 24h+
             var br5 = new BooksRenting()
             {
-                Book = b5,
-                ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now,
+                Book = b33,
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddDays(-2),
             }; booksRentingsList.Add(br5);
+
+            var br14 = new BooksRenting()
+            {
+                Book = b33,
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddHours(-1),
+            }; booksRentingsList.Add(br14);
+
+            var br15 = new BooksRenting()
+            {
+                Book = b29,
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddHours(-4),
+                TakingDate = DateTime.Now.AddHours(-2)
+            }; booksRentingsList.Add(br15);
+
+            var br16 = new BooksRenting()
+            {
+                Book = b32,
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddHours(-1),
+            }; booksRentingsList.Add(br16);
 
             var br6 = new BooksRenting()
             {
-                Book = b16,
-                ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-12),
-                TakingDate = DateTime.Now.AddDays(-11),
+                Book = b30,
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddDays(-6),
+                TakingDate = DateTime.Now.AddDays(-5)
             }; booksRentingsList.Add(br6);
 
             var br7 = new BooksRenting()
             {
                 Book = b31,
-                ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddHours(-2),
+                ApplicationUser = registeredUser3,
+                OrderDate = DateTime.Now.AddHours(-8),
                 TakingDate = DateTime.Now,
             }; booksRentingsList.Add(br7);
 
             var br8 = new BooksRenting()
             {
-                Book = b32,
-                ApplicationUser = registeredUser,
-                OrderDate = DateTime.Now.AddDays(-13),
-                TakingDate = DateTime.Now.AddDays(-12),
+                Book = b23,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddDays(-5),
+                TakingDate = DateTime.Now.AddDays(-4),
             }; booksRentingsList.Add(br8);
 
             var br9 = new BooksRenting()
             {
-                Book = b6,
-                ApplicationUser = registeredUser,
+                Book = b27,
+                ApplicationUser = registeredUser2,
                 OrderDate = DateTime.Now.AddDays(-2),
+                TakingDate = DateTime.Now.AddDays(-2)
             }; booksRentingsList.Add(br9);
+
+            var br10 = new BooksRenting()
+            {
+                Book = b24,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddHours(-1),
+            }; booksRentingsList.Add(br10);
+
+            var br13 = new BooksRenting()
+            {
+                Book = b28,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddHours(-8)
+            }; booksRentingsList.Add(br13);
+
+            var br17 = new BooksRenting()
+            {
+                Book = b4,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddDays(-30),
+                TakingDate = DateTime.Now.AddDays(-30),
+                ReturningDate = DateTime.Now.AddDays(-26)
+            }; booksRentingsList.Add(br17);
+
+            var br18 = new BooksRenting()
+            {
+                Book = b2,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddDays(-28),
+                TakingDate = DateTime.Now.AddDays(-28),
+                ReturningDate = DateTime.Now.AddDays(-24)
+            }; booksRentingsList.Add(br18);
+
+            var br19 = new BooksRenting()
+            {
+                Book = b3,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddDays(-28),
+                TakingDate = DateTime.Now.AddDays(-28),
+                ReturningDate = DateTime.Now.AddDays(-24)
+            }; booksRentingsList.Add(br19);
+
+            var br20 = new BooksRenting()
+            {
+                Book = b30,
+                ApplicationUser = registeredUser2,
+                OrderDate = DateTime.Now.AddHours(-9)
+            }; booksRentingsList.Add(br20);
 
 
 

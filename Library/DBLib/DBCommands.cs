@@ -161,7 +161,7 @@ namespace DBLib
             {
                 --startNum;
                 var allBooks = GetAllBooks();
-                IOrderedEnumerable<Book> orderedBooks = allBooks.OrderBy(b => b.Title);
+                IOrderedEnumerable<Book> orderedBooks = allBooks.OrderByDescending(b => b.AddingDate);
 
                 switch (sortingBy)
                 {

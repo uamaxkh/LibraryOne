@@ -13,9 +13,6 @@
             <button id="clearUserSearch" onclick="clearUserSearch()" class="btn btn-default">X</button>
         </div>
     </div>
-    @*<div class="input-group">
-        <button id="showOnlyLibrarianBtn" onclick="showOnlyLibrarian()" class="btn btn-default">Показати лише бібліотекарів</button>
-    </div>*@
 </div>
 
 <table class="table table-striped">
@@ -72,22 +69,6 @@
             );
         }
     }
-
-    //function showOnlyLibrarian() {
-    //    var nameTherm = $("#userSearch").val();
-    //    if (nameTherm.length > 2) {
-    //        userList.map(
-    //            (el) => {
-    //                if (el.name.toLowerCase().includes(nameTherm.toLowerCase())) {
-    //                    $("#" + el.id).removeClass("hidden");
-    //                }
-    //                else {
-    //                    $("#" + el.id).addClass("hidden");
-    //                }
-    //            }
-    //        );
-    //    }
-    //}
 
     function clearUserSearch() {
         $("#userSearch").val("");

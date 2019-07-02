@@ -19,3 +19,8 @@ InnerException:
 Source: 
 StackTrace: 
 
+---ExceptionExt [02.07.2019 17:28:53] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Користувач не знайдений
+AdditionalInfo: Немає користувача з таким Id, або Id не вказаний
+
