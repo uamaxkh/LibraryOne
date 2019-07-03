@@ -66,3 +66,36 @@ InnerException:
 Source: DBLib
 StackTrace: 
 
+---SystemException [03.07.2019 8:17:24] ---
+Message: Exception of type 'System.Exception' was thrown.
+Data: System.Collections.ListDictionaryInternal
+InnerException: 
+Source: 
+StackTrace: 
+
+---SystemException [03.07.2019 8:17:32] ---
+Message: Exception of type 'System.Exception' was thrown.
+Data: System.Collections.ListDictionaryInternal
+InnerException: 
+Source: 
+StackTrace: 
+
+---SystemException [03.07.2019 8:17:58] ---
+Message: Exception of type 'System.Exception' was thrown.
+Data: System.Collections.ListDictionaryInternal
+InnerException: 
+Source: 
+StackTrace: 
+
+---SystemException [03.07.2019 8:19:47] ---
+Message: Exception of type 'System.Exception' was thrown.
+Data: System.Collections.ListDictionaryInternal
+InnerException: 
+Source: 
+StackTrace: 
+
+---ExceptionExt [03.07.2019 8:21:18] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Користувач не знайдений
+AdditionalInfo: Немає користувача з таким Id, або Id не вказаний
+

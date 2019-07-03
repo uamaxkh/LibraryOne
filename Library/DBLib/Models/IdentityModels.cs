@@ -7,7 +7,7 @@ using System;
 using DBLib.Models;
 using DBLib;
 
-namespace Library.Models
+namespace DBLib.Models
 {
     /// <summary>
     /// Create an application database context

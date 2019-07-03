@@ -9,8 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using DBLib.Models;
 
-//namespace DBLib.Models
- namespace Library.Models
+namespace DBLib.Models
 {
     /// <summary>
     /// Standart ApplicationUser class with some changes for library project
