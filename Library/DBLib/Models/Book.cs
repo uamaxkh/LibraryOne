@@ -70,20 +70,14 @@ namespace DBLib.Models
         }
 
         public Book(string ISBN, string Title, bool LibraryReading, int Pages,
-            int Quantity, short Year)
+            int Quantity, short Year) : this()
         {
-            this.AddingDate = DateTime.Now;
             this.ISBN = ISBN;
             this.Title = Title;
             this.LibraryReading = LibraryReading;
             this.Pages = Pages;
             this.Quantity = Quantity;
             this.Year = Year;
-            Deleted = false;
-
-            BooksRenting = new List<BooksRenting>();
-            Authors = new List<Author>();
-            Comments = new List<Comment>();
         }
 
         public int FreeBooksCount()

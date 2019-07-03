@@ -737,7 +737,7 @@ namespace Library
             //Deleted, orderDate 24h+
             var br5 = new BooksRenting()
             {
-                Book = b33,
+                Book = b23,
                 ApplicationUser = registeredUser3,
                 OrderDate = DateTime.Now.AddDays(-2),
             }; booksRentingsList.Add(br5);

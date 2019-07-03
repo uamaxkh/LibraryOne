@@ -24,3 +24,45 @@ Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
 MessageExt: Користувач не знайдений
 AdditionalInfo: Немає користувача з таким Id, або Id не вказаний
 
+---ExceptionExt [02.07.2019 22:14:20] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Книгу додано
+AdditionalInfo: 
+
+---ExceptionExt [03.07.2019 7:40:17] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---ExceptionExt [03.07.2019 7:40:21] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---ExceptionExt [03.07.2019 7:40:46] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---ExceptionExt [03.07.2019 7:42:06] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---ExceptionExt [03.07.2019 7:44:49] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---ExceptionExt [03.07.2019 7:45:00] ---
+Message: Exception of type 'DBLib.Models.ExceptionExt' was thrown.
+MessageExt: Такої книги не існує
+AdditionalInfo: Не знайдено книги за цим кодом
+
+---SystemException [03.07.2019 7:47:01] ---
+Message: Exception of type 'System.Exception' was thrown.
+Data: System.Collections.ListDictionaryInternal
+InnerException: 
+Source: DBLib
+StackTrace: 
+

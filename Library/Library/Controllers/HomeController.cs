@@ -106,6 +106,10 @@ namespace Library.Controllers
                 }
 
                 var book = DBLib.DBCommands.GetBookWithAdditionalInfoById((Guid)id);
+                if(book == null)
+                {
+                    return RedirectToAction("ErrorExt", "Error", new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
+                }
                 ViewBag.freeBookCount = book.FreeBooksCount();
                 ViewBag.BookRating = DBCommands.GetBookRatingByBookId((Guid)id);
 
@@ -137,9 +141,9 @@ namespace Library.Controllers
 
                 return View(book);
             }
-            catch
+            catch(Exception ex)
             {
-                return RedirectToAction("ErrorExt", "Error",  new ExceptionExt("Такої книги не існує", "Не знайдено книги за цим кодом", MessageState.Error));
+                return RedirectToAction("Error", "Error", ex);
             }
         }
 
